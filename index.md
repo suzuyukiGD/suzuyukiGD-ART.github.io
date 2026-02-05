@@ -72,7 +72,7 @@
         
         <img src="./picture/Yikun Gu1.png" alt="Yikun Gu" class="profile-img">
 
-        <img src="./picture/Yikun Gu2.png" alt="Yikun Gu" class="profile-img">
+        <img src="./picture/Yikun Gu2.jpg" alt="Yikun Gu" class="profile-img">
         
         <p class="description">
             This is a test site and is not yet complete.
@@ -80,6 +80,7 @@
     </div> <!-- 关闭 content-box -->
 </body>
 </html>
+
 
 
 

@@ -1,45 +1,85 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>我的网站</title>
     <style>
         body {
-            /* 背景图片路径 */
             background-image: url('picture/BJ.jpg');
-            /* 背景图片覆盖整个屏幕 */
             background-size: cover;
-            /* 背景图片居中 */
             background-position: center;
-            /* 背景不重复 */
             background-repeat: no-repeat;
-            /* 背景固定（滚动时背景不动） */
             background-attachment: fixed;
-            /* 设置最小高度确保背景完全显示 */
             min-height: 100vh;
-            /* 背景色（图片加载前的备用色） */
             background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
         }
         
-        /* 使内容可读性更好 */
-        .content {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
+        /* 半透明内容容器 */
+        .content-box {
+            background-color: rgba(255, 255, 255, 0.7); /* 白色半透明背景 */
+            border-radius: 15px; /* 圆角 */
+            padding: 30px; /* 内边距 */
+            max-width: 900px; /* 最大宽度 */
+            margin: 50px auto; /* 居中 */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* 阴影效果 */
+            backdrop-filter: blur(5px); /* 毛玻璃效果（可选） */
+        }
+        
+        /* 标题样式 */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+        }
+        
+        /* 图片样式 */
+        .profile-img {
+            display: block;
+            max-width: 400px;
+            margin: 20px auto;
             border-radius: 10px;
-            max-width: 800px;
-            margin: 50px auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 段落样式 */
+        .description {
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1.8;
+            margin: 30px 0;
+            padding: 0 20px;
+            color: #444;
+            font-size: 1.1em;
         }
     </style>
 </head>
 <body>  
-    <h1>画作展示</h1>
-    <h2>顾以坤</h2>
-    <img src="./picture/Yikun Gu1.png" alt="Yikun Gu" class="profile-img">
-    
-   <p style="text-align: justify; text-justify: inter-word; line-height: 1.6; margin: 0 0 1em;">
-    This is a test site and is not yet complete.
-</p>
+    <!-- 半透明内容框开始 -->
+    <div class="content-box">
+        <h1>画作展示</h1>
+        <h2>顾以坤</h2>
+        
+        <img src="./picture/Yikun Gu1.png" alt="Yikun Gu" class="profile-img">
+        
+        <p class="description">
+            This is a test site and is not yet complete. Here will be displayed various artworks and paintings. The background image sets the artistic tone for the entire gallery, while this translucent box ensures readability and visual appeal.
+        </p>
 
 </body>
 </html>
+
 
 
 

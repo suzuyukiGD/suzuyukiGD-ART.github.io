@@ -1,11 +1,10 @@
 <html>
 <head>
-<head>
     <title>我的网站</title>
     <style>
         body {
             /* 背景图片路径 */
-            background-image: url('/picture/BJ.jpg');
+            background-image: url('picture/BJ.jpg');
             /* 背景图片覆盖整个屏幕 */
             background-size: cover;
             /* 背景图片居中 */
@@ -41,6 +40,7 @@
 
 </body>
 </html>
+
 
 
 

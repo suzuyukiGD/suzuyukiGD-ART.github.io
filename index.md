@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -79,6 +78,7 @@
     </div> <!-- 关闭 content-box -->
 </body>
 </html>
+
 
 
 

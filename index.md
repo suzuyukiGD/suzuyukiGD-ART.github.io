@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的网站</title>
+    <title>凉宫春日应援团广东支部画作展示</title>
     <style>
         body {
             background-image: url('picture/BJ.jpg');
@@ -78,6 +78,7 @@
     </div> <!-- 关闭 content-box -->
 </body>
 </html>
+
 
 
 

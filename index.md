@@ -67,10 +67,12 @@
 <body>  
     <!-- 半透明内容框开始 -->
     <div class="content-box">
-        <h1>画作展示</h1>
+        <h1>广东支部画作展示</h1>
         <h2>顾以坤</h2>
         
         <img src="./picture/Yikun Gu1.png" alt="Yikun Gu" class="profile-img">
+
+        <img src="./picture/Yikun Gu2.png" alt="Yikun Gu" class="profile-img">
         
         <p class="description">
             This is a test site and is not yet complete.
@@ -78,6 +80,7 @@
     </div> <!-- 关闭 content-box -->
 </body>
 </html>
+
 
 
 

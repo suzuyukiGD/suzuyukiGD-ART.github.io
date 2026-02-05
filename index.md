@@ -74,10 +74,11 @@
         <img src="./picture/Yikun Gu1.png" alt="Yikun Gu" class="profile-img">
         
         <p class="description">
-            This is a test site and is not yet complete. Here will be displayed various artworks and paintings. The background image sets the artistic tone for the entire gallery, while this translucent box ensures readability and visual appeal.
+            This is a test site and is not yet complete.
         </p>
 </body>
 </html>
+
 
 
 

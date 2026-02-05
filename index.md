@@ -76,6 +76,7 @@
         <p class="description">
             This is a test site and is not yet complete.
         </p>
+    </div> <!-- 关闭 content-box -->
 </body>
 </html>
 

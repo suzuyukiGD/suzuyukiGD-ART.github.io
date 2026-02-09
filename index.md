@@ -5,39 +5,90 @@
     <title>凉宫春日应援团广东支部画作展示</title>
     <style>
         /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
             min-height: 100vh;
-            background-color: #f0f0f0;
+            width: 100%;
         }
         
         /* 移动端样式（默认）- 使用竖版背景图 */
         body {
+            background-color: #f0f0f0;
+        }
+        
+        /* 背景容器 - 固定位置 */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        /* 背景图片 - 移动端 */
+        .bg-mobile {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: url('picture/Text2.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: scroll; /* 移动端改为scroll */
+            display: block;
         }
         
-        /* PC端样式 - 使用横版背景图 */
+        /* 背景图片 - PC端 */
+        .bg-pc {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('picture/suzumiya.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: none;
+        }
+        
+        /* PC端显示横版背景 */
         @media (min-width: 768px) {
-            body {
-                background-image: url('picture/suzumiya.png');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                background-attachment: fixed;
+            .bg-mobile {
+                display: none;
+            }
+            
+            .bg-pc {
+                display: block;
             }
         }
         
-        /* 大屏幕PC优化 */
-        @media (min-width: 1200px) {
-            body {
-                background-position: center 40%;
-            }
+        /* 半透明遮罩层，让背景不刺眼 */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.15);
+            z-index: -1;
+        }
+        
+        /* 内容区域 */
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            min-height: 100vh;
         }
         
         /* 导航栏样式 */
@@ -202,9 +253,8 @@
         
         /* 响应式调整 */
         @media (max-width: 767px) {
-            body {
+            .content-wrapper {
                 padding: 10px;
-                background-attachment: scroll;
             }
             
             .navigation {
@@ -233,92 +283,106 @@
             .gallery {
                 gap: 25px;
             }
+            
+            .profile-img {
+                max-width: 350px;
+            }
         }
     </style>
 </head>
 <body>  
-    <!-- 导航栏 -->
-    <div class="navigation">
-        <div class="nav-title">凉宫春日应援团广东支部美工组成员</div>
-        <div class="nav-links">
-            <a href="#guyikun" class="nav-link active">顾以坤</a>
-            <a href="#dangyang" class="nav-link">荡漾</a>
-            <a href="#lixing" class="nav-link">离星</a>
-            <a href="#gulu" class="nav-link">咕噜</a>
-            <a href="#tudou" class="nav-link">土豆</a>
-            <a href="#axiao" class="nav-link">阿笑</a>
-        </div>
+    <!-- 固定背景容器 -->
+    <div class="bg-container">
+        <div class="bg-mobile"></div>
+        <div class="bg-pc"></div>
     </div>
     
+    <!-- 半透明遮罩 -->
+    <div class="bg-overlay"></div>
+    
     <!-- 内容区域 -->
-    <div class="content-box">
-        <!-- 顾以坤作品区域 -->
-        <section id="guyikun" class="artist-section">
-            <h2 class="artist-title">顾以坤作品</h2>
-            
-            <div class="gallery">
-                <div class="gallery-item">
-                    <img src="./picture/Yikun Gu1.png" alt="顾以坤作品1" class="profile-img">
-                    <div class="image-caption">作品一：春日king</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="./picture/Yikun Gu2.jpg" alt="顾以坤作品2" class="profile-img">
-                    <div class="image-caption">作品二：凉宫春日应援团广东支部部徽</div>
-                </div>
+    <div class="content-wrapper">
+        <!-- 导航栏 -->
+        <div class="navigation">
+            <div class="nav-title">画师导航</div>
+            <div class="nav-links">
+                <a href="#guyikun" class="nav-link active">顾以坤</a>
+                <a href="#dangyang" class="nav-link">荡漾</a>
+                <a href="#lixing" class="nav-link">离星</a>
+                <a href="#gulu" class="nav-link">咕噜</a>
+                <a href="#tudou" class="nav-link">土豆</a>
+                <a href="#axiao" class="nav-link">阿笑</a>
             </div>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="content-box">
+            <!-- 顾以坤作品区域 -->
+            <section id="guyikun" class="artist-section">
+                <h2 class="artist-title">顾以坤作品</h2>
+                
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="./picture/Yikun Gu1.png" alt="顾以坤作品1" class="profile-img">
+                        <div class="image-caption">作品一：春日king</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="./picture/Yikun Gu2.jpg" alt="顾以坤作品2" class="profile-img">
+                        <div class="image-caption">作品二：凉宫春日应援团广东支部部徽</div>
+                    </div>
+                </div>
+                
+                <p class="description">
+                    顾以坤，凉宫春日应援团广东支部美工组成员，擅长通过简易线条表达主题，作品风格简约清新。
+                </p>
+                
+                <a href="#" class="back-to-top">返回顶部</a>
+            </section>
             
-            <p class="description">
-                顾以坤，凉宫春日应援团广东支部美工组成员，擅长通过简易线条表达主题，作品风格简约清新。
-            </p>
+            <!-- 荡漾作品区域 -->
+            <section id="dangyang" class="artist-section">
+                <h2 class="artist-title">荡漾作品集</h2>
+                <p class="description">更多作品正在筹备中...</p>
+                <a href="#" class="back-to-top">返回顶部</a>
+            </section>
             
-            <a href="#" class="back-to-top">返回顶部</a>
-        </section>
-        
-        <!-- 荡漾作品区域 -->
-        <section id="dangyang" class="artist-section">
-            <h2 class="artist-title">荡漾作品集</h2>
-            <p class="description">更多作品正在筹备中...</p>
-            <a href="#" class="back-to-top">返回顶部</a>
-        </section>
-        
-        <!-- 离星作品区域 -->
-        <section id="lixing" class="artist-section">
-            <h2 class="artist-title">离星作品集</h2>
-            <p class="description">更多作品正在筹备中...</p>
-            <a href="#" class="back-to-top">返回顶部</a>
-        </section>
-        
-        <!-- 咕噜作品区域 -->
-        <section id="gulu" class="artist-section">
-            <h2 class="artist-title">咕噜作品集</h2>
-            <p class="description">更多作品正在筹备中...</p>
-            <a href="#" class="back-to-top">返回顶部</a>
-        </section>
-        
-        <!-- 土豆作品区域 -->
-        <section id="tudou" class="artist-section">
-            <h2 class="artist-title">土豆作品集</h2>
-            <p class="description">更多作品正在筹备中...</p>
-            <a href="#" class="back-to-top">返回顶部</a>
-        </section>
-        
-        <!-- 阿笑作品区域 -->
-        <section id="axiao" class="artist-section">
-            <h2 class="artist-title">阿笑作品集</h2>
-            <p class="description">更多作品正在筹备中...</p>
-            <a href="#" class="back-to-top">返回顶部</a>
-        </section>
+            <!-- 离星作品区域 -->
+            <section id="lixing" class="artist-section">
+                <h2 class="artist-title">离星作品集</h2>
+                <p class="description">更多作品正在筹备中...</p>
+                <a href="#" class="back-to-top">返回顶部</a>
+            </section>
+            
+            <!-- 咕噜作品区域 -->
+            <section id="gulu" class="artist-section">
+                <h2 class="artist-title">咕噜作品集</h2>
+                <p class="description">更多作品正在筹备中...</p>
+                <a href="#" class="back-to-top">返回顶部</a>
+            </section>
+            
+            <!-- 土豆作品区域 -->
+            <section id="tudou" class="artist-section">
+                <h2 class="artist-title">土豆作品集</h2>
+                <p class="description">更多作品正在筹备中...</p>
+                <a href="#" class="back-to-top">返回顶部</a>
+            </section>
+            
+            <!-- 阿笑作品区域 -->
+            <section id="axiao" class="artist-section">
+                <h2 class="artist-title">阿笑作品集</h2>
+                <p class="description">更多作品正在筹备中...</p>
+                <a href="#" class="back-to-top">返回顶部</a>
+            </section>
+        </div>
     </div>
     
     <script>
         // 导航链接点击效果
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function() {
-                // 移除所有active类
                 document.querySelectorAll('.nav-link').forEach(l => {
                     l.classList.remove('active');
                 });
-                // 给当前点击的链接添加active类
                 this.classList.add('active');
             });
         });
@@ -331,7 +395,6 @@
                     top: 0,
                     behavior: 'smooth'
                 });
-                // 重置导航栏active状态
                 document.querySelectorAll('.nav-link').forEach(l => {
                     l.classList.remove('active');
                 });
@@ -362,22 +425,40 @@
             });
         });
         
-        // 修复移动端背景图问题
-        function fixMobileBackground() {
-            if (window.innerWidth < 768) {
-                // 移动端：使用JS动态设置背景
-                document.body.style.backgroundAttachment = 'scroll';
-            }
+        // 预加载背景图片
+        function preloadBackgrounds() {
+            const mobileImg = new Image();
+            const pcImg = new Image();
+            
+            mobileImg.src = 'picture/Text2.jpg';
+            pcImg.src = 'picture/suzumiya.png';
+            
+            mobileImg.onload = function() {
+                console.log('✅ 移动端背景图加载成功');
+            };
+            
+            pcImg.onload = function() {
+                console.log('✅ PC端背景图加载成功');
+            };
+            
+            mobileImg.onerror = function() {
+                console.warn('❌ 移动端背景图加载失败');
+            };
+            
+            pcImg.onerror = function() {
+                console.warn('❌ PC端背景图加载失败');
+            };
         }
         
-        window.addEventListener('load', fixMobileBackground);
-        window.addEventListener('resize', fixMobileBackground);
-        
         // 初始化
-        console.log('画师导航网站已加载完成');
+        window.addEventListener('load', function() {
+            preloadBackgrounds();
+            console.log('页面已加载，背景图固定显示');
+        });
     </script>
 </body>
 </html>
+
 
 
 

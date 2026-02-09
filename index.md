@@ -239,7 +239,7 @@
 <body>  
     <!-- 导航栏 -->
     <div class="navigation">
-        <div class="nav-title">画师导航</div>
+        <div class="nav-title">凉宫春日应援团广东支部美工组成员</div>
         <div class="nav-links">
             <a href="#guyikun" class="nav-link active">顾以坤</a>
             <a href="#dangyang" class="nav-link">荡漾</a>
@@ -378,6 +378,7 @@
     </script>
 </body>
 </html>
+
 
 
 

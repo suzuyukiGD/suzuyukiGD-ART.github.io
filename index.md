@@ -15,7 +15,7 @@
         
         /* 移动端样式（默认）- 使用竖版背景图 */
         body {
-            background-image: url('picture/Text2.jpg'); /* 竖版图片 */
+            background-image: url('picture/Text3.png'); /* 竖版图片 */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -220,6 +220,7 @@
     </script>
 </body>
 </html>
+
 
 
 

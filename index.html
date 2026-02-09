@@ -288,6 +288,32 @@
                 max-width: 350px;
             }
         }
+        
+        /* 禁止复制提示样式 */
+        .protection-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            z-index: 1000000;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            animation: fadeInOut 2s ease forwards;
+            border: 2px solid #ff4757;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); display: none; }
+        }
     </style>
 </head>
 <body>  
@@ -361,7 +387,7 @@
             </section>
             
             <!-- Potaro作品区域 -->
-            <section id="tudou" class="artist-section">
+            <section id="Potaro" class="artist-section">
                 <h2 class="artist-title">Potaro作品集</h2>
                 <p class="description">更多作品正在筹备中...</p>
                 <a href="#" class="back-to-top">返回顶部</a>
@@ -377,6 +403,111 @@
     </div>
     
     <script>
+        // ============ 禁止右键菜单 ============
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showProtectionMessage("右键功能已禁用");
+            return false;
+        });
+        
+        // ============ 禁止F12和开发者工具 ============
+        document.addEventListener('keydown', function(e) {
+            // 禁止F12
+            if (e.key === 'F12' || e.keyCode === 123) {
+                e.preventDefault();
+                showProtectionMessage("开发者工具已禁用");
+                return false;
+            }
+            
+            // 禁止Ctrl+Shift+I (Chrome开发者工具)
+            if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                e.preventDefault();
+                showProtectionMessage("开发者工具已禁用");
+                return false;
+            }
+            
+            // 禁止Ctrl+Shift+J (Chrome控制台)
+            if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                e.preventDefault();
+                showProtectionMessage("控制台已禁用");
+                return false;
+            }
+            
+            // 禁止Ctrl+U (查看源代码)
+            if (e.ctrlKey && e.key === 'u') {
+                e.preventDefault();
+                showProtectionMessage("查看源代码已禁用");
+                return false;
+            }
+            
+            // 禁止Ctrl+S (保存网页)
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                showProtectionMessage("网页保存已禁用");
+                return false;
+            }
+            
+            // 禁止Ctrl+C (复制)
+            if (e.ctrlKey && e.key === 'c') {
+                e.preventDefault();
+                showProtectionMessage("复制功能已禁用");
+                return false;
+            }
+        });
+        
+        // ============ 禁止文本选择和复制 ============
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            showProtectionMessage("复制功能已禁用");
+            return false;
+        });
+        
+        document.addEventListener('cut', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        document.addEventListener('paste', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // ============ 禁止拖拽图片 ============
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+                return false;
+            }
+        });
+        
+        // ============ 显示保护提示消息 ============
+        function showProtectionMessage(msg) {
+            // 如果已经有提示框，先移除
+            const existingMsg = document.querySelector('.protection-message');
+            if (existingMsg) {
+                existingMsg.remove();
+            }
+            
+            // 创建提示框
+            const msgBox = document.createElement('div');
+            msgBox.className = 'protection-message';
+            msgBox.textContent = msg;
+            document.body.appendChild(msgBox);
+            
+            // 2秒后自动移除
+            setTimeout(() => {
+                if (msgBox.parentNode) {
+                    msgBox.remove();
+                }
+            }, 2000);
+        }
+        
+        // ============ 原有代码保持不变 ============
         // 导航链接点击效果
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function() {
@@ -453,11 +584,12 @@
         // 初始化
         window.addEventListener('load', function() {
             preloadBackgrounds();
-            console.log('页面已加载，背景图固定显示');
+            console.log('页面已加载，保护功能已启用');
         });
     </script>
 </body>
 </html>
+
 
 
 

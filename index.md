@@ -225,22 +225,6 @@
         }
     </style>
 <style>
-/* 强制背景图始终显示 */
-html {
-    height: 100%;
-}
-
-body {
-    min-height: 100%;
-    background: 
-        linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)),
-        url('picture/Text2.jpg') no-repeat center center fixed;
-    background-size: cover;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-}
-</style>
 </head>
 <body>  
     <!-- 导航栏 -->
@@ -375,6 +359,7 @@ body {
     </script>
 </body>
 </html>
+
 
 
 

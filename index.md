@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -70,7 +69,8 @@
         /* 图片样式 */
         .profile-img {
             display: block;
-            max-width: 400px;
+            max-width: 500px;
+            width: 90%；
             margin: 20px auto;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -84,15 +84,16 @@
         /* 图片容器，用于多张图片布局 */
         .gallery {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
+            flex-direction: column;
+            align*items: center;
+            gap: 40px;
             margin: 30px 0;
         }
         
         .gallery-item {
-            flex: 0 1 400px;
-            max-width: 100%;
+            width: 100%;
+            max-width: 600%;
+            text_align: center;
         }
         
         /* 段落样式 */
@@ -219,6 +220,7 @@
     </script>
 </body>
 </html>
+
 
 
 

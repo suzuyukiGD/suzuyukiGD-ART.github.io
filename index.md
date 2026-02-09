@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -205,22 +204,6 @@
             }, 3000);
         }
         
-        // 检查背景图片是否存在
-        function checkBackgroundImages() {
-            const isMobile = window.innerWidth < 768;
-            const bgUrl = isMobile ? 'picture/Text1-vertical.jpeg' : 'picture/Text1-horizontal.jpeg';
-            
-            const img = new Image();
-            img.onload = function() {
-                console.log(`✅ 背景图加载成功: ${bgUrl}`);
-            };
-            img.onerror = function() {
-                console.warn(`❌ 背景图不存在: ${bgUrl}`);
-                alert(`提示：请准备两张背景图：\n1. picture/Text1-vertical.jpeg (竖版)\n2. picture/Text1-horizontal.jpeg (横版)`);
-            };
-            img.src = bgUrl;
-        }
-        
         // 页面加载时初始化
         window.addEventListener('load', function() {
             updateDeviceInfo();
@@ -230,18 +213,12 @@
         // 窗口大小变化时更新
         window.addEventListener('resize', updateDeviceInfo);
         
-        // 简化版：如果暂时只有一张图，用这个函数
-        function useSingleBackground() {
-            // 如果你暂时只有 Text1.jpeg，可以取消下面这行的注释
-            document.body.style.backgroundImage = "url('picture/Text1.jpeg')";
-            console.log('⚠️ 使用单张背景图模式');
-        }
-        
         // 如果只有一张图，取消下面这行的注释
         // useSingleBackground();
     </script>
 </body>
 </html>
+
 
 
 

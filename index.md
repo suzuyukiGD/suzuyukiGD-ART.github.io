@@ -224,6 +224,23 @@
             }
         }
     </style>
+<style>
+/* 强制背景图始终显示 */
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    background: 
+        linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15)),
+        url('picture/Text2.jpg') no-repeat center center fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+</style>
 </head>
 <body>  
     <!-- 导航栏 -->
@@ -231,9 +248,11 @@
         <div class="nav-title">画师导航</div>
         <div class="nav-links">
             <a href="#guyikun" class="nav-link active">顾以坤</a>
-            <a href="#artist2" class="nav-link">画师二</a>
-            <a href="#artist3" class="nav-link">画师三</a>
-            <a href="#artist4" class="nav-link">画师四</a>
+            <a href="#artist2" class="nav-link">荡漾</a>
+            <a href="#artist3" class="nav-link">离星</a>
+            <a href="#artist4" class="nav-link">咕噜</a>
+            <a href="#artist4" class="nav-link">土豆</a>
+            <a href="#artist4" class="nav-link">阿笑</a>
             <!-- 可以继续添加更多画师 -->
         </div>
     </div>
@@ -241,22 +260,22 @@
     <!-- 顾以坤作品区域 -->
     <div class="content-box">
         <section id="guyikun" class="artist-section">
-            <h2 class="artist-title">顾以坤作品集</h2>
+            <h2 class="artist-title">顾以坤作品</h2>
             
             <div class="gallery">
                 <div class="gallery-item">
                     <img src="./picture/Yikun Gu1.png" alt="顾以坤作品1" class="profile-img">
-                    <div class="image-caption">作品一：春日幻想</div>
+                    <div class="image-caption">作品一：春日king</div>
                 </div>
                 <div class="gallery-item">
                     <img src="./picture/Yikun Gu2.jpg" alt="顾以坤作品2" class="profile-img">
-                    <div class="image-caption">作品二：凉宫的日常</div>
+                    <div class="image-caption">作品二：凉宫春日应援团广东支部部徽</div>
                 </div>
                 <!-- 可以添加更多作品 -->
             </div>
             
             <p class="description">
-                顾以坤，凉宫春日应援团广东支部成员，擅长绘制动漫同人作品，作品风格清新唯美。
+                顾以坤，凉宫春日应援团广东支部美工组成员，擅长通过简易线条表达主题，作品风格简约清新。
             </p>
             
             <a href="#" class="back-to-top">返回顶部</a>
@@ -264,19 +283,29 @@
         
         <!-- 其他画师区域（示例） -->
         <section id="artist2" class="artist-section">
-            <h2 class="artist-title">画师二作品集</h2>
+            <h2 class="artist-title">荡漾作品集</h2>
             <p class="description">更多作品正在筹备中...</p>
             <a href="#" class="back-to-top">返回顶部</a>
         </section>
         
         <section id="artist3" class="artist-section">
-            <h2 class="artist-title">画师三作品集</h2>
+            <h2 class="artist-title">离星作品集</h2>
             <p class="description">更多作品正在筹备中...</p>
             <a href="#" class="back-to-top">返回顶部</a>
         </section>
         
         <section id="artist4" class="artist-section">
-            <h2 class="artist-title">画师四作品集</h2>
+            <h2 class="artist-title">咕噜作品集</h2>
+            <p class="description">更多作品正在筹备中...</p>
+            <a href="#" class="back-to-top">返回顶部</a>
+        </section>
+        <section id="artist4" class="artist-section">
+            <h2 class="artist-title">土豆作品集</h2>
+            <p class="description">更多作品正在筹备中...</p>
+            <a href="#" class="back-to-top">返回顶部</a>
+        </section>
+        <section id="artist4" class="artist-section">
+            <h2 class="artist-title">阿笑作品集</h2>
             <p class="description">更多作品正在筹备中...</p>
             <a href="#" class="back-to-top">返回顶部</a>
         </section>
@@ -346,6 +375,7 @@
     </script>
 </body>
 </html>
+
 
 
 

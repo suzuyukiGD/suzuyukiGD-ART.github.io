@@ -10,7 +10,7 @@
             margin: 0;
             padding: 20px;
             min-height: 100vh;
-            background-color: #f0f0f0; /* 备用背景色 */
+            background-color: #f0f0f0;
         }
         
         /* 移动端样式（默认）- 使用竖版背景图 */
@@ -33,22 +33,15 @@
             }
         }
         
-        /* 大屏幕PC优化 */
-        @media (min-width: 1200px) {
-            body {
-                background-position: center 40%;
-            }
-        }
-        
-        /* 半透明内容容器 */
+        /* 半透明内容容器 - 竖版窄布局 */
         .content-box {
-            background-color: rgba(255, 255, 255, 0.7); /* 白色半透明背景 */
-            border-radius: 15px; /* 圆角 */
-            padding: 30px; /* 内边距 */
-            max-width: 900px; /* 最大宽度 */
-            margin: 50px auto; /* 居中 */
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* 阴影效果 */
-            backdrop-filter: blur(5px); /* 毛玻璃效果 */
+            background-color: rgba(255, 255, 255, 0.75);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px; /* 窄布局，适合竖版 */
+            margin: 40px auto;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
         }
         
         /* 标题样式 */
@@ -56,92 +49,115 @@
             text-align: center;
             color: #333;
             margin-bottom: 10px;
-            font-size: 2.5em;
+            font-size: 2.2em;
         }
         
         h2 {
             text-align: center;
             color: #555;
-            margin-bottom: 30px;
-            font-size: 1.8em;
+            margin-bottom: 25px;
+            font-size: 1.6em;
         }
         
-        /* 图片样式 */
-        .profile-img {
+        /* 图片容器 - 垂直排列 */
+        .image-gallery {
+            display: flex;
+            flex-direction: column; /* 垂直排列 */
+            align-items: center;
+            gap: 25px; /* 图片之间的间距 */
+            margin: 25px 0;
+        }
+        
+        /* 单张图片样式 */
+        .artwork-img {
             display: block;
-            max-width: 400px;
-            margin: 20px auto;
+            max-width: 320px; /* 固定最大宽度 */
+            width: 90%; /* 响应式宽度 */
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease;
         }
         
-        .profile-img:hover {
-            transform: scale(1.02);
+        .artwork-img:hover {
+            transform: translateY(-3px);
         }
         
-        /* 图片容器，用于多张图片布局 */
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin: 30px 0;
-        }
-        
-        .gallery-item {
-            flex: 0 1 400px;
-            max-width: 100%;
+        /* 图片标题（可选） */
+        .img-caption {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 8px;
+            font-style: italic;
         }
         
         /* 段落样式 */
         .description {
             text-align: justify;
             text-justify: inter-word;
-            line-height: 1.8;
-            margin: 30px 0;
-            padding: 0 20px;
+            line-height: 1.7;
+            margin: 25px 0;
+            padding: 0 15px;
             color: #444;
-            font-size: 1.1em;
+            font-size: 1.05em;
+        }
+        
+        /* 装饰分隔线 */
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, 
+                transparent, 
+                rgba(0, 0, 0, 0.2), 
+                transparent
+            );
+            margin: 20px auto;
+            width: 80%;
         }
         
         /* 响应式调整 */
         @media (max-width: 767px) {
             body {
-                padding: 10px;
-                background-attachment: scroll; /* 移动端取消固定，提高性能 */
+                padding: 15px;
+                background-attachment: scroll;
             }
             
             .content-box {
-                padding: 20px;
-                margin: 20px auto;
-                border-radius: 10px;
+                padding: 25px 20px;
+                margin: 25px auto;
+                max-width: 90%;
             }
             
             h1 {
-                font-size: 2em;
+                font-size: 1.9em;
             }
             
             h2 {
-                font-size: 1.5em;
+                font-size: 1.4em;
             }
             
-            .gallery {
-                gap: 15px;
+            .artwork-img {
+                max-width: 280px;
+            }
+            
+            .image-gallery {
+                gap: 20px;
             }
         }
         
-        /* 装饰分隔线 */
-        .divider {
-            height: 2px;
-            background: linear-gradient(to right, transparent, #3498db, transparent);
-            margin: 30px auto;
-            max-width: 200px;
+        /* PC端优化 */
+        @media (min-width: 1200px) {
+            .content-box {
+                max-width: 450px; /* PC端可以更窄一些 */
+            }
+            
+            .artwork-img {
+                max-width: 300px;
+            }
         }
     </style>
 </head>
 <body>  
-    <!-- 半透明内容框开始 -->
+    <!-- 半透明内容框 -->
     <div class="content-box">
         <h1>广东支部画作展示</h1>
         <h2>顾以坤</h2>
@@ -149,13 +165,18 @@
         <!-- 装饰分隔线 -->
         <div class="divider"></div>
         
-        <!-- 图片画廊 -->
-        <div class="gallery">
-            <div class="gallery-item">
-                <img src="./picture/Yikun Gu1.png" alt="顾以坤作品1" class="profile-img">
+        <!-- 图片垂直排列画廊 -->
+        <div class="image-gallery">
+            <!-- 作品1 -->
+            <div class="artwork-item">
+                <img src="./picture/Yikun Gu1.png" alt="顾以坤作品1" class="artwork-img">
+                <div class="img-caption">作品一</div>
             </div>
-            <div class="gallery-item">
-                <img src="./picture/Yikun Gu2.jpg" alt="顾以坤作品2" class="profile-img">
+            
+            <!-- 作品2 -->
+            <div class="artwork-item">
+                <img src="./picture/Yikun Gu2.jpg" alt="顾以坤作品2" class="artwork-img">
+                <div class="img-caption">作品二</div>
             </div>
         </div>
         
@@ -165,59 +186,58 @@
         <p class="description">
             This is a test site and is not yet complete.
         </p>
-    </div> <!-- 关闭 content-box -->
-    
-    <!-- 设备检测提示（可选） -->
-    <div id="device-notice" style="
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        background: rgba(0,0,0,0.7);
-        color: white;
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-size: 12px;
-        display: none;
-    ">
-        当前设备：<span id="device-type"></span>
     </div>
     
+    <!-- 设备检测和背景图检查 -->
     <script>
-        // 设备检测和提示
-        function updateDeviceInfo() {
-            const width = window.innerWidth;
-            const isMobile = width < 768;
-            const deviceType = isMobile ? '移动端 (竖版背景)' : 'PC端 (横版背景)';
+        // 检查背景图片是否存在
+        function checkBackgroundImages() {
+            const isMobile = window.innerWidth < 768;
+            const bgUrl = isMobile ? 'picture/Text1-vertical.jpeg' : 'picture/Text1-horizontal.jpeg';
             
-            // 更新提示信息
-            document.getElementById('device-type').textContent = deviceType;
-            
-            // 控制台输出调试信息
-            console.log(`窗口尺寸: ${width}×${window.innerHeight}`);
-            console.log(`当前背景: ${isMobile ? 'picture/Text1-vertical.jpeg' : 'picture/Text1-horizontal.jpeg'}`);
-            
-            // 显示设备提示（3秒后自动隐藏）
-            const notice = document.getElementById('device-notice');
-            notice.style.display = 'block';
-            setTimeout(() => {
-                notice.style.display = 'none';
-            }, 3000);
+            const img = new Image();
+            img.onload = function() {
+                console.log(`✅ 背景图加载成功: ${bgUrl}`);
+            };
+            img.onerror = function() {
+                console.warn(`❌ 背景图可能不存在: ${bgUrl}`);
+                // 如果指定的图片不存在，使用通用背景
+                document.body.style.backgroundImage = "url('picture/Text1.jpeg')";
+                console.log('使用通用背景图: picture/Text1.jpeg');
+            };
+            img.src = bgUrl;
         }
         
-        // 页面加载时初始化
+        // 显示当前设备信息
+        function showDeviceInfo() {
+            const width = window.innerWidth;
+            const isMobile = width < 768;
+            console.log(`设备: ${isMobile ? '移动端' : 'PC端'} (${width}×${window.innerHeight})`);
+            console.log(`背景: ${isMobile ? '竖版' : '横版'}图片`);
+        }
+        
+        // 页面加载时执行
         window.addEventListener('load', function() {
-            updateDeviceInfo();
             checkBackgroundImages();
+            showDeviceInfo();
         });
         
-        // 窗口大小变化时更新
-        window.addEventListener('resize', updateDeviceInfo);
+        // 窗口大小变化时重新检查
+        window.addEventListener('resize', function() {
+            checkBackgroundImages();
+            showDeviceInfo();
+        });
         
-        // 如果只有一张图，取消下面这行的注释
+        // 如果暂时只有一张背景图，可以取消下面代码的注释
+        // function useSingleBackground() {
+        //     document.body.style.backgroundImage = "url('picture/Text1.jpeg')";
+        //     console.log('使用单张背景图模式');
+        // }
         // useSingleBackground();
     </script>
 </body>
 </html>
+
 
 
 

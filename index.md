@@ -5,7 +5,7 @@
     <title>凉宫春日应援团广东支部画作展示</title>
     <style>
         body {
-            background-image: url('picture/BJ.jpg');
+            background-image: url('picture/suzumiya.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -80,6 +80,7 @@
     </div> <!-- 关闭 content-box -->
 </body>
 </html>
+
 
 
 

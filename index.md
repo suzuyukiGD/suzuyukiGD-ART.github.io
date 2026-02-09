@@ -19,7 +19,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-attachment: scroll; /* 移动端改为scroll */
         }
         
         /* PC端样式 - 使用横版背景图 */
@@ -108,7 +108,7 @@
             padding: 20px;
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.5);
-            scroll-margin-top: 100px; /* 导航栏高度偏移 */
+            scroll-margin-top: 100px;
         }
         
         .artist-section:target {
@@ -147,7 +147,7 @@
             transform: scale(1.02);
         }
         
-        /* 图片容器，用于多张图片布局 */
+        /* 图片容器 */
         .gallery {
             display: flex;
             flex-direction: column;
@@ -168,6 +168,17 @@
             color: #666;
             font-style: italic;
             font-size: 0.95em;
+        }
+        
+        /* 段落样式 */
+        .description {
+            text-align: justify;
+            text-justify: inter-word;
+            line-height: 1.8;
+            margin: 30px 0;
+            padding: 0 20px;
+            color: #444;
+            font-size: 1.1em;
         }
         
         /* 返回顶部按钮 */
@@ -224,7 +235,6 @@
             }
         }
     </style>
-<style>
 </head>
 <body>  
     <!-- 导航栏 -->
@@ -232,17 +242,17 @@
         <div class="nav-title">画师导航</div>
         <div class="nav-links">
             <a href="#guyikun" class="nav-link active">顾以坤</a>
-            <a href="#artist2" class="nav-link">荡漾</a>
-            <a href="#artist3" class="nav-link">离星</a>
-            <a href="#artist4" class="nav-link">咕噜</a>
-            <a href="#artist4" class="nav-link">土豆</a>
-            <a href="#artist4" class="nav-link">阿笑</a>
-            <!-- 可以继续添加更多画师 -->
+            <a href="#dangyang" class="nav-link">荡漾</a>
+            <a href="#lixing" class="nav-link">离星</a>
+            <a href="#gulu" class="nav-link">咕噜</a>
+            <a href="#tudou" class="nav-link">土豆</a>
+            <a href="#axiao" class="nav-link">阿笑</a>
         </div>
     </div>
     
-    <!-- 顾以坤作品区域 -->
+    <!-- 内容区域 -->
     <div class="content-box">
+        <!-- 顾以坤作品区域 -->
         <section id="guyikun" class="artist-section">
             <h2 class="artist-title">顾以坤作品</h2>
             
@@ -255,7 +265,6 @@
                     <img src="./picture/Yikun Gu2.jpg" alt="顾以坤作品2" class="profile-img">
                     <div class="image-caption">作品二：凉宫春日应援团广东支部部徽</div>
                 </div>
-                <!-- 可以添加更多作品 -->
             </div>
             
             <p class="description">
@@ -265,30 +274,36 @@
             <a href="#" class="back-to-top">返回顶部</a>
         </section>
         
-        <!-- 其他画师区域（示例） -->
-        <section id="artist2" class="artist-section">
+        <!-- 荡漾作品区域 -->
+        <section id="dangyang" class="artist-section">
             <h2 class="artist-title">荡漾作品集</h2>
             <p class="description">更多作品正在筹备中...</p>
             <a href="#" class="back-to-top">返回顶部</a>
         </section>
         
-        <section id="artist3" class="artist-section">
+        <!-- 离星作品区域 -->
+        <section id="lixing" class="artist-section">
             <h2 class="artist-title">离星作品集</h2>
             <p class="description">更多作品正在筹备中...</p>
             <a href="#" class="back-to-top">返回顶部</a>
         </section>
         
-        <section id="artist4" class="artist-section">
+        <!-- 咕噜作品区域 -->
+        <section id="gulu" class="artist-section">
             <h2 class="artist-title">咕噜作品集</h2>
             <p class="description">更多作品正在筹备中...</p>
             <a href="#" class="back-to-top">返回顶部</a>
         </section>
-        <section id="artist4" class="artist-section">
+        
+        <!-- 土豆作品区域 -->
+        <section id="tudou" class="artist-section">
             <h2 class="artist-title">土豆作品集</h2>
             <p class="description">更多作品正在筹备中...</p>
             <a href="#" class="back-to-top">返回顶部</a>
         </section>
-        <section id="artist4" class="artist-section">
+        
+        <!-- 阿笑作品区域 -->
+        <section id="axiao" class="artist-section">
             <h2 class="artist-title">阿笑作品集</h2>
             <p class="description">更多作品正在筹备中...</p>
             <a href="#" class="back-to-top">返回顶部</a>
@@ -347,18 +362,23 @@
             });
         });
         
-        // 设备检测
-        function updateDeviceInfo() {
-            const width = window.innerWidth;
-            const isMobile = width < 768;
-            console.log(`设备: ${isMobile ? '移动端' : 'PC端'} (${width}×${window.innerHeight})`);
+        // 修复移动端背景图问题
+        function fixMobileBackground() {
+            if (window.innerWidth < 768) {
+                // 移动端：使用JS动态设置背景
+                document.body.style.backgroundAttachment = 'scroll';
+            }
         }
         
-        window.addEventListener('load', updateDeviceInfo);
-        window.addEventListener('resize', updateDeviceInfo);
+        window.addEventListener('load', fixMobileBackground);
+        window.addEventListener('resize', fixMobileBackground);
+        
+        // 初始化
+        console.log('画师导航网站已加载完成');
     </script>
 </body>
 </html>
+
 
 
 

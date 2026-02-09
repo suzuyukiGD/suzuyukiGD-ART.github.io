@@ -192,10 +192,12 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
+            cursor: pointer;
         }
         
         .profile-img:hover {
             transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
         
         /* 图片容器 */
@@ -314,6 +316,159 @@
             80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
             100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); display: none; }
         }
+        
+        /* ============ 大图查看器样式 ============ */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .lightbox-container {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            animation: lightboxZoom 0.3s ease;
+        }
+        
+        @keyframes lightboxZoom {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 85vh;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .lightbox-caption {
+            color: white;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.1em;
+            padding: 10px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+        
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .lightbox-prev {
+            left: 20px;
+        }
+        
+        .lightbox-next {
+            right: 20px;
+        }
+        
+        .lightbox-counter {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            color: white;
+            font-size: 0.9em;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+        
+        /* 响应式调整大图查看器 */
+        @media (max-width: 767px) {
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .lightbox-prev {
+                left: 10px;
+            }
+            
+            .lightbox-next {
+                right: 10px;
+            }
+            
+            .lightbox-close {
+                top: -50px;
+                right: 10px;
+            }
+            
+            .lightbox-caption {
+                font-size: 1em;
+                padding: 5px;
+            }
+        }
+        
+        /* 图片点击提示 */
+        .click-hint {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 0.8em;
+            color: #666;
+            background: rgba(0, 0, 0, 0.05);
+            padding: 2px 8px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>  
@@ -325,6 +480,18 @@
     
     <!-- 半透明遮罩 -->
     <div class="bg-overlay"></div>
+    
+    <!-- 大图查看器 -->
+    <div class="lightbox-overlay" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">×</button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
+        <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
+        <div class="lightbox-container">
+            <img src="" alt="" class="lightbox-img" id="lightboxImage">
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+    </div>
     
     <!-- 内容区域 -->
     <div class="content-wrapper">
@@ -345,16 +512,14 @@
         <div class="content-box">
             <!-- Yikun作品区域 -->
             <section id="guyikun" class="artist-section">
-                <h2 class="artist-title">顾以坤作品</h2>
+                <h2 class="artist-title">顾以坤作品 <span class="click-hint">点击图片可查看大图</span></h2>
                 
                 <div class="gallery">
                     <div class="gallery-item">
-                        <img src="./picture/Yikun Gu1.png" alt="顾以坤作品1" class="profile-img">
-                        <div class="image-caption">作品一：春日king</div>
+                        <img src="./picture/Yikun Gu1.png" alt="顾以坤作品1" class="profile-img" data-caption="作品一：春日king">
                     </div>
                     <div class="gallery-item">
-                        <img src="./picture/Yikun Gu2.jpg" alt="顾以坤作品2" class="profile-img">
-                        <div class="image-caption">作品二：凉宫春日应援团广东支部部徽</div>
+                        <img src="./picture/Yikun Gu2.jpg" alt="顾以坤作品2" class="profile-img" data-caption="作品二：凉宫春日应援团广东支部部徽">
                     </div>
                 </div>
                 
@@ -367,35 +532,35 @@
             
             <!-- 荡漾作品区域 -->
             <section id="dangyang" class="artist-section">
-                <h2 class="artist-title">荡漾作品集</h2>
+                <h2 class="artist-title">荡漾作品集 <span class="click-hint">点击图片可查看大图</span></h2>
                 <p class="description">更多作品正在筹备中...</p>
                 <a href="#" class="back-to-top">返回顶部</a>
             </section>
             
             <!-- 咔啦作品区域 -->
             <section id="lixing" class="artist-section">
-                <h2 class="artist-title">咔啦作品集</h2>
+                <h2 class="artist-title">咔啦作品集 <span class="click-hint">点击图片可查看大图</span></h2>
                 <p class="description">更多作品正在筹备中...</p>
                 <a href="#" class="back-to-top">返回顶部</a>
             </section>
             
             <!-- 咕噜作品区域 -->
             <section id="gulu" class="artist-section">
-                <h2 class="artist-title">咕噜作品集</h2>
+                <h2 class="artist-title">咕噜作品集 <span class="click-hint">点击图片可查看大图</span></h2>
                 <p class="description">更多作品正在筹备中...</p>
                 <a href="#" class="back-to-top">返回顶部</a>
             </section>
             
             <!-- Potaro作品区域 -->
             <section id="Potaro" class="artist-section">
-                <h2 class="artist-title">Potaro作品集</h2>
+                <h2 class="artist-title">Potaro作品集 <span class="click-hint">点击图片可查看大图</span></h2>
                 <p class="description">更多作品正在筹备中...</p>
                 <a href="#" class="back-to-top">返回顶部</a>
             </section>
             
             <!-- 阿笑作品区域 -->
             <section id="axiao" class="artist-section">
-                <h2 class="artist-title">阿笑作品集</h2>
+                <h2 class="artist-title">阿笑作品集 <span class="click-hint">点击图片可查看大图</span></h2>
                 <p class="description">更多作品正在筹备中...</p>
                 <a href="#" class="back-to-top">返回顶部</a>
             </section>
@@ -403,6 +568,101 @@
     </div>
     
     <script>
+        // ============ 大图查看器功能 ============
+        let currentImageIndex = 0;
+        let allImages = [];
+        
+        // 收集所有可查看大图的图片
+        function collectImages() {
+            const images = document.querySelectorAll('.profile-img');
+            allImages = Array.from(images).map(img => ({
+                src: img.src,
+                caption: img.getAttribute('data-caption') || img.alt
+            }));
+        }
+        
+        // 打开大图查看器
+        function openLightbox(index) {
+            collectImages();
+            currentImageIndex = index;
+            updateLightbox();
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden'; // 防止背景滚动
+        }
+        
+        // 更新大图查看器内容
+        function updateLightbox() {
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+            const lightboxCounter = document.getElementById('lightboxCounter');
+            
+            if (allImages.length > 0) {
+                lightboxImage.src = allImages[currentImageIndex].src;
+                lightboxCaption.textContent = allImages[currentImageIndex].caption;
+                lightboxCounter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
+            }
+        }
+        
+        // 关闭大图查看器
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto'; // 恢复滚动
+        }
+        
+        // 显示上一张图片
+        function showPrevImage() {
+            currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
+            updateLightbox();
+        }
+        
+        // 显示下一张图片
+        function showNextImage() {
+            currentImageIndex = (currentImageIndex + 1) % allImages.length;
+            updateLightbox();
+        }
+        
+        // 初始化大图查看器
+        function initLightbox() {
+            // 为所有图片添加点击事件
+            document.querySelectorAll('.profile-img').forEach((img, index) => {
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', () => openLightbox(index));
+            });
+            
+            // 绑定关闭按钮
+            document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+            
+            // 绑定导航按钮
+            document.getElementById('lightboxPrev').addEventListener('click', showPrevImage);
+            document.getElementById('lightboxNext').addEventListener('click', showNextImage);
+            
+            // 点击遮罩层关闭
+            document.getElementById('lightbox').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeLightbox();
+                }
+            });
+            
+            // 键盘控制
+            document.addEventListener('keydown', function(e) {
+                const lightbox = document.getElementById('lightbox');
+                if (!lightbox.classList.contains('active')) return;
+                
+                switch(e.key) {
+                    case 'Escape':
+                        closeLightbox();
+                        break;
+                    case 'ArrowLeft':
+                        showPrevImage();
+                        break;
+                    case 'ArrowRight':
+                        showNextImage();
+                        break;
+                }
+            });
+        }
+        
+        // ============ 原有保护功能 ============
         // ============ 禁止右键菜单 ============
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
@@ -581,14 +841,16 @@
             };
         }
         
-        // 初始化
+        // 初始化所有功能
         window.addEventListener('load', function() {
             preloadBackgrounds();
-            console.log('页面已加载，保护功能已启用');
+            initLightbox();
+            console.log('页面已加载，所有功能已启用');
         });
     </script>
 </body>
 </html>
+
 
 
 

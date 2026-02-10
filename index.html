@@ -616,6 +616,129 @@
             80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
             100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); display: none; }
         }
+        
+        /* 移动端图片保护样式 */
+        @media (max-width: 768px) {
+            .card-bg, .card, .lightbox-img, img {
+                -webkit-touch-callout: none !important;
+                -webkit-user-select: none !important;
+                -moz-user-select: none !important;
+                -ms-user-select: none !important;
+                user-select: none !important;
+                pointer-events: auto !important;
+                -webkit-user-drag: none !important;
+                user-drag: none !important;
+            }
+            
+            /* 防止图片被长按保存 */
+            .card-wrap {
+                position: relative;
+            }
+            
+            .card-wrap::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 5;
+                pointer-events: none;
+            }
+            
+            /* 在大图查看器中添加保护 */
+            .lightbox-container::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 5;
+                pointer-events: none;
+            }
+        }
+        
+        /* 移动端保护提示样式 */
+        .mobile-protection-message {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            color: #FFD54F;
+            padding: 12px 24px;
+            border-radius: 25px;
+            z-index: 1000000;
+            font-family: "Raleway", sans-serif;
+            font-size: 14px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: mobileFadeInOut 1.5s ease forwards;
+            border: 1px solid #8D6E63;
+            backdrop-filter: blur(5px);
+            max-width: 80%;
+            word-break: keep-all;
+        }
+        
+        @keyframes mobileFadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); display: none; }
+        }
+        
+        /* 移动端图片保护增强 */
+        @media (max-width: 768px) {
+            /* 禁用所有图片的默认行为 */
+            img, .card-bg, .card, .lightbox-img {
+                -webkit-touch-callout: none !important;
+                -webkit-user-select: none !important;
+                -moz-user-select: none !important;
+                -ms-user-select: none !important;
+                user-select: none !important;
+                -webkit-tap-highlight-color: transparent !important;
+                -webkit-user-drag: none !important;
+                user-drag: none !important;
+            }
+            
+            /* 防止图片被系统级保存菜单 */
+            .card-wrap {
+                -webkit-user-select: none;
+                user-select: none;
+            }
+            
+            /* 保护层增强 */
+            .card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 5;
+                background: transparent;
+                pointer-events: none;
+            }
+            
+            /* 大图查看器额外保护 */
+            .lightbox-overlay.active .lightbox-img {
+                pointer-events: none;
+            }
+            
+            .lightbox-overlay.active .lightbox-container::after {
+                content: '图片已受保护';
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                background: rgba(0, 0, 0, 0.7);
+                color: #FFD54F;
+                padding: 5px 10px;
+                border-radius: 10px;
+                font-size: 12px;
+                z-index: 10;
+            }
+        }
     </style>
     
     <!-- 添加Google字体 -->
@@ -733,10 +856,9 @@
             
             <button class="back-to-top">返回顶部</button>
         </section>
-    
-    </div>
-            <!-- 荡漾作品区域 -->
-        <section id="guyikun" class="artist-section">
+        
+        <!-- 荡漾作品区域 -->
+        <section id="dangyang" class="artist-section">
             <h2 class="artist-title">荡漾作品集</h2>
             <p class="artist-description">
                 介绍正在编辑中。
@@ -770,12 +892,9 @@
             
             <button class="back-to-top">返回顶部</button>
         </section>
-    </div>
-
         
-    </div>
-            <!-- 咔啦作品区域 -->
-        <section id="guyikun" class="artist-section">
+        <!-- 咔啦作品区域 -->
+        <section id="lixing" class="artist-section">
             <h2 class="artist-title">咔啦作品集</h2>
             <p class="artist-description">
                 介绍正在编辑中。
@@ -809,11 +928,9 @@
             
             <button class="back-to-top">返回顶部</button>
         </section>
-    </div>
         
-    </div>
-            <!-- 咕噜作品区域 -->
-        <section id="guyikun" class="artist-section">
+        <!-- 咕噜作品区域 -->
+        <section id="gulu" class="artist-section">
             <h2 class="artist-title">咕噜作品集</h2>
             <p class="artist-description">
                 介绍正在编辑中。
@@ -847,11 +964,9 @@
             
             <button class="back-to-top">返回顶部</button>
         </section>
-    </div>
         
-    </div>
-            <!-- Potaro作品区域 -->
-        <section id="guyikun" class="artist-section">
+        <!-- Potaro作品区域 -->
+        <section id="Potaro" class="artist-section">
             <h2 class="artist-title">Potaro作品集</h2>
             <p class="artist-description">
                 介绍正在编辑中。
@@ -885,11 +1000,9 @@
             
             <button class="back-to-top">返回顶部</button>
         </section>
-    </div>
-            
-    </div>
-            <!-- 阿笑作品区域 -->
-        <section id="guyikun" class="artist-section">
+        
+        <!-- 阿笑作品区域 -->
+        <section id="axiao" class="artist-section">
             <h2 class="artist-title">阿笑作品集</h2>
             <p class="artist-description">
                 介绍正在编辑中。
@@ -1286,7 +1399,7 @@
             // 禁止右键菜单
             document.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
-                showProtectionMessage("右键功能已禁用");
+                showProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
                 return false;
             });
             
@@ -1302,32 +1415,11 @@
                 
                 if (isBlocked) {
                     e.preventDefault();
-                    showProtectionMessage("此操作已被禁止");
+                    showProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
                     return false;
                 }
             });
-            
-            // 禁止复制选择
-            document.addEventListener('selectstart', function(e) {
-                e.preventDefault();
-                return false;
-            });
-            
-            document.addEventListener('copy', function(e) {
-                e.preventDefault();
-                showProtectionMessage("复制功能已禁用");
-                return false;
-            });
-            
-            document.addEventListener('cut', function(e) {
-                e.preventDefault();
-                return false;
-            });
-            
-            document.addEventListener('paste', function(e) {
-                e.preventDefault();
-                return false;
-            });
+
             
             // 禁止拖拽
             document.addEventListener('dragstart', function(e) {
@@ -1356,18 +1448,142 @@
             }, 2000);
         }
         
+        // ============ 手机端图片保护功能 ============
+        function initMobileImageProtection() {
+            // 检测是否为移动设备
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (!isMobile) return; // 只在移动设备上启用
+            
+            console.log('📱 移动设备检测，启用图片保护功能');
+            
+            // 1. 阻止长按图片保存
+            const images = document.querySelectorAll('.card-bg, .lightbox-img');
+            images.forEach(img => {
+                img.addEventListener('touchstart', function(e) {
+                    // 阻止默认的长按菜单
+                    e.preventDefault();
+                }, { passive: false });
+                
+                img.addEventListener('touchmove', function(e) {
+                    // 阻止触摸移动时可能触发的复制/保存行为
+                    e.preventDefault();
+                }, { passive: false });
+                
+                img.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    return false;
+                });
+            });
+            
+            // 2. 为卡片添加防保存样式
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                // 禁用图片拖拽
+                card.style.webkitUserDrag = 'none';
+                card.style.userDrag = 'none';
+                card.style.webkitTouchCallout = 'none';
+            });
+            
+            // 3. 阻止双击缩放（某些浏览器双击会保存图片）
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(e) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    e.preventDefault();
+                    showMobileProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
+                }
+                lastTouchEnd = now;
+            }, { passive: false });
+            
+            // 4. 阻止iOS的3D Touch peek & pop预览
+            document.addEventListener('touchforcechange', function(e) {
+                if (e.target.closest('.card') || e.target.closest('.lightbox-container')) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            // 5. 监听图片加载错误并添加保护
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.addedNodes.length) {
+                        mutation.addedNodes.forEach((node) => {
+                            if (node.nodeType === 1 && (node.tagName === 'IMG' || node.classList.contains('card-bg'))) {
+                                addImageProtection(node);
+                            }
+                        });
+                    }
+                });
+            });
+            
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
+        
+        // 添加图片保护
+        function addImageProtection(imgElement) {
+            if (!imgElement) return;
+            
+            imgElement.style.webkitTouchCallout = 'none';
+            imgElement.style.webkitUserDrag = 'none';
+            imgElement.style.userDrag = 'none';
+            
+            imgElement.addEventListener('touchstart', function(e) {
+                // 如果触摸时间超过500ms，显示提示
+                const timer = setTimeout(() => {
+                    showMobileProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
+                }, 500);
+                
+                const clearTimer = () => {
+                    clearTimeout(timer);
+                    imgElement.removeEventListener('touchend', clearTimer);
+                    imgElement.removeEventListener('touchcancel', clearTimer);
+                };
+                
+                imgElement.addEventListener('touchend', clearTimer, { once: true });
+                imgElement.addEventListener('touchcancel', clearTimer, { once: true });
+            }, { passive: true });
+        }
+        
+        // 移动端保护提示
+        function showMobileProtectionMessage(msg) {
+            const existingMsg = document.querySelector('.mobile-protection-message');
+            if (existingMsg) {
+                existingMsg.remove();
+            }
+            
+            const msgBox = document.createElement('div');
+            msgBox.className = 'mobile-protection-message';
+            msgBox.textContent = msg;
+            document.body.appendChild(msgBox);
+            
+            setTimeout(() => {
+                if (msgBox.parentNode) {
+                    msgBox.remove();
+                }
+            }, 1500);
+        }
+        
         // ============ 页面加载完成后初始化 ============
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM已加载，开始初始化...');
             initPage();
             initProtection();
+            initMobileImageProtection(); // 添加手机端图片保护
             
             // 显示初始化成功提示
             setTimeout(() => {
                 console.log('🎨 3D卡片画廊已初始化完成');
-                console.log('📱 移动鼠标查看3D交互效果');
+                console.log('📱 移动设备保护功能已启用');
                 console.log('🖼️ 点击卡片查看大图');
             }, 500);
+        });
+        
+        // 设备方向变化时重新检测
+        window.addEventListener('orientationchange', function() {
+            setTimeout(initMobileImageProtection, 100);
         });
         
         // 移除可能引起问题的缩放限制
@@ -1388,6 +1604,7 @@
     </script>
 </body>
 </html>
+
 
 
 

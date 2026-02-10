@@ -3,6 +3,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>凉宫春日应援团广东支部画作展示</title>
+    
+    <!-- 引入Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    
     <style>
         /* 基础样式 */
         * {
@@ -15,16 +19,16 @@
             font-family: "Raleway", Arial, sans-serif;
             min-height: 100vh;
             width: 100%;
-            margin: 0;
+            margin: 40px 0;
             font-size: 14px;
             font-weight: 500;
             background-color: #BCAAA4;
             -webkit-font-smoothing: antialiased;
         }
         
-        /* 动画曲线 - 来自第一个代码 */
-        $hoverEasing: cubic-bezier(0.23, 1, 0.32, 1);
-        $returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+        /* 动画曲线 */
+        .hoverEasing { transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1); }
+        .returnEasing { transition-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95); }
         
         /* 页面标题样式 */
         .page-title {
@@ -60,45 +64,17 @@
             overflow: hidden;
         }
         
-        /* 背景图片 - 移动端 */
-        .bg-mobile {
+        /* 背景图片 */
+        .bg-image {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('picture/Text2.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            display: block;
             opacity: 0.4;
-        }
-        
-        /* 背景图片 - PC端 */
-        .bg-pc {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('picture/suzumiya.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: none;
-            opacity: 0.4;
-        }
-        
-        /* PC端显示横版背景 */
-        @media (min-width: 768px) {
-            .bg-mobile {
-                display: none;
-            }
-            
-            .bg-pc {
-                display: block;
-            }
         }
         
         /* 半透明遮罩层*/
@@ -165,6 +141,7 @@
             box-shadow: 0 4px 15px rgba(93, 64, 55, 0.3);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .nav-link:hover {
@@ -178,7 +155,7 @@
             box-shadow: 0 4px 20px rgba(93, 64, 55, 0.5);
         }
         
-        /* 卡片容器 - 来自第一个代码，修改为画廊布局 */
+        /* Vue卡片容器 */
         .cards-container {
             padding: 40px 20px;
             display: flex;
@@ -189,7 +166,7 @@
             margin: 0 auto;
         }
         
-        /* 卡片包装 - 来自第一个代码，修改后 */
+        /* Vue卡片样式 - 基于第一个代码修改 */
         .card-wrap {
             margin: 0;
             transform: perspective(1000px);
@@ -198,48 +175,52 @@
             flex: 0 0 calc(33.333% - 40px);
             max-width: 380px;
             min-width: 300px;
-            
-            &:hover {
-                .card-info {
-                    transform: translateY(0);
-                }
-                .card-info p {
-                    opacity: 1;
-                }
-                .card-info, .card-info p {
-                    transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-                }
-                .card-info:after {
-                    transition: 5s cubic-bezier(0.23, 1, 0.32, 1);
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-                .card-bg {
-                    transition: 
-                        0.6s cubic-bezier(0.23, 1, 0.32, 1),
-                        opacity 5s cubic-bezier(0.23, 1, 0.32, 1);
-                    opacity: 0.85;
-                    transform: scale(1.05);
-                }
-                .card {
-                    transition:
-                        0.6s cubic-bezier(0.23, 1, 0.32, 1),
-                        box-shadow 2s cubic-bezier(0.23, 1, 0.32, 1);
-                    box-shadow:
-                        rgba(255, 255, 255, 0.3) 0 0 60px 10px,
-                        rgba(255, 255, 255, 0.8) 0 0 0 2px,
-                        rgba(0, 0, 0, 0.8) 0 40px 80px 0,
-                        inset #333 0 0 0 6px,
-                        inset rgba(255, 255, 255, 0.6) 0 0 0 8px;
-                }
-            }
+            transition: transform 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
         }
         
-        /* 卡片 - 来自第一个代码，修改后 */
+        .card-wrap:hover .card-info {
+            transform: translateY(0);
+        }
+        
+        .card-wrap:hover .card-info p {
+            opacity: 1;
+        }
+        
+        .card-wrap:hover .card-info,
+        .card-wrap:hover .card-info p {
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .card-wrap:hover .card-info:after {
+            transition: 5s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .card-wrap:hover .card-bg {
+            transition: 
+                0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                opacity 5s cubic-bezier(0.23, 1, 0.32, 1);
+            opacity: 0.85;
+        }
+        
+        .card-wrap:hover .card {
+            transition:
+                0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 2s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow:
+                rgba(255, 255, 255, 0.3) 0 0 60px 10px,
+                rgba(255, 255, 255, 0.8) 0 0 0 2px,
+                rgba(0, 0, 0, 0.8) 0 40px 80px 0,
+                inset #333 0 0 0 6px,
+                inset rgba(255, 255, 255, 0.6) 0 0 0 8px;
+        }
+        
+        /* 卡片 */
         .card {
             position: relative;
             width: 100%;
-            height: 420px;
+            height: 450px;
             background-color: #1a1a1a;
             overflow: hidden;
             border-radius: 15px;
@@ -248,9 +229,11 @@
                 inset #222 0 0 0 6px,
                 inset rgba(255, 255, 255, 0.4) 0 0 0 8px;
             transition: 1s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+            transform-style: preserve-3d;
+            will-change: transform;
         }
         
-        /* 卡片背景 - 来自第一个代码，修改后 */
+        /* 卡片背景 */
         .card-bg {
             opacity: 0.6;
             position: absolute;
@@ -267,9 +250,10 @@
                 transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             pointer-events: none;
             filter: brightness(0.9) contrast(1.1);
+            will-change: transform;
         }
         
-        /* 卡片信息 - 来自第一个代码，修改后 */
+        /* 卡片信息 */
         .card-info {
             padding: 30px;
             position: absolute;
@@ -371,6 +355,7 @@
             font-size: 1.1em;
             box-shadow: 0 6px 20px rgba(93, 64, 55, 0.3);
             border: none;
+            cursor: pointer;
         }
         
         .back-to-top:hover {
@@ -398,7 +383,7 @@
             }
             
             .card {
-                height: 380px;
+                height: 400px;
             }
             
             .artist-title {
@@ -433,7 +418,7 @@
         
         @media (max-width: 480px) {
             .card {
-                height: 340px;
+                height: 360px;
             }
             
             .card-info {
@@ -449,7 +434,27 @@
             }
         }
         
-        /* 大图查看器样式（保持不变） */
+        /* 交互提示 */
+        .interactive-hint {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            z-index: 10;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .card-wrap:hover .interactive-hint {
+            opacity: 1;
+        }
+        
+        /* 大图查看器样式 */
         .lightbox-overlay {
             position: fixed;
             top: 0;
@@ -563,33 +568,6 @@
             border-radius: 20px;
         }
         
-        /* 响应式调整大图查看器 */
-        @media (max-width: 767px) {
-            .lightbox-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-            }
-            
-            .lightbox-prev {
-                left: 10px;
-            }
-            
-            .lightbox-next {
-                right: 10px;
-            }
-            
-            .lightbox-close {
-                top: -50px;
-                right: 10px;
-            }
-            
-            .lightbox-caption {
-                font-size: 1em;
-                padding: 5px;
-            }
-        }
-        
         /* 保护提示样式 */
         .protection-message {
             position: fixed;
@@ -620,366 +598,431 @@
     <!-- 添加Google字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body>  
-    <!-- 固定背景容器 -->
-    <div class="bg-container">
-        <div class="bg-mobile"></div>
-        <div class="bg-pc"></div>
-    </div>
-    
-    <!-- 半透明遮罩 -->
-    <div class="bg-overlay"></div>
-    
-    <!-- 大图查看器 -->
-    <div class="lightbox-overlay" id="lightbox">
-        <button class="lightbox-close" id="lightboxClose">×</button>
-        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
-        <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
-        <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
-        <div class="lightbox-container">
-            <img src="" alt="" class="lightbox-img" id="lightboxImage">
-            <div class="lightbox-caption" id="lightboxCaption"></div>
+<body>
+    <div id="app">
+        <!-- 固定背景容器 -->
+        <div class="bg-container">
+            <div class="bg-image" :style="{ backgroundImage: 'url(picture/Text2.jpg)' }"></div>
+            <div class="bg-image" :style="{ backgroundImage: 'url(picture/suzumiya.png)', display: isPC ? 'block' : 'none' }"></div>
         </div>
-    </div>
-    
-    <!-- 内容区域 -->
-    <div class="content-wrapper">
-        <!-- 页面标题 -->
-        <h1 class="page-title">凉宫春日应援团广东支部画作展示</h1>
-        <p class="page-subtitle">汇聚广东支部美工组成员的精美作品，每一幅画作都凝聚着我们对凉宫春日系列的热爱与创意</p>
         
-        <!-- 导航栏 -->
-        <div class="navigation">
-            <div class="nav-title">美工组成员作品集</div>
-            <div class="nav-links">
-                <a href="#guyikun" class="nav-link active">Yikun作品</a>
-                <a href="#dangyang" class="nav-link">荡漾作品</a>
-                <a href="#lixing" class="nav-link">咔啦作品</a>
-                <a href="#gulu" class="nav-link">咕噜作品</a>
-                <a href="#Potaro" class="nav-link">Potaro作品</a>
-                <a href="#axiao" class="nav-link">阿笑作品</a>
+        <!-- 半透明遮罩 -->
+        <div class="bg-overlay"></div>
+        
+        <!-- 大图查看器 -->
+        <div class="lightbox-overlay" id="lightbox" @click="closeLightboxIfOverlay">
+            <button class="lightbox-close" @click="closeLightbox">×</button>
+            <button class="lightbox-nav lightbox-prev" @click="showPrevImage">‹</button>
+            <button class="lightbox-nav lightbox-next" @click="showNextImage">›</button>
+            <div class="lightbox-counter">{{ currentImageIndex + 1 }} / {{ images.length }}</div>
+            <div class="lightbox-container">
+                <img :src="currentImage.src" :alt="currentImage.caption" class="lightbox-img">
+                <div class="lightbox-caption">{{ currentImage.caption }}</div>
             </div>
         </div>
         
-        <!-- Yikun作品区域 -->
-        <section id="guyikun" class="artist-section">
-            <h2 class="artist-title">Yikun的作品集</h2>
-            <p class="artist-description">
-                Yikun，凉宫春日应援团广东支部美工组成员，擅长通过简约的线条和色彩表达对凉宫春日系列的热爱。作品风格清新自然，富有感染力。
-            </p>
+        <!-- 内容区域 -->
+        <div class="content-wrapper">
+            <!-- 页面标题 -->
+            <h1 class="page-title">凉宫春日应援团广东支部画作展示</h1>
+            <p class="page-subtitle">汇聚广东支部美工组成员的精美作品，每一幅画作都凝聚着我们对凉宫春日系列的热爱与创意</p>
             
-            <div class="cards-container">
-                <!-- 卡片1 -->
-                <div class="card-wrap">
-                    <div class="card">
-                        <div class="card-bg" style="background-image: url('./picture/Yikun Gu1.png')"></div>
-                        <div class="card-info">
+            <!-- 导航栏 -->
+            <div class="navigation">
+                <div class="nav-title">美工组成员作品集</div>
+                <div class="nav-links">
+                    <a href="#guyikun" class="nav-link" :class="{ active: activeSection === 'guyikun' }" @click.prevent="scrollToSection('guyikun')">Yikun作品</a>
+                    <a href="#dangyang" class="nav-link" :class="{ active: activeSection === 'dangyang' }" @click.prevent="scrollToSection('dangyang')">荡漾作品</a>
+                    <a href="#lixing" class="nav-link" :class="{ active: activeSection === 'lixing' }" @click.prevent="scrollToSection('lixing')">咔啦作品</a>
+                    <a href="#gulu" class="nav-link" :class="{ active: activeSection === 'gulu' }" @click.prevent="scrollToSection('gulu')">咕噜作品</a>
+                    <a href="#Potaro" class="nav-link" :class="{ active: activeSection === 'Potaro' }" @click.prevent="scrollToSection('Potaro')">Potaro作品</a>
+                    <a href="#axiao" class="nav-link" :class="{ active: activeSection === 'axiao' }" @click.prevent="scrollToSection('axiao')">阿笑作品</a>
+                </div>
+            </div>
+            
+            <!-- Yikun作品区域 -->
+            <section id="guyikun" class="artist-section" ref="guyikun">
+                <h2 class="artist-title">Yikun的作品集</h2>
+                <p class="artist-description">
+                    Yikun，凉宫春日应援团广东支部美工组成员，擅长通过简约的线条和色彩表达对凉宫春日系列的热爱。作品风格清新自然，富有感染力。
+                </p>
+                
+                <div class="cards-container">
+                    <!-- Vue卡片组件 -->
+                    <card data-image="./picture/Yikun Gu1.png">
+                        <template v-slot:header>
                             <h1>春日King</h1>
+                        </template>
+                        <template v-slot:content>
                             <p>简约线条勾勒出凉宫春日的王者气质，背景的渐变色彩象征着无尽的可能性。</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 卡片2 -->
-                <div class="card-wrap">
-                    <div class="card">
-                        <div class="card-bg" style="background-image: url('./picture/Yikun Gu2.jpg')"></div>
-                        <div class="card-info">
+                        </template>
+                    </card>
+                    
+                    <card data-image="./picture/Yikun Gu2.jpg">
+                        <template v-slot:header>
                             <h1>支部部徽</h1>
+                        </template>
+                        <template v-slot:content>
                             <p>凉宫春日应援团广东支部的官方部徽设计，融合了广东元素与凉宫春日标志性的团长符号。</p>
-                        </div>
-                    </div>
+                        </template>
+                    </card>
                 </div>
                 
-                <!-- 卡片3（如果有更多作品可以继续添加） -->
-                <div class="card-wrap">
-                    <div class="card">
-                        <div class="card-bg" style="background-image: url('https://via.placeholder.com/400x500/8D6E63/FFFFFF?text=更多作品+创作中')"></div>
-                        <div class="card-info">
-                            <h1>创作中</h1>
-                            <p>更多精彩作品正在创作中，敬请期待！</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <button class="back-to-top" @click="scrollToTop">返回顶部</button>
+            </section>
             
-            <a href="#" class="back-to-top">返回顶部</a>
-        </section>
-        
-        <!-- 荡漾作品区域 -->
-        <section id="dangyang" class="artist-section">
-            <h2 class="artist-title">荡漾的作品集</h2>
-            <p class="artist-description">
-                荡漾的作品以细腻的情感描绘和丰富的色彩层次著称，擅长捕捉角色内心的微妙变化。
-            </p>
-            
-            <div class="cards-container">
-                <div class="card-wrap">
-                    <div class="card">
-                        <div class="card-bg" style="background-image: url('https://via.placeholder.com/400x500/BCAAA4/5D4037?text=作品+筹备中')"></div>
-                        <div class="card-info">
+            <!-- 荡漾作品区域 -->
+            <section id="dangyang" class="artist-section" ref="dangyang">
+                <h2 class="artist-title">荡漾的作品集</h2>
+                <p class="artist-description">
+                    荡漾的作品以细腻的情感描绘和丰富的色彩层次著称，擅长捕捉角色内心的微妙变化。
+                </p>
+                
+                <div class="cards-container">
+                    <card data-image="https://via.placeholder.com/400x500/BCAAA4/5D4037?text=作品+筹备中">
+                        <template v-slot:header>
                             <h1>敬请期待</h1>
+                        </template>
+                        <template v-slot:content>
                             <p>更多精彩作品正在精心创作中，即将与大家见面！</p>
-                        </div>
-                    </div>
+                        </template>
+                    </card>
                 </div>
-            </div>
+                
+                <button class="back-to-top" @click="scrollToTop">返回顶部</button>
+            </section>
             
-            <a href="#" class="back-to-top">返回顶部</a>
-        </section>
-        
-        <!-- 咔啦作品区域 -->
-        <section id="lixing" class="artist-section">
-            <h2 class="artist-title">咔啦的作品集</h2>
-            <p class="artist-description">
-                咔啦的作品充满了天马行空的想象力，独特的视角和创新的构图让人眼前一亮。
-            </p>
-            
-            <div class="cards-container">
-                <div class="card-wrap">
-                    <div class="card">
-                        <div class="card-bg" style="background-image: url('https://via.placeholder.com/400x500/8D6E63/FFFFFF?text=创意+构思中')"></div>
-                        <div class="card-info">
+            <!-- 咔啦作品区域 -->
+            <section id="lixing" class="artist-section" ref="lixing">
+                <h2 class="artist-title">咔啦的作品集</h2>
+                <p class="artist-description">
+                    咔啦的作品充满了天马行空的想象力，独特的视角和创新的构图让人眼前一亮。
+                </p>
+                
+                <div class="cards-container">
+                    <card data-image="https://via.placeholder.com/400x500/8D6E63/FFFFFF?text=创意+构思中">
+                        <template v-slot:header>
                             <h1>创作进行时</h1>
+                        </template>
+                        <template v-slot:content>
                             <p>正在构思一系列全新的作品，将带给大家不一样的视觉体验。</p>
-                        </div>
-                    </div>
+                        </template>
+                    </card>
                 </div>
-            </div>
+                
+                <button class="back-to-top" @click="scrollToTop">返回顶部</button>
+            </section>
             
-            <a href="#" class="back-to-top">返回顶部</a>
-        </section>
-        
-        <!-- 咕噜作品区域 -->
-        <section id="gulu" class="artist-section">
-            <h2 class="artist-title">咕噜的作品集</h2>
-            <p class="artist-description">
-                咕噜的作品风格温暖治愈，色彩柔和舒适，每一幅画都像是冬日的暖阳。
-            </p>
-            
-            <div class="cards-container">
-                <div class="card-wrap">
-                    <div class="card">
-                        <div class="card-bg" style="background-image: url('https://via.placeholder.com/400x500/A1887F/FFFFFF?text=温暖+创作中')"></div>
-                        <div class="card-info">
+            <!-- 咕噜作品区域 -->
+            <section id="gulu" class="artist-section" ref="gulu">
+                <h2 class="artist-title">咕噜的作品集</h2>
+                <p class="artist-description">
+                    咕噜的作品风格温暖治愈，色彩柔和舒适，每一幅画都像是冬日的暖阳。
+                </p>
+                
+                <div class="cards-container">
+                    <card data-image="https://via.placeholder.com/400x500/A1887F/FFFFFF?text=温暖+创作中">
+                        <template v-slot:header>
                             <h1>准备中</h1>
+                        </template>
+                        <template v-slot:content>
                             <p>正在准备一系列温暖人心的作品，敬请期待！</p>
-                        </div>
-                    </div>
+                        </template>
+                    </card>
                 </div>
-            </div>
+                
+                <button class="back-to-top" @click="scrollToTop">返回顶部</button>
+            </section>
             
-            <a href="#" class="back-to-top">返回顶部</a>
-        </section>
-        
-        <!-- Potaro作品区域 -->
-        <section id="Potaro" class="artist-section">
-            <h2 class="artist-title">Potaro的作品集</h2>
-            <p class="artist-description">
-                Potaro的作品充满了现代感和设计感，将传统动漫元素与现代艺术完美融合。
-            </p>
-            
-            <div class="cards-container">
-                <div class="card-wrap">
-                    <div class="card">
-                        <div class="card-bg" style="background-image: url('https://via.placeholder.com/400x500/5D4037/FFFFFF?text=现代+设计+中')"></div>
-                        <div class="card-info">
+            <!-- Potaro作品区域 -->
+            <section id="Potaro" class="artist-section" ref="Potaro">
+                <h2 class="artist-title">Potaro的作品集</h2>
+                <p class="artist-description">
+                    Potaro的作品充满了现代感和设计感，将传统动漫元素与现代艺术完美融合。
+                </p>
+                
+                <div class="cards-container">
+                    <card data-image="https://via.placeholder.com/400x500/5D4037/FFFFFF?text=现代+设计+中">
+                        <template v-slot:header>
                             <h1>设计构思</h1>
+                        </template>
+                        <template v-slot:content>
                             <p>正在进行一系列现代风格的设计创作，融合传统与创新。</p>
-                        </div>
-                    </div>
+                        </template>
+                    </card>
                 </div>
-            </div>
+                
+                <button class="back-to-top" @click="scrollToTop">返回顶部</button>
+            </section>
             
-            <a href="#" class="back-to-top">返回顶部</a>
-        </section>
-        
-        <!-- 阿笑作品区域 -->
-        <section id="axiao" class="artist-section">
-            <h2 class="artist-title">阿笑的作品集</h2>
-            <p class="artist-description">
-                阿笑的作品充满了幽默感和趣味性，用独特的笔触展现角色的另一面。
-            </p>
-            
-            <div class="cards-container">
-                <div class="card-wrap">
-                    <div class="card">
-                        <div class="card-bg" style="background-image: url('https://via.placeholder.com/400x500/BCAAA4/5D4037?text=趣味+创作中')"></div>
-                        <div class="card-info">
+            <!-- 阿笑作品区域 -->
+            <section id="axiao" class="artist-section" ref="axiao">
+                <h2 class="artist-title">阿笑的作品集</h2>
+                <p class="artist-description">
+                    阿笑的作品充满了幽默感和趣味性，用独特的笔触展现角色的另一面。
+                </p>
+                
+                <div class="cards-container">
+                    <card data-image="https://via.placeholder.com/400x500/BCAAA4/5D4037?text=趣味+创作中">
+                        <template v-slot:header>
                             <h1>筹备中</h1>
+                        </template>
+                        <template v-slot:content>
                             <p>正在创作一系列充满趣味性的作品，希望能给大家带来欢乐！</p>
-                        </div>
-                    </div>
+                        </template>
+                    </card>
                 </div>
-            </div>
-            
-            <a href="#" class="back-to-top">返回顶部</a>
-        </section>
+                
+                <button class="back-to-top" @click="scrollToTop">返回顶部</button>
+            </section>
+        </div>
     </div>
     
     <script>
-        // ============ 大图查看器功能 ============
-        let currentImageIndex = 0;
-        let allImages = [];
+        // 启用Vue开发工具
+        Vue.config.devtools = true;
+        Vue.config.productionTip = false;
         
-        // 收集所有可查看大图的图片
-        function collectImages() {
-            const cardBgs = document.querySelectorAll('.card-bg[style*="background-image"]');
-            allImages = Array.from(cardBgs).map(bg => {
-                const style = bg.getAttribute('style');
-                const urlMatch = style.match(/url\(['"]?(.*?)['"]?\)/);
-                const src = urlMatch ? urlMatch[1] : '';
-                const cardInfo = bg.nextElementSibling;
-                const title = cardInfo ? cardInfo.querySelector('h1').textContent : '';
-                const desc = cardInfo ? cardInfo.querySelector('p').textContent : '';
+        // 注册Vue卡片组件
+        Vue.component('card', {
+            template: `
+                <div class="card-wrap"
+                    @mousemove="handleMouseMove"
+                    @mouseenter="handleMouseEnter"
+                    @mouseleave="handleMouseLeave"
+                    @click="handleCardClick"
+                    ref="card">
+                    <div class="interactive-hint">移动鼠标查看3D效果</div>
+                    <div class="card"
+                        :style="cardStyle">
+                        <div class="card-bg" :style="[cardBgTransform, cardBgImage]"></div>
+                        <div class="card-info">
+                            <slot name="header"></slot>
+                            <slot name="content"></slot>
+                        </div>
+                    </div>
+                </div>`,
+            mounted() {
+                this.width = this.$refs.card.offsetWidth;
+                this.height = this.$refs.card.offsetHeight;
                 
-                return {
-                    src: src,
-                    caption: `${title} - ${desc}`
-                };
-            }).filter(img => img.src && !img.src.includes('placeholder'));
-        }
-        
-        // 打开大图查看器
-        function openLightbox(index) {
-            collectImages();
-            if (allImages.length === 0) return;
-            
-            currentImageIndex = index % allImages.length;
-            updateLightbox();
-            document.getElementById('lightbox').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        // 更新大图查看器内容
-        function updateLightbox() {
-            const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxCaption = document.getElementById('lightboxCaption');
-            const lightboxCounter = document.getElementById('lightboxCounter');
-            
-            if (allImages.length > 0 && currentImageIndex < allImages.length) {
-                lightboxImage.src = allImages[currentImageIndex].src;
-                lightboxCaption.textContent = allImages[currentImageIndex].caption;
-                lightboxCounter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
-            }
-        }
-        
-        // 关闭大图查看器
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-        
-        // 显示上一张图片
-        function showPrevImage() {
-            if (allImages.length === 0) return;
-            currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
-            updateLightbox();
-        }
-        
-        // 显示下一张图片
-        function showNextImage() {
-            if (allImages.length === 0) return;
-            currentImageIndex = (currentImageIndex + 1) % allImages.length;
-            updateLightbox();
-        }
-        
-        // 为卡片添加点击事件（打开大图）
-        function initCardClickEvents() {
-            document.querySelectorAll('.card-wrap').forEach((cardWrap, index) => {
-                cardWrap.addEventListener('click', function(e) {
-                    // 如果点击的是卡片本身（不是子元素冒泡），则打开大图
-                    if (e.target === this || e.target.closest('.card')) {
-                        openLightbox(index);
-                    }
+                // 收集图片信息到父组件
+                this.$parent.registerImage({
+                    src: this.dataImage,
+                    caption: this.$slots.header?.[0]?.elm?.textContent + ' - ' + 
+                            (this.$slots.content?.[0]?.elm?.textContent || '')
                 });
-            });
-        }
-        
-        // 初始化大图查看器
-        function initLightbox() {
-            // 绑定关闭按钮
-            document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-            
-            // 绑定导航按钮
-            document.getElementById('lightboxPrev').addEventListener('click', showPrevImage);
-            document.getElementById('lightboxNext').addEventListener('click', showNextImage);
-            
-            // 点击遮罩层关闭
-            document.getElementById('lightbox').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeLightbox();
+            },
+            props: ['dataImage'],
+            data: () => ({
+                width: 0,
+                height: 0,
+                mouseX: 0,
+                mouseY: 0,
+                mouseLeaveDelay: null
+            }),
+            computed: {
+                mousePX() {
+                    return this.mouseX / this.width;
+                },
+                mousePY() {
+                    return this.mouseY / this.height;
+                },
+                cardStyle() {
+                    const rX = this.mousePX * 30;
+                    const rY = this.mousePY * -30;
+                    return {
+                        transform: `rotateY(${rX}deg) rotateX(${rY}deg)`
+                    };
+                },
+                cardBgTransform() {
+                    const tX = this.mousePX * -40;
+                    const tY = this.mousePY * -40;
+                    return {
+                        transform: `translateX(${tX}px) translateY(${tY}px)`
+                    }
+                },
+                cardBgImage() {
+                    return {
+                        backgroundImage: `url(${this.dataImage})`
+                    }
                 }
-            });
-            
-            // 键盘控制
-            document.addEventListener('keydown', function(e) {
-                const lightbox = document.getElementById('lightbox');
-                if (!lightbox.classList.contains('active')) return;
+            },
+            methods: {
+                handleMouseMove(e) {
+                    const rect = this.$refs.card.getBoundingClientRect();
+                    this.mouseX = e.clientX - rect.left - this.width/2;
+                    this.mouseY = e.clientY - rect.top - this.height/2;
+                },
+                handleMouseEnter() {
+                    clearTimeout(this.mouseLeaveDelay);
+                },
+                handleMouseLeave() {
+                    this.mouseLeaveDelay = setTimeout(() => {
+                        this.mouseX = 0;
+                        this.mouseY = 0;
+                    }, 1000);
+                },
+                handleCardClick() {
+                    const index = Array.from(this.$parent.$refs.cardContainer?.children || []).indexOf(this.$el);
+                    this.$parent.openLightbox(index);
+                }
+            }
+        });
+        
+        // Vue实例
+        const app = new Vue({
+            el: '#app',
+            data: {
+                isPC: window.innerWidth >= 768,
+                activeSection: 'guyikun',
+                showLightbox: false,
+                images: [],
+                currentImageIndex: 0
+            },
+            computed: {
+                currentImage() {
+                    return this.images[this.currentImageIndex] || { src: '', caption: '' };
+                }
+            },
+            methods: {
+                registerImage(imageData) {
+                    if (imageData.src && !imageData.src.includes('placeholder')) {
+                        this.images.push(imageData);
+                    }
+                },
                 
-                switch(e.key) {
-                    case 'Escape':
-                        closeLightbox();
-                        break;
-                    case 'ArrowLeft':
-                        showPrevImage();
-                        break;
-                    case 'ArrowRight':
-                        showNextImage();
-                        break;
+                openLightbox(index) {
+                    this.currentImageIndex = index % this.images.length;
+                    this.showLightbox = true;
+                    document.body.style.overflow = 'hidden';
+                },
+                
+                closeLightbox() {
+                    this.showLightbox = false;
+                    document.body.style.overflow = 'auto';
+                },
+                
+                closeLightboxIfOverlay(e) {
+                    if (e.target.classList.contains('lightbox-overlay')) {
+                        this.closeLightbox();
+                    }
+                },
+                
+                showPrevImage() {
+                    this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+                },
+                
+                showNextImage() {
+                    this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+                },
+                
+                scrollToSection(sectionId) {
+                    this.activeSection = sectionId;
+                    const element = document.getElementById(sectionId);
+                    if (element) {
+                        window.scrollTo({
+                            top: element.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                },
+                
+                scrollToTop() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                    this.activeSection = 'guyikun';
+                },
+                
+                handleScroll() {
+                    // 检测当前可见的区域
+                    const sections = ['guyikun', 'dangyang', 'lixing', 'gulu', 'Potaro', 'axiao'];
+                    const scrollPosition = window.scrollY + 100;
+                    
+                    for (const sectionId of sections) {
+                        const element = document.getElementById(sectionId);
+                        if (element) {
+                            const offsetTop = element.offsetTop;
+                            const offsetHeight = element.offsetHeight;
+                            
+                            if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+                                this.activeSection = sectionId;
+                                break;
+                            }
+                        }
+                    }
+                },
+                
+                handleResize() {
+                    this.isPC = window.innerWidth >= 768;
                 }
-            });
-            
-            // 初始化卡片点击事件
-            initCardClickEvents();
-        }
+            },
+            mounted() {
+                // 初始化事件监听
+                window.addEventListener('scroll', this.handleScroll);
+                window.addEventListener('resize', this.handleResize);
+                
+                // 预加载图片
+                this.$nextTick(() => {
+                    const preloadImages = [
+                        'picture/Text2.jpg',
+                        'picture/suzumiya.png',
+                        'picture/Yikun Gu1.png',
+                        'picture/Yikun Gu2.jpg'
+                    ];
+                    
+                    preloadImages.forEach(src => {
+                        const img = new Image();
+                        img.src = src;
+                    });
+                });
+            },
+            beforeDestroy() {
+                window.removeEventListener('scroll', this.handleScroll);
+                window.removeEventListener('resize', this.handleResize);
+            }
+        });
         
-        // ============ 原有保护功能 ============
-        // 禁止右键菜单
+        // 原有的保护功能（兼容Vue）
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
             showProtectionMessage("右键功能已禁用");
             return false;
         });
         
-        // 禁止F12和开发者工具
         document.addEventListener('keydown', function(e) {
-            // 禁止F12
             if (e.key === 'F12' || e.keyCode === 123) {
                 e.preventDefault();
                 showProtectionMessage("开发者工具已禁用");
                 return false;
             }
             
-            // 禁止Ctrl+Shift+I (Chrome开发者工具)
             if (e.ctrlKey && e.shiftKey && e.key === 'I') {
                 e.preventDefault();
                 showProtectionMessage("开发者工具已禁用");
                 return false;
             }
             
-            // 禁止Ctrl+Shift+J (Chrome控制台)
             if (e.ctrlKey && e.shiftKey && e.key === 'J') {
                 e.preventDefault();
                 showProtectionMessage("控制台已禁用");
                 return false;
             }
             
-            // 禁止Ctrl+U (查看源代码)
             if (e.ctrlKey && e.key === 'u') {
                 e.preventDefault();
                 showProtectionMessage("查看源代码已禁用");
                 return false;
             }
             
-            // 禁止Ctrl+S (保存网页)
             if (e.ctrlKey && e.key === 's') {
                 e.preventDefault();
                 showProtectionMessage("网页保存已禁用");
                 return false;
             }
             
-            // 禁止Ctrl+C (复制)
             if (e.ctrlKey && e.key === 'c') {
                 e.preventDefault();
                 showProtectionMessage("复制功能已禁用");
@@ -1009,7 +1052,7 @@
             return false;
         });
         
-        // 禁止拖拽图片
+        // 禁止拖拽
         document.addEventListener('dragstart', function(e) {
             if (e.target.tagName === 'IMG' || e.target.classList.contains('card-bg')) {
                 e.preventDefault();
@@ -1017,185 +1060,28 @@
             }
         });
         
-        // 显示保护提示消息
+        // 保护提示
         function showProtectionMessage(msg) {
-            // 如果已经有提示框，先移除
             const existingMsg = document.querySelector('.protection-message');
             if (existingMsg) {
                 existingMsg.remove();
             }
             
-            // 创建提示框
             const msgBox = document.createElement('div');
             msgBox.className = 'protection-message';
             msgBox.textContent = msg;
             document.body.appendChild(msgBox);
             
-            // 2秒后自动移除
             setTimeout(() => {
                 if (msgBox.parentNode) {
                     msgBox.remove();
                 }
             }, 2000);
         }
-        
-        // ============ 原有代码保持不变 ============
-        // 导航链接点击效果
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    // 更新导航状态
-                    document.querySelectorAll('.nav-link').forEach(l => {
-                        l.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    
-                    // 平滑滚动到目标位置
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 100,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // 返回顶部按钮平滑滚动
-        document.querySelectorAll('.back-to-top').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-                document.querySelectorAll('.nav-link').forEach(l => {
-                    l.classList.remove('active');
-                });
-                document.querySelector('.nav-link[href="#guyikun"]').classList.add('active');
-            });
-        });
-        
-        // 监听滚动，高亮当前可见的画师区域
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('.artist-section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            let currentSection = '';
-            let maxVisibleArea = 0;
-            
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
-                
-                if (visibleHeight > 0 && visibleHeight > maxVisibleArea) {
-                    maxVisibleArea = visibleHeight;
-                    currentSection = section.getAttribute('id');
-                }
-            });
-            
-            if (currentSection) {
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href').substring(1) === currentSection) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-        });
-        
-        // 预加载背景图片
-        function preloadBackgrounds() {
-            const mobileImg = new Image();
-            const pcImg = new Image();
-            
-            mobileImg.src = 'picture/Text2.jpg';
-            pcImg.src = 'picture/suzumiya.png';
-            
-            mobileImg.onload = function() {
-                console.log('✅ 移动端背景图加载成功');
-            };
-            
-            pcImg.onload = function() {
-                console.log('✅ PC端背景图加载成功');
-            };
-            
-            mobileImg.onerror = function() {
-                console.warn('❌ 移动端背景图加载失败');
-                document.querySelector('.bg-mobile').style.display = 'none';
-            };
-            
-            pcImg.onerror = function() {
-                console.warn('❌ PC端背景图加载失败');
-                document.querySelector('.bg-pc').style.display = 'none';
-            };
-        }
-        
-        // 预加载卡片图片
-        function preloadCardImages() {
-            const cardImages = document.querySelectorAll('.card-bg[style*="background-image"]');
-            cardImages.forEach(card => {
-                const style = card.getAttribute('style');
-                const urlMatch = style.match(/url\(['"]?(.*?)['"]?\)/);
-                if (urlMatch && !urlMatch[1].includes('placeholder')) {
-                    const img = new Image();
-                    img.src = urlMatch[1];
-                    
-                    img.onload = function() {
-                        console.log(`✅ 卡片图片加载成功: ${urlMatch[1]}`);
-                    };
-                    
-                    img.onerror = function() {
-                        console.warn(`❌ 卡片图片加载失败: ${urlMatch[1]}`);
-                        // 使用备用图片
-                        card.style.backgroundImage = 'url("https://via.placeholder.com/400x500/8D6E63/FFFFFF?text=图片加载失败")';
-                    };
-                }
-            });
-        }
-        
-        // 初始化所有功能
-        window.addEventListener('load', function() {
-            preloadBackgrounds();
-            preloadCardImages();
-            initLightbox();
-            console.log('页面已加载，3D卡片效果和大图查看器已启用');
-            
-            // 添加卡片悬停效果提示
-            const cards = document.querySelectorAll('.card-wrap');
-            cards.forEach(card => {
-                const hint = document.createElement('div');
-                hint.style.cssText = `
-                    position: absolute;
-                    top: 15px;
-                    right: 15px;
-                    background: rgba(255, 255, 255, 0.2);
-                    color: white;
-                    padding: 5px 10px;
-                    border-radius: 15px;
-                    font-size: 12px;
-                    z-index: 10;
-                    pointer-events: none;
-                    opacity: 0;
-                    transition: opacity 0.3s ease;
-                `;
-                hint.textContent = '悬停查看详情';
-                card.appendChild(hint);
-                
-                card.addEventListener('mouseenter', () => {
-                    hint.style.opacity = '1';
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    hint.style.opacity = '0';
-                });
-            });
-        });
     </script>
 </body>
 </html>
+
 
 
 

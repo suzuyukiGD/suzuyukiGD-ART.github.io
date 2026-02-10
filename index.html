@@ -16,11 +16,12 @@
             font-family: "Raleway", Arial, sans-serif;
             min-height: 100vh;
             width: 100%;
-            margin: 40px 0;
+            margin: 0; /* 移除原来的margin */
             font-size: 14px;
             font-weight: 500;
             background-color: #BCAAA4;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden; /* 防止水平滚动 */
         }
         
         /* 动画曲线 */
@@ -50,7 +51,7 @@
             line-height: 1.6;
         }
         
-        /* 背景容器 - 固定位置 */
+        /* 背景容器 - 修复：确保只有一个背景显示 */
         .bg-container {
             position: fixed;
             top: 0;
@@ -61,17 +62,45 @@
             overflow: hidden;
         }
         
-        /* 背景图片 */
-        .bg-image {
+        /* 背景图片 - 修复：添加明确的类名 */
+        .bg-mobile {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background-image: url('picture/Text2.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0.4;
+            display: block;
+        }
+        
+        /* PC端背景图片 */
+        .bg-pc {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('picture/suzumiya.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.4;
+            display: none; /* 默认隐藏 */
+        }
+        
+        /* PC端显示横版背景 */
+        @media (min-width: 768px) {
+            .bg-mobile {
+                display: none;
+            }
+            
+            .bg-pc {
+                display: block;
+            }
         }
         
         /* 半透明遮罩层*/
@@ -91,6 +120,8 @@
             z-index: 1;
             padding: 20px;
             min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
         }
         
         /* 导航栏样式 */
@@ -163,7 +194,7 @@
             margin: 0 auto;
         }
         
-        /* 3D卡片样式 */
+        /* 3D卡片样式 - 修复：确保图片显示 */
         .card-wrap {
             margin: 0;
             transform: perspective(1000px);
@@ -173,6 +204,7 @@
             max-width: 380px;
             min-width: 300px;
             transition: transform 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+            position: relative;
         }
         
         .card {
@@ -193,22 +225,22 @@
             will-change: transform;
         }
         
-        /* 卡片背景 */
+        /* 卡片背景 - 修复：确保图片可见 */
         .card-bg {
-            opacity: 0.6;
+            opacity: 0.8; /* 提高默认透明度 */
             position: absolute;
-            top: -30px;
-            left: -30px;
-            width: calc(100% + 60px);
-            height: calc(100% + 60px);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
+            background-color: #333; /* 添加默认背景色 */
             transition: 
                 opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
                 transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             pointer-events: none;
-            filter: brightness(0.9) contrast(1.1);
             will-change: transform;
         }
         
@@ -277,7 +309,8 @@
         }
         
         .card-wrap:hover .card-bg {
-            opacity: 0.85;
+            opacity: 0.95;
+            transform: scale(1.05);
         }
         
         .card-wrap:hover .card-info {
@@ -589,10 +622,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 固定背景容器 -->
+    <!-- 固定背景容器 - 修复：使用明确的类名 -->
     <div class="bg-container">
-        <div class="bg-image" style="background-image: url('picture/Text2.jpg');"></div>
-        <div class="bg-image" style="background-image: url('picture/suzumiya.png'); display: none;" id="pcBg"></div>
+        <div class="bg-mobile"></div>
+        <div class="bg-pc"></div>
     </div>
     
     <!-- 半透明遮罩 -->
@@ -637,8 +670,8 @@
             </p>
             
             <div class="cards-container">
-                <!-- 卡片1 - 使用JavaScript初始化3D效果 -->
-                <div class="card-wrap" data-image="./picture/Yikun Gu1.png">
+                <!-- 卡片1 - 确保data-image属性正确 -->
+                <div class="card-wrap" data-image="picture/Yikun Gu1.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="card">
                         <div class="card-bg"></div>
@@ -650,140 +683,13 @@
                 </div>
                 
                 <!-- 卡片2 -->
-                <div class="card-wrap" data-image="./picture/Yikun Gu2.jpg">
+                <div class="card-wrap" data-image="picture/Yikun Gu2.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="card">
                         <div class="card-bg"></div>
                         <div class="card-info">
                             <h1>支部部徽</h1>
                             <p>凉宫春日应援团广东支部的官方部徽设计，融合了广东元素与凉宫春日标志性的团长符号。</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 卡片3 -->
-                <div class="card-wrap" data-image="https://via.placeholder.com/400x500/8D6E63/FFFFFF?text=更多作品+创作中">
-                    <div class="interactive-hint">移动鼠标查看3D效果</div>
-                    <div class="card">
-                        <div class="card-bg"></div>
-                        <div class="card-info">
-                            <h1>创作中</h1>
-                            <p>更多精彩作品正在创作中，敬请期待！</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="back-to-top">返回顶部</button>
-        </section>
-        
-        <!-- 荡漾作品区域 -->
-        <section id="dangyang" class="artist-section">
-            <h2 class="artist-title">荡漾的作品集</h2>
-            <p class="artist-description">
-                荡漾的作品以细腻的情感描绘和丰富的色彩层次著称，擅长捕捉角色内心的微妙变化。
-            </p>
-            
-            <div class="cards-container">
-                <div class="card-wrap" data-image="https://via.placeholder.com/400x500/BCAAA4/5D4037?text=作品+筹备中">
-                    <div class="interactive-hint">移动鼠标查看3D效果</div>
-                    <div class="card">
-                        <div class="card-bg"></div>
-                        <div class="card-info">
-                            <h1>敬请期待</h1>
-                            <p>更多精彩作品正在精心创作中，即将与大家见面！</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="back-to-top">返回顶部</button>
-        </section>
-        
-        <!-- 咔啦作品区域 -->
-        <section id="lixing" class="artist-section">
-            <h2 class="artist-title">咔啦的作品集</h2>
-            <p class="artist-description">
-                咔啦的作品充满了天马行空的想象力，独特的视角和创新的构图让人眼前一亮。
-            </p>
-            
-            <div class="cards-container">
-                <div class="card-wrap" data-image="https://via.placeholder.com/400x500/8D6E63/FFFFFF?text=创意+构思中">
-                    <div class="interactive-hint">移动鼠标查看3D效果</div>
-                    <div class="card">
-                        <div class="card-bg"></div>
-                        <div class="card-info">
-                            <h1>创作进行时</h1>
-                            <p>正在构思一系列全新的作品，将带给大家不一样的视觉体验。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="back-to-top">返回顶部</button>
-        </section>
-        
-        <!-- 咕噜作品区域 -->
-        <section id="gulu" class="artist-section">
-            <h2 class="artist-title">咕噜的作品集</h2>
-            <p class="artist-description">
-                咕噜的作品风格温暖治愈，色彩柔和舒适，每一幅画都像是冬日的暖阳。
-            </p>
-            
-            <div class="cards-container">
-                <div class="card-wrap" data-image="https://via.placeholder.com/400x500/A1887F/FFFFFF?text=温暖+创作中">
-                    <div class="interactive-hint">移动鼠标查看3D效果</div>
-                    <div class="card">
-                        <div class="card-bg"></div>
-                        <div class="card-info">
-                            <h1>准备中</h1>
-                            <p>正在准备一系列温暖人心的作品，敬请期待！</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="back-to-top">返回顶部</button>
-        </section>
-        
-        <!-- Potaro作品区域 -->
-        <section id="Potaro" class="artist-section">
-            <h2 class="artist-title">Potaro的作品集</h2>
-            <p class="artist-description">
-                Potaro的作品充满了现代感和设计感，将传统动漫元素与现代艺术完美融合。
-            </p>
-            
-            <div class="cards-container">
-                <div class="card-wrap" data-image="https://via.placeholder.com/400x500/5D4037/FFFFFF?text=现代+设计+中">
-                    <div class="interactive-hint">移动鼠标查看3D效果</div>
-                    <div class="card">
-                        <div class="card-bg"></div>
-                        <div class="card-info">
-                            <h1>设计构思</h1>
-                            <p>正在进行一系列现代风格的设计创作，融合传统与创新。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="back-to-top">返回顶部</button>
-        </section>
-        
-        <!-- 阿笑作品区域 -->
-        <section id="axiao" class="artist-section">
-            <h2 class="artist-title">阿笑的作品集</h2>
-            <p class="artist-description">
-                阿笑的作品充满了幽默感和趣味性，用独特的笔触展现角色的另一面。
-            </p>
-            
-            <div class="cards-container">
-                <div class="card-wrap" data-image="https://via.placeholder.com/400x500/BCAAA4/5D4037?text=趣味+创作中">
-                    <div class="interactive-hint">移动鼠标查看3D效果</div>
-                    <div class="card">
-                        <div class="card-bg"></div>
-                        <div class="card-info">
-                            <h1>筹备中</h1>
-                            <p>正在创作一系列充满趣味性的作品，希望能给大家带来欢乐！</p>
                         </div>
                     </div>
                 </div>
@@ -806,13 +712,39 @@
                 this.mouseY = 0;
                 this.mouseLeaveDelay = null;
                 
-                // 设置背景图片
+                // 修复：立即设置背景图片
                 const imageUrl = element.getAttribute('data-image');
+                console.log('初始化卡片，图片路径:', imageUrl);
                 if (imageUrl) {
-                    this.cardBg.style.backgroundImage = `url(${imageUrl})`;
+                    // 确保URL格式正确
+                    let finalUrl = imageUrl;
+                    if (!imageUrl.startsWith('http') && !imageUrl.startsWith('//')) {
+                        // 如果是相对路径，确保格式正确
+                        finalUrl = imageUrl.replace('./', '');
+                    }
+                    
+                    this.cardBg.style.backgroundImage = `url('${finalUrl}')`;
+                    // 预加载图片
+                    this.preloadImage(finalUrl);
                 }
                 
                 this.init();
+            }
+            
+            preloadImage(url) {
+                const img = new Image();
+                img.src = url;
+                img.onload = () => {
+                    console.log('✅ 卡片图片加载成功:', url);
+                    // 图片加载成功后确保显示
+                    this.cardBg.style.opacity = '0.8';
+                };
+                img.onerror = () => {
+                    console.error('❌ 卡片图片加载失败:', url);
+                    // 使用备用背景
+                    this.cardBg.style.backgroundImage = 'linear-gradient(135deg, #8D6E63 0%, #5D4037 100%)';
+                    this.cardBg.style.backgroundColor = '#333';
+                };
             }
             
             init() {
@@ -823,7 +755,9 @@
                 
                 // 点击事件打开大图
                 this.element.addEventListener('click', (e) => {
-                    const index = Array.from(document.querySelectorAll('.card-wrap')).indexOf(this.element);
+                    e.stopPropagation();
+                    const cardWraps = Array.from(document.querySelectorAll('.card-wrap'));
+                    const index = cardWraps.indexOf(this.element);
                     openLightbox(index);
                 });
             }
@@ -862,7 +796,7 @@
                 // 背景图片平移
                 const tX = mousePX * -40;
                 const tY = mousePY * -40;
-                this.cardBg.style.transform = `translateX(${tX}px) translateY(${tY}px)`;
+                this.cardBg.style.transform = `translateX(${tX}px) translateY(${tY}px) scale(1.05)`;
             }
         }
         
@@ -872,21 +806,36 @@
         
         function collectImages() {
             const cardWraps = document.querySelectorAll('.card-wrap');
-            allImages = Array.from(cardWraps).map((card, index) => {
+            allImages = [];
+            
+            cardWraps.forEach((card, index) => {
                 const imageUrl = card.getAttribute('data-image');
+                // 跳过占位图片
+                if (!imageUrl || imageUrl.includes('via.placeholder')) {
+                    return;
+                }
+                
                 const title = card.querySelector('.card-info h1')?.textContent || '作品';
                 const description = card.querySelector('.card-info p')?.textContent || '';
                 
-                return {
+                allImages.push({
                     src: imageUrl,
                     caption: `${title} - ${description}`,
                     index: index
-                };
+                });
             });
+            
+            console.log('收集到的图片:', allImages);
         }
         
         function openLightbox(index) {
             collectImages();
+            
+            if (allImages.length === 0) {
+                console.warn('没有找到可显示的图片');
+                return;
+            }
+            
             currentImageIndex = index % allImages.length;
             updateLightbox();
             
@@ -901,8 +850,9 @@
             const lightboxCounter = document.getElementById('lightboxCounter');
             
             if (allImages.length > 0 && currentImageIndex < allImages.length) {
-                lightboxImage.src = allImages[currentImageIndex].src;
-                lightboxCaption.textContent = allImages[currentImageIndex].caption;
+                const image = allImages[currentImageIndex];
+                lightboxImage.src = image.src;
+                lightboxCaption.textContent = image.caption;
                 lightboxCounter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
             }
         }
@@ -925,13 +875,25 @@
             updateLightbox();
         }
         
-        // ============ 页面功能 ============
+        // ============ 页面初始化 ============
         function initPage() {
+            console.log('开始初始化页面...');
+            
             // 初始化所有3D卡片
             const cardWraps = document.querySelectorAll('.card-wrap');
-            cardWraps.forEach(card => {
-                new Card3D(card);
-            });
+            console.log('找到卡片数量:', cardWraps.length);
+            
+            // 确保卡片完全加载后再初始化
+            setTimeout(() => {
+                cardWraps.forEach((card, index) => {
+                    try {
+                        new Card3D(card);
+                        console.log(`卡片 ${index + 1} 初始化成功`);
+                    } catch (error) {
+                        console.error(`卡片 ${index + 1} 初始化失败:`, error);
+                    }
+                });
+            }, 100);
             
             // 初始化大图查看器
             initLightbox();
@@ -946,8 +908,10 @@
             // 返回顶部功能
             initBackToTop();
             
-            // 预加载图片
-            preloadImages();
+            // 预加载背景图片
+            preloadBackgrounds();
+            
+            console.log('页面初始化完成');
         }
         
         function initLightbox() {
@@ -982,9 +946,17 @@
         }
         
         function updateBackground() {
-            const pcBg = document.getElementById('pcBg');
+            const mobileBg = document.querySelector('.bg-mobile');
+            const pcBg = document.querySelector('.bg-pc');
             const isPC = window.innerWidth >= 768;
-            pcBg.style.display = isPC ? 'block' : 'none';
+            
+            if (isPC) {
+                mobileBg.style.display = 'none';
+                pcBg.style.display = 'block';
+            } else {
+                mobileBg.style.display = 'block';
+                pcBg.style.display = 'none';
+            }
         }
         
         function initNavigation() {
@@ -1012,23 +984,27 @@
             });
             
             // 监听滚动更新导航状态
+            let scrollTimeout;
             window.addEventListener('scroll', function() {
-                const scrollPosition = window.scrollY + 100;
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.offsetHeight;
-                    const sectionId = section.getAttribute('id');
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    const scrollPosition = window.scrollY + 100;
                     
-                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                        navLinks.forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === `#${sectionId}`) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
+                    sections.forEach(section => {
+                        const sectionTop = section.offsetTop;
+                        const sectionHeight = section.offsetHeight;
+                        const sectionId = section.getAttribute('id');
+                        
+                        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                            navLinks.forEach(link => {
+                                link.classList.remove('active');
+                                if (link.getAttribute('href') === `#${sectionId}`) {
+                                    link.classList.add('active');
+                                }
+                            });
+                        }
+                    });
+                }, 100);
             });
         }
         
@@ -1051,26 +1027,32 @@
             });
         }
         
-        function preloadImages() {
-            const imagesToPreload = [
-                'picture/Text2.jpg',
-                'picture/suzumiya.png',
-                'picture/Yikun Gu1.png',
-                'picture/Yikun Gu2.jpg'
-            ];
+        function preloadBackgrounds() {
+            const mobileImg = new Image();
+            const pcImg = new Image();
             
-            imagesToPreload.forEach(src => {
-                const img = new Image();
-                img.src = src;
-                
-                img.onload = function() {
-                    console.log(`✅ 预加载成功: ${src}`);
-                };
-                
-                img.onerror = function() {
-                    console.warn(`❌ 预加载失败: ${src}`);
-                };
-            });
+            mobileImg.src = 'picture/Text2.jpg';
+            pcImg.src = 'picture/suzumiya.png';
+            
+            mobileImg.onload = function() {
+                console.log('✅ 移动端背景图加载成功');
+                document.querySelector('.bg-mobile').style.opacity = '0.4';
+            };
+            
+            pcImg.onload = function() {
+                console.log('✅ PC端背景图加载成功');
+                document.querySelector('.bg-pc').style.opacity = '0.4';
+            };
+            
+            mobileImg.onerror = function() {
+                console.warn('❌ 移动端背景图加载失败');
+                document.querySelector('.bg-mobile').style.display = 'none';
+            };
+            
+            pcImg.onerror = function() {
+                console.warn('❌ PC端背景图加载失败');
+                document.querySelector('.bg-pc').style.display = 'none';
+            };
         }
         
         // ============ 保护功能 ============
@@ -1084,19 +1066,10 @@
             
             // 禁止开发者工具
             document.addEventListener('keydown', function(e) {
-                const blockedKeys = {
-                    'F12': 123,
-                    'I': 73,
-                    'J': 74,
-                    'U': 85,
-                    'S': 83,
-                    'C': 67
-                };
-                
                 const isBlocked = 
                     (e.key === 'F12' || e.keyCode === 123) ||
-                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.keyCode === 73)) ||
-                    (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.keyCode === 74)) ||
+                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                    (e.ctrlKey && e.shiftKey && e.key === 'J') ||
                     (e.ctrlKey && e.key === 'u') ||
                     (e.ctrlKey && e.key === 's') ||
                     (e.ctrlKey && e.key === 'c');
@@ -1158,99 +1131,37 @@
         }
         
         // ============ 页面加载完成后初始化 ============
-        window.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM已加载，开始初始化...');
             initPage();
             initProtection();
             
-            console.log('🎨 3D卡片画廊已初始化');
-            console.log('📱 移动鼠标查看3D交互效果');
-            console.log('🖼️ 点击卡片查看大图');
-            
-            // 添加加载完成提示
+            // 显示初始化成功提示
             setTimeout(() => {
-                const hint = document.createElement('div');
-                hint.style.cssText = `
-                    position: fixed;
-                    bottom: 20px;
-                    right: 20px;
-                    background: rgba(93, 64, 55, 0.9);
-                    color: white;
-                    padding: 10px 15px;
-                    border-radius: 10px;
-                    font-size: 12px;
-                    z-index: 1000;
-                    animation: fadeInOut 3s ease forwards;
-                `;
-                hint.textContent = '✨ 移动鼠标体验3D卡片效果';
-                document.body.appendChild(hint);
-                
-                setTimeout(() => {
-                    if (hint.parentNode) {
-                        hint.remove();
-                    }
-                }, 3000);
-            }, 1000);
+                console.log('🎨 3D卡片画廊已初始化完成');
+                console.log('📱 移动鼠标查看3D交互效果');
+                console.log('🖼️ 点击卡片查看大图');
+            }, 500);
         });
         
-        // 防止页面缩放
+        // 移除可能引起问题的缩放限制
+        // 这些代码可能导致页面渲染问题，先注释掉
+        /*
         document.addEventListener('wheel', function(e) {
             if (e.ctrlKey) {
                 e.preventDefault();
             }
         }, { passive: false });
         
-        // 防止触摸缩放
         document.addEventListener('touchstart', function(e) {
             if (e.touches.length > 1) {
                 e.preventDefault();
             }
         }, { passive: false });
+        */
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

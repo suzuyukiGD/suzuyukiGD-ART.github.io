@@ -17,6 +17,24 @@
             justify-content: center;
             gap: 30px;
             margin: 40px 0;
+            align-items: flex-start;
+        }
+        
+        /* 3D卡片项目容器 */
+        .card-item {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 240px;
+        }
+        
+        /* 3D卡片说明文字 */
+        .card-item .image-caption {
+            margin-top: 10px;
+            color: #666;
+            font-style: italic;
+            font-size: 0.95em;
+            text-align: center;
+            padding: 0 10px;
         }
         
         .card-wrap {
@@ -490,6 +508,11 @@
             .card-info h3 {
                 font-size: 22px;
             }
+            
+            .card-item {
+                width: 200px;
+                margin-bottom: 20px;
+            }
         }
         
         /* 禁止复制提示样式 */
@@ -724,15 +747,21 @@
             <!-- Yikun作品区域 -->
             <section id="guyikun" class="artist-section">
                 <h2 class="artist-title">Yikun作品</h2>
+                
+                <h3 class="section-subtitle">3D卡片展示</h3>
                 <div class="card-container" id="yikunCards">
                     <!-- 卡片将通过JavaScript动态生成 -->
                 </div>
+                
+                <h3 class="section-subtitle">传统展示</h3>
                 <div class="gallery">
                     <div class="gallery-item">
                         <img src="./picture/Yikun Gu1.png" alt="顾以坤作品1" class="profile-img" data-caption="作品一：春日king">
+                        <div class="image-caption">作品一：春日king</div>
                     </div>
                     <div class="gallery-item">
                         <img src="./picture/Yikun Gu2.jpg" alt="顾以坤作品2" class="profile-img" data-caption="作品二：凉宫春日应援团广东支部部徽">
+                        <div class="image-caption">作品二：凉宫春日应援团广东支部部徽</div>
                     </div>
                 </div>
                 
@@ -804,6 +833,11 @@
             const container = document.getElementById('yikunCards');
             
             yikunCardsData.forEach((cardData, index) => {
+                // 创建卡片容器
+                const cardItem = document.createElement('div');
+                cardItem.className = 'card-item';
+                
+                // 创建卡片包装器
                 const cardWrap = document.createElement('div');
                 cardWrap.className = 'card-wrap';
                 
@@ -818,7 +852,15 @@
                     </div>
                 `;
                 
-                container.appendChild(cardWrap);
+                // 创建图片说明
+                const captionDiv = document.createElement('div');
+                captionDiv.className = 'image-caption';
+                captionDiv.textContent = cardData.caption;
+                
+                // 组装
+                cardItem.appendChild(cardWrap);
+                cardItem.appendChild(captionDiv);
+                container.appendChild(cardItem);
                 
                 // 为查看按钮添加点击事件
                 const viewBtn = cardWrap.querySelector('.card-view-btn');
@@ -857,10 +899,12 @@
                 const cardInfo = card.parentElement.querySelector('.card-info');
                 const title = cardInfo ? cardInfo.querySelector('h3').textContent : '';
                 const desc = cardInfo ? cardInfo.querySelector('p').textContent : '';
+                const cardItem = card.closest('.card-item');
+                const caption = cardItem ? cardItem.querySelector('.image-caption').textContent : '';
                 
                 return {
                     src: src,
-                    caption: `${title} - ${desc}`
+                    caption: caption || `${title} - ${desc}`
                 };
             }).filter(img => img.src); // 过滤掉没有src的
             
@@ -1061,7 +1105,89 @@
         
         // ============ 原有代码保持不变 ============
         // 导航链接点击效果
-        document
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('.nav-link').forEach(l => {
+                    l.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+        
+        // 返回顶部按钮平滑滚动
+        document.querySelectorAll('.back-to-top').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+                document.querySelectorAll('.nav-link').forEach(l => {
+                    l.classList.remove('active');
+                });
+                document.querySelector('.nav-link[href="#guyikun"]').classList.add('active');
+            });
+        });
+        
+        // 监听滚动，高亮当前可见的画师区域
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.artist-section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // 预加载背景图片
+        function preloadBackgrounds() {
+            const mobileImg = new Image();
+            const pcImg = new Image();
+            
+            mobileImg.src = 'picture/Text2.jpg';
+            pcImg.src = 'picture/suzumiya.png';
+            
+            mobileImg.onload = function() {
+                console.log('✅ 移动端背景图加载成功');
+            };
+            
+            pcImg.onload = function() {
+                console.log('✅ PC端背景图加载成功');
+            };
+            
+            mobileImg.onerror = function() {
+                console.warn('❌ 移动端背景图加载失败');
+            };
+            
+            pcImg.onerror = function() {
+                console.warn('❌ PC端背景图加载失败');
+            };
+        }
+        
+        // 初始化所有功能
+        window.addEventListener('load', function() {
+            preloadBackgrounds();
+            create3DCards();
+            initLightbox();
+            console.log('页面已加载，所有功能已启用');
+        });
+    </script>
+</body>
+</html>
+
 
 
 

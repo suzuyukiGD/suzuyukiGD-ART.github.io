@@ -4,6 +4,183 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>凉宫春日应援团广东支部画作展示</title>
     <style>
+        /* ============ 3D卡片效果样式 ============ */
+        :root {
+            --hoverEasing: cubic-bezier(0.23, 1, 0.32, 1);
+            --returnEasing: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+        }
+        
+        .card-container {
+            perspective: 1000px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .card-wrap {
+            width: 240px;
+            height: 320px;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px;
+        }
+        
+        .card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #333;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow:
+                rgba(0, 0, 0, 0.66) 0 30px 60px 0,
+                inset #333 0 0 0 5px,
+                inset rgba(255, 255, 255, 0.5) 0 0 0 6px;
+            transition: transform 1s var(--returnEasing), 
+                        box-shadow 1s var(--returnEasing);
+        }
+        
+        .card-bg {
+            opacity: 0.5;
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: calc(100% + 40px);
+            height: calc(100% + 40px);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            transition: 
+                opacity 1s var(--returnEasing),
+                transform 1s var(--returnEasing);
+            pointer-events: none;
+        }
+        
+        .card-info {
+            padding: 20px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            color: #fff;
+            transform: translateY(40%);
+            transition: transform 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+            z-index: 2;
+        }
+        
+        .card-info h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: rgba(0, 0, 0, 0.5) 0 10px 10px;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1),
+                       transform 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        
+        .card-info p {
+            opacity: 0;
+            transform: translateY(20px);
+            text-shadow: rgba(0, 0, 0, 1) 0 2px 3px;
+            line-height: 1.5;
+            font-size: 14px;
+            transition: opacity 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1),
+                       transform 0.6s 1.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+        
+        .card-info:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+            background-blend-mode: overlay;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: transform 5s 1s var(--returnEasing),
+                       opacity 5s 1s var(--returnEasing);
+            z-index: -1;
+        }
+        
+        /* 悬停效果 */
+        .card-wrap:hover .card {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow:
+                rgba(255, 255, 255, 0.2) 0 0 40px 5px,
+                rgba(255, 255, 255, 1) 0 0 0 1px,
+                rgba(0, 0, 0, 0.66) 0 30px 60px 0,
+                inset #333 0 0 0 5px,
+                inset white 0 0 0 6px;
+            transition: transform 0.6s var(--hoverEasing),
+                       box-shadow 0.6s var(--hoverEasing);
+        }
+        
+        .card-wrap:hover .card-bg {
+            opacity: 0.8;
+            transform: scale(1.05);
+            transition: 
+                opacity 0.6s var(--hoverEasing),
+                transform 0.6s var(--hoverEasing);
+        }
+        
+        .card-wrap:hover .card-info {
+            transform: translateY(0);
+            transition: transform 0.6s var(--hoverEasing);
+        }
+        
+        .card-wrap:hover .card-info h3,
+        .card-wrap:hover .card-info p {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s var(--hoverEasing),
+                       transform 0.6s var(--hoverEasing);
+        }
+        
+        .card-wrap:hover .card-info:after {
+            opacity: 1;
+            transform: translateY(0);
+            transition: transform 0.6s var(--hoverEasing),
+                       opacity 0.6s var(--hoverEasing);
+        }
+        
+        /* 卡片查看按钮 */
+        .card-view-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+        
+        .card-wrap:hover .card-view-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .card-view-btn:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+        
         /* 基础样式 */
         * {
             margin: 0;
@@ -15,6 +192,9 @@
             font-family: Arial, sans-serif;
             min-height: 100vh;
             width: 100%;
+            font-size: 14px;
+            background-color: #BCAAA4;
+            -webkit-font-smoothing: antialiased;
         }
         
         /* 移动端样式（默认）- 使用竖版背景图 */
@@ -70,6 +250,10 @@
             .bg-pc {
                 display: block;
             }
+            
+            .card-container {
+                gap: 40px;
+            }
         }
         
         /* 半透明遮罩层*/
@@ -96,7 +280,7 @@
             background-color: rgba(255, 255, 255, 0.85);
             border-radius: 10px;
             padding: 15px 30px;
-            max-width: 900px;
+            max-width: 1200px;
             margin: 20px auto;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(5px);
@@ -107,10 +291,11 @@
         
         .nav-title {
             text-align: center;
-            color: #333;
+            color: #5D4037;
             margin-bottom: 15px;
-            font-size: 1.2em;
-            font-weight: bold;
+            font-size: 28px;
+            font-weight: 700;
+            font-family: "Raleway", sans-serif;
         }
         
         .nav-links {
@@ -147,7 +332,7 @@
             background-color: rgba(255, 255, 255, 0.7);
             border-radius: 15px;
             padding: 30px;
-            max-width: 900px;
+            max-width: 1200px;
             margin: 20px auto;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(5px);
@@ -176,14 +361,16 @@
         /* 画师标题 */
         .artist-title {
             text-align: center;
-            color: #2c3e50;
+            color: #5D4037;
             margin-bottom: 25px;
-            font-size: 2em;
+            font-size: 2.2em;
             border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
+            font-family: "Raleway", sans-serif;
+            font-weight: 700;
         }
         
-        /* 图片样式 */
+        /* 传统图片样式 */
         .profile-img {
             display: block;
             max-width: 500px;
@@ -200,7 +387,7 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
         
-        /* 图片容器 */
+        /* 传统图片容器 */
         .gallery {
             display: flex;
             flex-direction: column;
@@ -288,6 +475,20 @@
             
             .profile-img {
                 max-width: 350px;
+            }
+            
+            .card-wrap {
+                width: 200px;
+                height: 280px;
+                margin: 10px;
+            }
+            
+            .card-info {
+                padding: 15px;
+            }
+            
+            .card-info h3 {
+                font-size: 22px;
             }
         }
         
@@ -469,6 +670,16 @@
             border-radius: 10px;
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
+        
+        /* 分区标题 */
+        .section-subtitle {
+            text-align: center;
+            color: #5D4037;
+            margin: 40px 0 20px;
+            font-size: 1.8em;
+            font-family: "Raleway", sans-serif;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>  
@@ -514,6 +725,12 @@
             <section id="guyikun" class="artist-section">
                 <h2 class="artist-title">Yikun作品</h2>
                 
+                <h3 class="section-subtitle">3D卡片展示</h3>
+                <div class="card-container" id="yikunCards">
+                    <!-- 卡片将通过JavaScript动态生成 -->
+                </div>
+                
+                <h3 class="section-subtitle">传统展示</h3>
                 <div class="gallery">
                     <div class="gallery-item">
                         <img src="./picture/Yikun Gu1.png" alt="顾以坤作品1" class="profile-img" data-caption="作品一：春日king">
@@ -568,6 +785,59 @@
     </div>
     
     <script>
+        // ============ 3D卡片数据 ============
+        const yikunCardsData = [
+            {
+                id: 1,
+                title: "春日King",
+                description: "简约线条展现凉宫春日的王者气质",
+                bgImage: "./picture/Yikun Gu1.png",
+                caption: "作品一：春日king"
+            },
+            {
+                id: 2,
+                title: "部徽设计",
+                description: "凉宫春日应援团广东支部部徽",
+                bgImage: "./picture/Yikun Gu2.jpg",
+                caption: "作品二：凉宫春日应援团广东支部部徽"
+            }
+        ];
+        
+        // ============ 3D卡片生成函数 ============
+        function create3DCards() {
+            const container = document.getElementById('yikunCards');
+            
+            yikunCardsData.forEach((cardData, index) => {
+                const cardWrap = document.createElement('div');
+                cardWrap.className = 'card-wrap';
+                
+                cardWrap.innerHTML = `
+                    <div class="card">
+                        <div class="card-bg" style="background-image: url('${cardData.bgImage}')"></div>
+                        <div class="card-info">
+                            <h3>${cardData.title}</h3>
+                            <p>${cardData.description}</p>
+                        </div>
+                        <button class="card-view-btn" data-index="${index}">查看大图</button>
+                    </div>
+                `;
+                
+                container.appendChild(cardWrap);
+                
+                // 为查看按钮添加点击事件
+                const viewBtn = cardWrap.querySelector('.card-view-btn');
+                viewBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    openLightbox(index);
+                });
+                
+                // 为整个卡片添加点击事件（查看大图）
+                cardWrap.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+        }
+        
         // ============ 大图查看器功能 ============
         let currentImageIndex = 0;
         let allImages = [];
@@ -575,10 +845,31 @@
         // 收集所有可查看大图的图片
         function collectImages() {
             const images = document.querySelectorAll('.profile-img');
-            allImages = Array.from(images).map(img => ({
+            const cardImages = document.querySelectorAll('.card-bg');
+            
+            // 收集传统图片
+            const traditionalImages = Array.from(images).map(img => ({
                 src: img.src,
                 caption: img.getAttribute('data-caption') || img.alt
             }));
+            
+            // 收集3D卡片背景图片
+            const cardBgImages = Array.from(cardImages).map((card, index) => {
+                const style = card.getAttribute('style') || '';
+                const bgMatch = style.match(/url\('([^']+)'\)/);
+                const src = bgMatch ? bgMatch[1] : '';
+                const cardInfo = card.parentElement.querySelector('.card-info');
+                const title = cardInfo ? cardInfo.querySelector('h3').textContent : '';
+                const desc = cardInfo ? cardInfo.querySelector('p').textContent : '';
+                
+                return {
+                    src: src,
+                    caption: `${title} - ${desc}`
+                };
+            }).filter(img => img.src); // 过滤掉没有src的
+            
+            // 合并两种图片
+            allImages = [...cardBgImages, ...traditionalImages];
         }
         
         // 打开大图查看器
@@ -596,7 +887,7 @@
             const lightboxCaption = document.getElementById('lightboxCaption');
             const lightboxCounter = document.getElementById('lightboxCounter');
             
-            if (allImages.length > 0) {
+            if (allImages.length > 0 && currentImageIndex < allImages.length) {
                 lightboxImage.src = allImages[currentImageIndex].src;
                 lightboxCaption.textContent = allImages[currentImageIndex].caption;
                 lightboxCounter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
@@ -623,10 +914,15 @@
         
         // 初始化大图查看器
         function initLightbox() {
-            // 为所有图片添加点击事件
+            // 为所有传统图片添加点击事件
             document.querySelectorAll('.profile-img').forEach((img, index) => {
                 img.style.cursor = 'pointer';
-                img.addEventListener('click', () => openLightbox(index));
+                img.addEventListener('click', () => {
+                    collectImages();
+                    // 计算在allImages中的正确索引（3D卡片图片排在前面）
+                    const cardCount = document.querySelectorAll('.card-bg').length;
+                    openLightbox(cardCount + index);
+                });
             });
             
             // 绑定关闭按钮
@@ -769,87 +1065,8 @@
         
         // ============ 原有代码保持不变 ============
         // 导航链接点击效果
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function() {
-                document.querySelectorAll('.nav-link').forEach(l => {
-                    l.classList.remove('active');
-                });
-                this.classList.add('active');
-            });
-        });
-        
-        // 返回顶部按钮平滑滚动
-        document.querySelectorAll('.back-to-top').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-                document.querySelectorAll('.nav-link').forEach(l => {
-                    l.classList.remove('active');
-                });
-                document.querySelector('.nav-link[href="#guyikun"]').classList.add('active');
-            });
-        });
-        
-        // 监听滚动，高亮当前可见的画师区域
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('.artist-section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            let currentSection = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
-                const sectionHeight = section.clientHeight;
-                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-                    currentSection = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').substring(1) === currentSection) {
-                    link.classList.add('active');
-                }
-            });
-        });
-        
-        // 预加载背景图片
-        function preloadBackgrounds() {
-            const mobileImg = new Image();
-            const pcImg = new Image();
-            
-            mobileImg.src = 'picture/Text2.jpg';
-            pcImg.src = 'picture/suzumiya.png';
-            
-            mobileImg.onload = function() {
-                console.log('✅ 移动端背景图加载成功');
-            };
-            
-            pcImg.onload = function() {
-                console.log('✅ PC端背景图加载成功');
-            };
-            
-            mobileImg.onerror = function() {
-                console.warn('❌ 移动端背景图加载失败');
-            };
-            
-            pcImg.onerror = function() {
-                console.warn('❌ PC端背景图加载失败');
-            };
-        }
-        
-        // 初始化所有功能
-        window.addEventListener('load', function() {
-            preloadBackgrounds();
-            initLightbox();
-            console.log('页面已加载，所有功能已启用');
-        });
-    </script>
-</body>
-</html>
+        document
+
 
 
 

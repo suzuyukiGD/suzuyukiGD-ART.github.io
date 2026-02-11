@@ -1109,6 +1109,59 @@
     object-position: 125% center !important;
     object-fit: contain !important;
 }
+        /* ===== 修复大图预览文字被图片覆盖问题 ===== */
+.lightbox-caption {
+    position: absolute !important;  /* 绝对定位 */
+    bottom: 30px !important;       /* 固定在底部 */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    max-width: 90% !important;
+    margin: 0 auto !important;
+    background: rgba(102, 102, 102, 0.85) !important;  /* 更不透明的背景 */
+    backdrop-filter: blur(7px) saturate(100%);
+    border: 1px solid #999999;
+    border-radius: 12px;
+    padding: 12px 24px !important;
+    color: white !important;
+    font-size: 1.1em !important;
+    text-align: center !important;
+    z-index: 10002 !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+    /* 确保文字不会太宽 */
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .lightbox-caption {
+        bottom: 20px !important;
+        padding: 8px 16px !important;
+        font-size: 0.9em !important;
+        max-width: 85% !important;
+        white-space: normal !important;  /* 移动端允许换行 */
+        line-height: 1.4 !important;
+    }
+}
+
+/* 确保图片容器不会影响文字定位 */
+.lightbox-container {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+/* 图片样式调整 */
+.lightbox-img {
+    max-width: 100% !important;
+    max-height: calc(80vh - 80px) !important;  /* 留出文字空间 */
+    object-fit: contain !important;
+    display: block !important;
+}
 
     </style>
     
@@ -2391,6 +2444,7 @@
     </script>
 </body>
 </html>
+
 
 
 

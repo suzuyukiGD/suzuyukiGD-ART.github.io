@@ -16,12 +16,12 @@
             font-family: "Raleway", Arial, sans-serif;
             min-height: 100vh;
             width: 100%;
-            margin: 0; /* 移除原来的margin */
+            margin: 0; 
             font-size: 14px;
             font-weight: 500;
             background-color: #BCAAA4;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden; /* 防止水平滚动 */
+            overflow-x: hidden; 
         }
         
         /* 动画曲线 */
@@ -89,7 +89,7 @@
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0.4;
-            display: none; /* 默认隐藏 */
+            display: none; 
         }
         
         /* PC端显示横版背景 */
@@ -227,7 +227,7 @@
         
         /* 卡片背景 */
         .card-bg {
-            opacity: 0.8; /* 提高默认透明度 */
+            opacity: 0.8; 
             position: absolute;
             top: 0;
             left: 0;
@@ -236,7 +236,7 @@
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
-            background-color: #333; /* 添加默认背景色 */
+            background-color: #333; 
             transition: 
                 opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
                 transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -528,7 +528,7 @@
             transition: transform 0.2s ease-out;
         }
         
-        /* 大图查看器样式 - 已修复遮挡问题 */
+        /* 大图查看器样式 */
         .lightbox-overlay {
             position: fixed;
             top: 0;
@@ -543,8 +543,8 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
-            touch-action: none; /* 禁止默认触摸行为 */
-            user-select: none; /* 禁止用户选择 */
+            touch-action: none; 
+            user-select: none;
         }
         
         .lightbox-overlay.active {
@@ -554,8 +554,8 @@
         
         .lightbox-container {
             position: relative;
-            width: 95%; /* 从90%改为95% */
-            height: 85vh; /* 从80vh改为85vh */
+            width: 95%; 
+            height: 85vh;
             animation: lightboxZoom 0.3s ease;
             overflow: hidden;
             cursor: grab;
@@ -575,8 +575,8 @@
         }
         
         .lightbox-img {
-            max-width: 90%; /* 添加最大宽度限制 */
-            max-height: 200vh; /* 从60vh改为70vh */
+            max-width: 90%;
+            max-height: 200vh; 
             display: block;
             margin: 0 auto;
             border-radius: 5px;
@@ -796,13 +796,13 @@
         /* 移动端大图查看器调整 */
         @media (max-width: 768px) {
             .lightbox-container {
-                width: 98%; /* 从95%改为98% */
-                height: 82vh; /* 从75vh改为82vh */
+                width: 98%; 
+                height: 82vh; 
             }
             
             .lightbox-img {
-                max-height: 65vh; /* 从50vh改为65vh */
-                max-width: 95%; /* 从90%改为95% */
+                max-height: 65vh; 
+                max-width: 95%; 
             }
             
             .lightbox-caption {
@@ -878,16 +878,16 @@
                 -moz-user-select: none !important;
                 -ms-user-select: none !important;
                 user-select: none !important;
-                pointer-events: none !important; /* 改为 none */
+                pointer-events: none !important; 
                 -webkit-user-drag: none !important;
                 user-drag: none !important;
             }
             
-            /* 防止图片被长按保存 - 修改保护层 */
+            /* 防止图片被长按保存 */
             .card-wrap {
                 position: relative;
-                touch-action: pan-y; /* 允许垂直滚动 */
-                -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
+                touch-action: pan-y; 
+                -webkit-overflow-scrolling: touch; 
             }
             
             .card-wrap::after {
@@ -898,11 +898,11 @@
                 width: 100%;
                 height: 100%;
                 z-index: 5;
-                pointer-events: none; /* 确保不阻止事件 */
-                background: transparent; /* 透明背景 */
+                pointer-events: none;
+                background: transparent;
             }
             
-            /* 在大图查看器中添加保护 - 修改 */
+            /* 在大图查看器中添加保护 */
             .lightbox-container::before {
                 content: '';
                 position: absolute;
@@ -911,7 +911,7 @@
                 width: 100%;
                 height: 100%;
                 z-index: 5;
-                pointer-events: none; /* 不阻止事件 */
+                pointer-events: none;
                 background: transparent;
             }
             
@@ -933,7 +933,7 @@
             }
             
             .card-wrap {
-                pointer-events: auto; /* 允许卡片容器接收事件 */
+                pointer-events: auto;
             }
             
             /* 修复图片保护层的触摸事件 */
@@ -983,7 +983,7 @@
                 -webkit-tap-highlight-color: transparent !important;
                 -webkit-user-drag: none !important;
                 user-drag: none !important;
-                pointer-events: none !important; /* 重要：设为none */
+                pointer-events: none !important;
             }
             
             /* 防止图片被系统级保存菜单 */
@@ -993,7 +993,7 @@
                 touch-action: pan-y;
             }
             
-            /* 保护层增强 - 修改为透明 */
+            /* 保护层增强 */
             .card::before {
                 content: '';
                 position: absolute;
@@ -1002,13 +1002,13 @@
                 width: 100%;
                 height: 100%;
                 z-index: 5;
-                background: transparent; /* 改为透明 */
-                pointer-events: none; /* 不阻止事件 */
+                background: transparent;
+                pointer-events: none;
             }
             
             /* 大图查看器额外保护 */
             .lightbox-overlay.active .lightbox-img {
-                pointer-events: auto; /* 在大图查看器中允许操作 */
+                pointer-events: auto;
             }
             
             .lightbox-overlay.active .lightbox-container::after {
@@ -2481,6 +2481,7 @@
     </script>
 </body>
 </html>
+
 
 
 

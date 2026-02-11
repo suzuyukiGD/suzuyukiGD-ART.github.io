@@ -925,17 +925,9 @@
                 z-index: 10;
             }
         }
-        /* 咕噜作品区的第一张卡片居中 */
-#gulu .cards-container {
-  position: relative;
-}
-
-#gulu .cards-container > .card-wrap:first-child {
-  flex: 0 0 100% !important;
-  max-width: 600px !important;
-  margin: 0 auto 40px !important;
-  display: flex;
-  justify-content: center;
+#gulu .cards-container > .card-wrap:first-child .card-bg {
+  background-position: center 20% !important; /* 向上调整20% */
+  background-size: contain !important; /* 改为contain保持完整显示 */
 }
 
 /* 响应式调整 */
@@ -2032,6 +2024,7 @@
     </script>
 </body>
 </html>
+
 
 
 

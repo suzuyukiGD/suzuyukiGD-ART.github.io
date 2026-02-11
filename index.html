@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -16,12 +17,12 @@
             font-family: "Raleway", Arial, sans-serif;
             min-height: 100vh;
             width: 100%;
-            margin: 0; /* 移除原来的margin */
+            margin: 0;
             font-size: 14px;
             font-weight: 500;
             background-color: #BCAAA4;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden; /* 防止水平滚动 */
+            overflow-x: hidden;
         }
         
         /* 动画曲线 */
@@ -89,7 +90,7 @@
             background-position: center;
             background-repeat: no-repeat;
             opacity: 0.4;
-            display: none; /* 默认隐藏 */
+            display: none;
         }
         
         /* PC端显示横版背景 */
@@ -227,7 +228,7 @@
         
         /* 卡片背景 */
         .card-bg {
-            opacity: 0.8; /* 提高默认透明度 */
+            opacity: 0.8;
             position: absolute;
             top: 0;
             left: 0;
@@ -236,7 +237,7 @@
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
-            background-color: #333; /* 添加默认背景色 */
+            background-color: #333;
             transition: 
                 opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
                 transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -543,8 +544,8 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
-            touch-action: none; /* 禁止默认触摸行为 */
-            user-select: none; /* 禁止用户选择 */
+            touch-action: none;
+            user-select: none;
         }
         
         .lightbox-overlay.active {
@@ -555,7 +556,7 @@
         .lightbox-container {
             position: relative;
             width: 90%;
-            height: 80vh; /* 设置固定高度，为底部留出空间 */
+            height: 80vh;
             animation: lightboxZoom 0.3s ease;
             overflow: hidden;
             cursor: grab;
@@ -576,7 +577,7 @@
         
         .lightbox-img {
             max-width: 100%;
-            max-height: 60vh; 
+            max-height: 60vh;
             display: block;
             margin: 0 auto;
             border-radius: 5px;
@@ -593,10 +594,10 @@
             padding: 10px 20px;
             font-size: 1.1em;
             max-width: 90%;
-            z-index: 10002; 
+            z-index: 10002;
             backdrop-filter: blur(10px);
             position: relative;
-            margin-bottom: 10px; 
+            margin-bottom: 10px;
             border-radius: 12px;
             background: rgba(102, 102, 102, 0.7);
             box-sizing: border-box;
@@ -646,7 +647,7 @@
         /* 缩放控制按钮 */
         .lightbox-zoom-controls {
             position: absolute;
-            bottom: 30px; 
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -861,7 +862,6 @@
                 right: 10px;
             }
             
-            /* 移动端陀螺仪提示 */
             .gyro-hint {
                 font-size: 11px;
                 padding: 6px 12px;
@@ -877,16 +877,15 @@
                 -moz-user-select: none !important;
                 -ms-user-select: none !important;
                 user-select: none !important;
-                pointer-events: none !important; /* 改为 none */
+                pointer-events: none !important;
                 -webkit-user-drag: none !important;
                 user-drag: none !important;
             }
             
-            /* 防止图片被长按保存 - 修改保护层 */
             .card-wrap {
                 position: relative;
-                touch-action: pan-y; /* 允许垂直滚动 */
-                -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
+                touch-action: pan-y;
+                -webkit-overflow-scrolling: touch;
             }
             
             .card-wrap::after {
@@ -897,11 +896,10 @@
                 width: 100%;
                 height: 100%;
                 z-index: 5;
-                pointer-events: none; /* 确保不阻止事件 */
-                background: transparent; /* 透明背景 */
+                pointer-events: none;
+                background: transparent;
             }
             
-            /* 在大图查看器中添加保护 - 修改 */
             .lightbox-container::before {
                 content: '';
                 position: absolute;
@@ -910,32 +908,28 @@
                 width: 100%;
                 height: 100%;
                 z-index: 5;
-                pointer-events: none; /* 不阻止事件 */
+                pointer-events: none;
                 background: transparent;
             }
             
-            /* 卡片容器允许滚动 */
             .cards-container {
                 touch-action: pan-y;
                 -webkit-overflow-scrolling: touch;
             }
             
-            /* 确保内容区域可以滚动 */
             .content-wrapper {
                 touch-action: pan-y;
                 -webkit-overflow-scrolling: touch;
             }
             
-            /* 允许卡片点击但阻止图片操作 */
             .card {
                 pointer-events: none;
             }
             
             .card-wrap {
-                pointer-events: auto; /* 允许卡片容器接收事件 */
+                pointer-events: auto;
             }
             
-            /* 修复图片保护层的触摸事件 */
             .card-bg {
                 pointer-events: none !important;
             }
@@ -972,7 +966,6 @@
         
         /* 移动端图片保护增强 */
         @media (max-width: 768px) {
-            /* 禁用所有图片的默认行为 */
             img, .card-bg, .card, .lightbox-img {
                 -webkit-touch-callout: none !important;
                 -webkit-user-select: none !important;
@@ -982,17 +975,15 @@
                 -webkit-tap-highlight-color: transparent !important;
                 -webkit-user-drag: none !important;
                 user-drag: none !important;
-                pointer-events: none !important; /* 重要：设为none */
+                pointer-events: none !important;
             }
             
-            /* 防止图片被系统级保存菜单 */
             .card-wrap {
                 -webkit-user-select: none;
                 user-select: none;
                 touch-action: pan-y;
             }
             
-            /* 保护层增强 - 修改为透明 */
             .card::before {
                 content: '';
                 position: absolute;
@@ -1001,13 +992,12 @@
                 width: 100%;
                 height: 100%;
                 z-index: 5;
-                background: transparent; /* 改为透明 */
-                pointer-events: none; /* 不阻止事件 */
+                background: transparent;
+                pointer-events: none;
             }
             
-            /* 大图查看器额外保护 */
             .lightbox-overlay.active .lightbox-img {
-                pointer-events: auto; /* 在大图查看器中允许操作 */
+                pointer-events: auto;
             }
             
             .lightbox-overlay.active .lightbox-container::after {
@@ -1023,7 +1013,6 @@
                 z-index: 10;
             }
             
-            /* 确保body可以滚动 */
             body, html {
                 overflow-x: hidden;
                 overflow-y: auto;
@@ -1245,7 +1234,7 @@
             </p>
             
             <div class="cards-container">
-                <!-- 卡片1 - 确保data-image属性正确 -->
+                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/1.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1283,7 +1272,7 @@
             </p>
             
             <div class="cards-container">
-                <!-- 卡片1 - 确保data-image属性正确 -->
+                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/1.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1321,7 +1310,7 @@
             </p>
             
             <div class="cards-container">
-                <!-- 卡片1 - 确保data-image属性正确 -->
+                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/gulu1.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1372,7 +1361,7 @@
             </p>
             
             <div class="cards-container">
-                <!-- 卡片1 - 确保data-image属性正确 -->
+                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/Potaro1.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1397,7 +1386,7 @@
             </p>
             
             <div class="cards-container">
-                <!-- 卡片1 - 确保data-image属性正确 -->
+                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/1.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1436,29 +1425,25 @@
                 this.cardWraps = [];
                 this.isGyroActive = false;
                 this.isGyroAvailable = false;
-                this.beta = 0;  // 左右倾斜
-                this.gamma = 0; // 前后倾斜
-                this.alpha = 0; // 设备方向
+                this.beta = 0;
+                this.gamma = 0;
+                this.alpha = 0;
                 this.animationId = null;
                 this.lastUpdateTime = 0;
-                this.updateInterval = 16; // 约60fps
+                this.updateInterval = 16;
                 
                 this.init();
             }
             
             init() {
-                // 收集所有卡片
                 this.cardWraps = document.querySelectorAll('.card-wrap');
                 
-                // 检查设备是否支持陀螺仪
                 if (window.DeviceOrientationEvent) {
                     console.log('📱 设备支持陀螺仪');
                     this.isGyroAvailable = true;
                     
-                    // 监听设备方向变化
                     window.addEventListener('deviceorientation', this.handleOrientation.bind(this));
                     
-                    // 自动为移动设备激活陀螺仪
                     if (this.isMobileDevice()) {
                         setTimeout(() => {
                             this.activateGyro();
@@ -1469,7 +1454,6 @@
                     this.isGyroAvailable = false;
                 }
                 
-                // 添加点击切换功能
                 this.addClickToggle();
             }
             
@@ -1478,10 +1462,8 @@
             }
             
             addClickToggle() {
-                // 点击卡片切换陀螺仪模式
                 this.cardWraps.forEach(cardWrap => {
                     cardWrap.addEventListener('click', (e) => {
-                        // 防止与卡片点击打开大图冲突
                         if (e.target.closest('.card-info') || e.target.closest('.lightbox-overlay')) {
                             return;
                         }
@@ -1516,11 +1498,9 @@
                     cardWrap.classList.add('gyro-active');
                 });
                 
-                // 开始动画循环
                 this.startAnimation();
                 console.log('🎮 陀螺仪3D效果已激活');
                 
-                // 显示提示
                 this.showHint('倾斜手机查看3D效果');
             }
             
@@ -1531,7 +1511,6 @@
                 this.cardWraps.forEach(cardWrap => {
                     cardWrap.classList.remove('gyro-active');
                     
-                    // 平滑恢复原始状态
                     const card = cardWrap.querySelector('.card');
                     const cardBg = cardWrap.querySelector('.card-bg');
                     
@@ -1542,7 +1521,6 @@
                         card.style.transform = 'rotateY(0deg) rotateX(0deg)';
                         cardBg.style.transform = 'translateX(0px) translateY(0px) scale(1.05)';
                         
-                        // 移除过渡效果
                         setTimeout(() => {
                             card.style.transition = '';
                             cardBg.style.transition = '';
@@ -1550,7 +1528,6 @@
                     }
                 });
                 
-                // 停止动画循环
                 this.stopAnimation();
                 console.log('🎮 陀螺仪3D效果已关闭');
             }
@@ -1558,12 +1535,10 @@
             handleOrientation(event) {
                 if (!this.isGyroActive) return;
                 
-                // 获取设备方向数据
-                this.beta = event.beta || 0;  // -180 到 180 (前后倾斜)
-                this.gamma = event.gamma || 0; // -90 到 90 (左右倾斜)
-                this.alpha = event.alpha || 0; // 0 到 360 (设备方向)
+                this.beta = event.beta || 0;
+                this.gamma = event.gamma || 0;
+                this.alpha = event.alpha || 0;
                 
-                // 数据有效时才更新
                 if (this.beta !== null && this.gamma !== null) {
                     this.updateCards();
                 }
@@ -1573,7 +1548,6 @@
                 if (this.animationId) return;
                 
                 const animate = (timestamp) => {
-                    // 限制更新频率
                     if (timestamp - this.lastUpdateTime >= this.updateInterval) {
                         this.updateCards();
                         this.lastUpdateTime = timestamp;
@@ -1594,32 +1568,23 @@
             updateCards() {
                 if (!this.isGyroActive) return;
                 
-                // 计算3D变换值
-                // 使用gamma控制左右旋转，beta控制前后旋转
-                const rotateY = (this.gamma / 90) * 25; // 左右倾斜控制Y轴旋转
-                const rotateX = (this.beta / 180) * 20;  // 前后倾斜控制X轴旋转
+                const rotateY = (this.gamma / 90) * 25;
+                const rotateX = (this.beta / 180) * 20;
                 
-                // 限制旋转角度
                 const limitedRotateY = Math.max(-25, Math.min(25, rotateY));
                 const limitedRotateX = Math.max(-20, Math.min(20, rotateX));
                 
-                // 计算背景偏移（与旋转方向相反）
                 const bgX = -this.gamma * 0.8;
                 const bgY = -this.beta * 0.5;
                 
-                // 应用3D效果到所有卡片
                 this.cardWraps.forEach(cardWrap => {
                     const card = cardWrap.querySelector('.card');
                     const cardBg = cardWrap.querySelector('.card-bg');
                     
                     if (card && cardBg) {
-                        // 应用3D旋转
                         card.style.transform = `rotateY(${limitedRotateY}deg) rotateX(${limitedRotateX}deg)`;
-                        
-                        // 应用背景偏移
                         cardBg.style.transform = `translateX(${bgX}px) translateY(${bgY}px) scale(1.05)`;
                         
-                        // 显示陀螺仪提示
                         const gyroHint = cardWrap.querySelector('.gyro-hint');
                         if (gyroHint && !gyroHint.classList.contains('show')) {
                             gyroHint.classList.add('show');
@@ -1674,13 +1639,11 @@
             }
             
             init() {
-                // PC端鼠标事件
                 this.element.addEventListener('mousemove', this.handleMouseMove.bind(this));
                 this.element.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
                 this.element.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
                 
                 this.element.addEventListener('click', (e) => {
-                    // 防止陀螺仪切换时触发大图查看器
                     if (!e.target.closest('.gyro-hint')) {
                         e.stopPropagation();
                         const cardWraps = Array.from(document.querySelectorAll('.card-wrap'));
@@ -1763,14 +1726,13 @@
             }
             
             currentImageIndex = index % allImages.length;
-            resetTransform(); // 重置变换
+            resetTransform();
             updateLightbox();
             
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
             
-            // 预加载相邻图片
             preloadAdjacentImages();
         }
         
@@ -1787,10 +1749,9 @@
                 lightboxCounter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
                 lightboxZoomInfo.textContent = `${Math.round(scale * 100)}%`;
                 
-                // 图片加载完成后重置位置
                 lightboxImage.onload = function() {
                     resetTransform();
-                    fitToScreen(); // 自动适应屏幕
+                    fitToScreen();
                 };
             }
         }
@@ -1831,7 +1792,6 @@
             
             lightboxImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
             
-            // 根据缩放级别调整容器光标
             if (scale > 1) {
                 lightboxContainer.classList.add('grabbing');
                 lightboxContainer.style.cursor = 'grab';
@@ -1862,21 +1822,28 @@
             }
         }
         
+        // ===== 修复方案一：统一缩放比例 =====
         function fitToScreen() {
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
             
             if (!lightboxImage.complete || lightboxImage.naturalWidth === 0) return;
             
-            const containerWidth = lightboxContainer.clientWidth;
-            const containerHeight = lightboxContainer.clientHeight;
+            // 统一使用容器宽度的85%作为标准宽度
+            const targetWidth = lightboxContainer.clientWidth * 0.85;
             const imageWidth = lightboxImage.naturalWidth;
-            const imageHeight = lightboxImage.naturalHeight;
             
-            const widthRatio = containerWidth / imageWidth;
-            const heightRatio = containerHeight / imageHeight;
+            // 所有图片都按相同宽度比例缩放
+            scale = targetWidth / imageWidth;
             
-            scale = Math.min(widthRatio, heightRatio);
+            // 如果图片高度超出容器，则限制最大高度
+            const scaledHeight = lightboxImage.naturalHeight * scale;
+            const maxHeight = lightboxContainer.clientHeight * 0.8;
+            
+            if (scaledHeight > maxHeight) {
+                scale = maxHeight / lightboxImage.naturalHeight;
+            }
+            
             translateX = 0;
             translateY = 0;
             
@@ -1892,7 +1859,6 @@
             updateZoomInfo();
         }
         
-        // 拖拽功能
         function startDrag(e) {
             if (scale <= 1) return;
             
@@ -1932,7 +1898,6 @@
             translateX = clientX - startX;
             translateY = clientY - startY;
             
-            // 限制拖拽范围
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
             
@@ -1958,7 +1923,6 @@
             document.removeEventListener('touchend', stopDrag);
         }
         
-        // 滚轮缩放
         function handleWheel(e) {
             e.preventDefault();
             
@@ -1969,8 +1933,8 @@
             }
         }
         
-        // 触控缩放
         let initialDistance = null;
+        let initialScale = null;
         
         function handleTouchStart(e) {
             if (e.touches.length === 2) {
@@ -2036,7 +2000,6 @@
             const cardWraps = document.querySelectorAll('.card-wrap');
             console.log('找到卡片数量:', cardWraps.length);
             
-            // 初始化陀螺仪效果（仅移动设备）
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 gyroEffect = new Gyro3DEffect();
             }
@@ -2063,7 +2026,6 @@
         }
         
         function initLightbox() {
-            // 按钮事件
             document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
             document.getElementById('lightboxPrev').addEventListener('click', showPrevImage);
             document.getElementById('lightboxNext').addEventListener('click', showNextImage);
@@ -2073,29 +2035,24 @@
             document.getElementById('lightboxZoomFit').addEventListener('click', fitToScreen);
             document.getElementById('lightboxZoomOriginal').addEventListener('click', zoomToOriginal);
             
-            // 拖拽事件
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
             
             lightboxImage.addEventListener('mousedown', startDrag);
             lightboxImage.addEventListener('touchstart', startDrag);
             
-            // 滚轮缩放
             lightboxContainer.addEventListener('wheel', handleWheel, { passive: false });
             
-            // 触控缩放
             lightboxContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
             lightboxContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
             lightboxContainer.addEventListener('touchend', handleTouchEnd);
             
-            // 点击遮罩层关闭
             document.getElementById('lightbox').addEventListener('click', function(e) {
                 if (e.target === this) {
                     closeLightbox();
                 }
             });
             
-            // 键盘控制
             document.addEventListener('keydown', function(e) {
                 const lightbox = document.getElementById('lightbox');
                 if (!lightbox.classList.contains('active')) return;
@@ -2284,23 +2241,19 @@
             }, 2000);
         }
         
-        // ============ 手机端图片保护功能 ============
         function initMobileImageProtection() {
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             if (!isMobile) return;
             
             console.log('📱 移动设备检测，启用图片保护功能');
             
-            // 移动端图片保护，但不阻止滚动
             const images = document.querySelectorAll('.card-bg, .lightbox-img');
             images.forEach(img => {
                 img.addEventListener('touchstart', function(e) {
                     if (e.target.closest('.lightbox-overlay.active')) {
-                        // 在大图查看器中允许触摸操作
                         return;
                     }
-                    // 不阻止默认行为，允许滚动
-                }, { passive: true }); // 改为 passive: true 允许滚动
+                }, { passive: true });
                 
                 img.addEventListener('contextmenu', function(e) {
                     e.preventDefault();
@@ -2308,24 +2261,20 @@
                 });
             });
             
-            // 修复双击保护但不阻止滚动
             let lastTouchEnd = 0;
             document.addEventListener('touchend', function(e) {
                 const now = Date.now();
                 if (now - lastTouchEnd <= 300) {
                     if (!e.target.closest('.lightbox-overlay.active')) {
-                        // 不阻止默认行为，但显示保护消息
                         setTimeout(() => {
                             showMobileProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
                         }, 100);
                     }
                 }
                 lastTouchEnd = now;
-            }, { passive: true }); // 改为 passive: true
+            }, { passive: true });
             
-            // 移除可能阻止滚动的事件监听器
             document.addEventListener('touchmove', function(e) {
-                // 允许默认的滚动行为
             }, { passive: true });
         }
         
@@ -2343,15 +2292,12 @@
             }, 1500);
         }
         
-        // ============ iOS陀螺仪权限请求 ============
         function requestGyroPermission() {
-            // iOS 13+ 需要请求陀螺仪权限
             if (typeof DeviceOrientationEvent.requestPermission === 'function' && 
                 /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 
                 console.log('📱 iOS设备，需要请求陀螺仪权限');
                 
-                // 显示提示
                 const permissionHint = document.createElement('div');
                 permissionHint.className = 'gyro-permission-hint';
                 permissionHint.innerHTML = '<div style="margin-bottom: 10px; font-size: 18px;">🚀 启用陀螺仪3D效果</div>' +
@@ -2359,20 +2305,17 @@
                                           '<div style="font-size: 12px; color: #D7CCC8; margin-top: 8px;">获得更佳的3D交互体验</div>';
                 document.body.appendChild(permissionHint);
                 
-                // 3秒后自动移除
                 setTimeout(() => {
                     if (permissionHint.parentNode) {
                         permissionHint.remove();
                     }
                 }, 5000);
                 
-                // 点击页面请求权限
                 const requestPermission = () => {
                     DeviceOrientationEvent.requestPermission()
                         .then(permissionState => {
                             if (permissionState === 'granted') {
                                 console.log('✅ 陀螺仪权限已授予');
-                                // 重新初始化陀螺仪
                                 if (gyroEffect) {
                                     gyroEffect.isGyroAvailable = true;
                                     gyroEffect.activateGyro();
@@ -2383,7 +2326,6 @@
                         })
                         .catch(console.error);
                     
-                    // 移除点击监听器
                     document.removeEventListener('click', requestPermission);
                     document.removeEventListener('touchstart', requestPermission);
                 };
@@ -2393,11 +2335,9 @@
             }
         }
         
-        // ============ 页面加载完成后初始化 ============
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM已加载，开始初始化...');
             
-            // 请求陀螺仪权限（iOS需要）
             if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 setTimeout(requestGyroPermission, 2000);
             }
@@ -2406,7 +2346,6 @@
             initProtection();
             initMobileImageProtection();
             
-            // 确保移动端可以滚动
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 document.body.style.overflow = 'auto';
                 document.body.style.webkitOverflowScrolling = 'touch';
@@ -2426,7 +2365,6 @@
     </script>
 </body>
 </html>
-
 
 
 

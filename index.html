@@ -51,7 +51,7 @@
             line-height: 1.6;
         }
         
-        /* 背景容器 - 修复：确保只有一个背景显示 */
+        /* 背景容器 */
         .bg-container {
             position: fixed;
             top: 0;
@@ -62,7 +62,7 @@
             overflow: hidden;
         }
         
-        /* 背景图片 - 修复：添加明确的类名 */
+        /* 背景图片 */
         .bg-mobile {
             position: absolute;
             top: 0;
@@ -194,7 +194,7 @@
             margin: 0 auto;
         }
         
-        /* 3D卡片样式 - 一行两张 */
+        /* 3D卡片样式 */
         .card-wrap {
             margin: 0;
             transform: perspective(1000px);
@@ -225,7 +225,7 @@
             will-change: transform;
         }
         
-        /* 卡片背景 - 修复：确保图片可见 */
+        /* 卡片背景 */
         .card-bg {
             opacity: 0.8; /* 提高默认透明度 */
             position: absolute;
@@ -544,7 +544,7 @@
         
         .lightbox-img {
             max-width: 100%;
-            max-height: 60vh; /* 减小图片高度，为描述留出空间 */
+            max-height: 60vh; 
             display: block;
             margin: 0 auto;
             border-radius: 5px;
@@ -554,7 +554,6 @@
             cursor: move;
         }
         
-        /* 修复：图片描述样式，防止被按钮遮挡 */
         .lightbox-caption {
             color: white;
             text-align: center;
@@ -612,10 +611,10 @@
             transform: scale(0.95);
         }
         
-        /* 缩放控制按钮 - 位置调整 */
+        /* 缩放控制按钮 */
         .lightbox-zoom-controls {
             position: absolute;
-            bottom: 30px; /* 向上移动，避免遮挡 */
+            bottom: 30px; 
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -989,8 +988,7 @@ button,
   }
 }
 #gulu .cards-container > .card-wrap:first-child .card-bg {
-  background-position: center 30% !important; /* 向上调整30% */
-  /* 保持原有的 cover，不改变图片裁切方式 */
+  background-position: center 30% !important; 
 }
 
 /* 悬停时也相应调整 */
@@ -1013,7 +1011,7 @@ button,
     <!-- 半透明遮罩 -->
     <div class="bg-overlay"></div>
     
-    <!-- 大图查看器 - 结构优化 -->
+    <!-- 大图查看器 -->
     <div class="lightbox-overlay" id="lightbox">
         <!-- 工具栏 -->
         <div class="lightbox-toolbar">
@@ -1214,7 +1212,7 @@ button,
         <section id="gulu" class="artist-section">
             <h2 class="artist-title">咕噜作品集</h2>
             <p class="artist-description">
-                广东支部美工组成员，十八线小画手，喜欢京阿尼all，谢谢喜欢我的画~
+                咕噜，凉宫春日应援团广东支部美工组成员，擅长运用平涂手法，融入对于作品的理解，希望创作更多有趣的凉宫春日系列作品，谢谢喜欢咕噜的画~
             </p>
             
             <div class="cards-container">
@@ -2085,6 +2083,7 @@ button,
     </script>
 </body>
 </html>
+
 
 
 

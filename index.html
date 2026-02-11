@@ -1104,6 +1104,11 @@
 #guyikun .cards-container > .card-wrap:first-child:hover .card-bg {
     background-position: 28% center !important;
 }
+        /* 修复大图预览模式广东支部旗帜图片右偏问题 - 精确匹配 */
+.lightbox-img[src*="Yikun Gu1.png"] {
+    object-position: 65% center !important;
+    object-fit: contain !important;
+}
 
     </style>
     
@@ -2386,6 +2391,7 @@
     </script>
 </body>
 </html>
+
 
 
 

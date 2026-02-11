@@ -554,8 +554,8 @@
         
         .lightbox-container {
             position: relative;
-            width: 90%;
-            height: 80vh; /* 设置固定高度，为底部留出空间 */
+            width: 95%; /* 从90%改为95% */
+            height: 85vh; /* 从80vh改为85vh */
             animation: lightboxZoom 0.3s ease;
             overflow: hidden;
             cursor: grab;
@@ -575,8 +575,8 @@
         }
         
         .lightbox-img {
-            max-width: 100%;
-            max-height: 100vh; 
+            max-width: 90%; /* 添加最大宽度限制 */
+            max-height: 70vh; /* 从60vh改为70vh */
             display: block;
             margin: 0 auto;
             border-radius: 5px;
@@ -796,12 +796,13 @@
         /* 移动端大图查看器调整 */
         @media (max-width: 768px) {
             .lightbox-container {
-                width: 95%;
-                height: 75vh;
+                width: 98%; /* 从95%改为98% */
+                height: 82vh; /* 从75vh改为82vh */
             }
             
             .lightbox-img {
-                max-height: 50vh;
+                max-height: 65vh; /* 从50vh改为65vh */
+                max-width: 95%; /* 从90%改为95% */
             }
             
             .lightbox-caption {
@@ -1034,7 +1035,7 @@
         /* 动态指针样式系统 */
         :root {
           --cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%235D4037" opacity="0.3"/><circle cx="12" cy="12" r="4" fill="%235D4037"/></svg>') 12 12, auto;
-          --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M14 2C7.373 2 2 7.373 2 14s5.373 12 12 12 12-5.373 12-12S20.627 2 14 2z" fill="%23FF4081" opacity="0.7"/><path d="M18.5 13.5l-4.5 4.5-4.5-4.5 1.5-1.5 3 3 3-3z" fill="white"/></svg>') 14 14, pointer;
+          --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M14 2C7.373 2 2 7.373 2 14s5.373 12 12 12 12-5.373 12-14S20.627 2 14 2z" fill="%23FF4081" opacity="0.7"/><path d="M18.5 13.5l-4.5 4.5-4.5-4.5 1.5-1.5 3 3 3-3z" fill="white"/></svg>') 14 14, pointer;
           --cursor-grab: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FFFFFF" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="%23000000"/></svg>') 16 16, grab;
           --cursor-grabbing: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FF4081" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="white"/></svg>') 16 16, grabbing;
         }
@@ -1127,6 +1128,7 @@
             <button id="lightboxZoomIn" title="放大">+</button>
             <button id="lightboxZoomOut" title="缩小">-</button>
             <button id="lightboxReset" title="重置">↺</button>
+            <button id="lightboxBestFit" title="最佳尺寸">⇲</button>
             <button id="lightboxClose" title="关闭">×</button>
         </div>
         
@@ -1787,10 +1789,23 @@
                 lightboxCounter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
                 lightboxZoomInfo.textContent = `${Math.round(scale * 100)}%`;
                 
-                // 图片加载完成后重置位置
+                // 图片加载完成后重置位置 - 修改这里
                 lightboxImage.onload = function() {
                     resetTransform();
-                    fitToScreen(); // 自动适应屏幕
+                    // 只有当图片非常大时才自动缩小
+                    const lightboxContainer = document.getElementById('lightboxContainer');
+                    
+                    if (this.naturalWidth > lightboxContainer.clientWidth * 1.5 || 
+                        this.naturalHeight > lightboxContainer.clientHeight * 1.5) {
+                        fitToScreen();
+                    } else {
+                        // 图片不大，保持原始尺寸或稍微放大
+                        scale = Math.min(1.2, Math.max(1, 
+                            Math.min(lightboxContainer.clientWidth / this.naturalWidth, 
+                                   lightboxContainer.clientHeight / this.naturalHeight) * 1.1));
+                        updateImageTransform();
+                        updateZoomInfo();
+                    }
                 };
             }
         }
@@ -1876,7 +1891,15 @@
             const widthRatio = containerWidth / imageWidth;
             const heightRatio = containerHeight / imageHeight;
             
-            scale = Math.min(widthRatio, heightRatio);
+            // 修改这里：只有当图片比容器大时才缩小，否则保持原尺寸或放大
+            if (imageWidth <= containerWidth && imageHeight <= containerHeight) {
+                // 图片比容器小，稍微放大到合适尺寸
+                scale = Math.min(widthRatio, heightRatio) * 0.9;
+            } else {
+                // 图片比容器大，适当缩小以适应
+                scale = Math.min(widthRatio, heightRatio) * 0.9; // 乘以0.9给边框留点空间
+            }
+            
             translateX = 0;
             translateY = 0;
             
@@ -1888,6 +1911,32 @@
             scale = 1;
             translateX = 0;
             translateY = 0;
+            updateImageTransform();
+            updateZoomInfo();
+        }
+        
+        // 新增：最佳尺寸函数
+        function zoomToBestFit() {
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxContainer = document.getElementById('lightboxContainer');
+            
+            if (!lightboxImage.complete || lightboxImage.naturalWidth === 0) return;
+            
+            const containerWidth = lightboxContainer.clientWidth;
+            const containerHeight = lightboxContainer.clientHeight;
+            const imageWidth = lightboxImage.naturalWidth;
+            const imageHeight = lightboxImage.naturalHeight;
+            
+            const widthRatio = containerWidth / imageWidth;
+            const heightRatio = containerHeight / imageHeight;
+            
+            // 选择最佳的缩放比例，让图片尽可能大但又完全可见
+            scale = Math.min(widthRatio, heightRatio) * 0.95; // 留5%的边距
+            
+            // 居中显示
+            translateX = 0;
+            translateY = 0;
+            
             updateImageTransform();
             updateZoomInfo();
         }
@@ -2070,6 +2119,7 @@
             document.getElementById('lightboxZoomIn').addEventListener('click', zoomIn);
             document.getElementById('lightboxZoomOut').addEventListener('click', zoomOut);
             document.getElementById('lightboxReset').addEventListener('click', resetTransform);
+            document.getElementById('lightboxBestFit').addEventListener('click', zoomToBestFit);
             document.getElementById('lightboxZoomFit').addEventListener('click', fitToScreen);
             document.getElementById('lightboxZoomOriginal').addEventListener('click', zoomToOriginal);
             
@@ -2125,6 +2175,10 @@
                         resetTransform();
                         break;
                     case '1':
+                        e.preventDefault();
+                        zoomToBestFit();
+                        break;
+                    case '2':
                         e.preventDefault();
                         fitToScreen();
                         break;
@@ -2417,6 +2471,7 @@
                 console.log('📱 移动设备支持陀螺仪3D效果');
                 console.log('🎮 手机端：倾斜手机触发3D效果');
                 console.log('🖱️  PC端：移动鼠标触发3D效果');
+                console.log('🖼️  大图查看器已优化');
             }, 500);
         });
         

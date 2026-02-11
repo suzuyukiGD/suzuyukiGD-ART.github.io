@@ -1162,6 +1162,68 @@
         max-width: 85% !important;
     }
 }
+        /* ===== 移动端大图预览优化 ===== */
+@media (max-width: 768px) {
+    .lightbox-container {
+        width: 100% !important;
+        height: 85vh !important;  /* 增加高度 */
+    }
+    
+    .lightbox-img {
+        max-width: 100% !important;
+        max-height: none !important;  /* 移除高度限制 */
+        object-fit: contain !important;
+    }
+    
+    .lightbox-caption {
+        bottom: 70px !important;
+        font-size: 14px !important;
+        padding: 8px 16px !important;
+        max-width: 90% !important;
+        white-space: nowrap !important;
+        background: rgba(102, 102, 102, 0.9) !important;
+    }
+    
+    .lightbox-zoom-controls {
+        bottom: 20px !important;
+        padding: 8px 12px !important;
+        background: rgba(0, 0, 0, 0.8) !important;
+    }
+    
+    .lightbox-counter {
+        top: 15px !important;
+        font-size: 14px !important;
+        padding: 6px 16px !important;
+        background: rgba(0, 0, 0, 0.7) !important;
+    }
+    
+    .lightbox-zoom-info {
+        top: 15px !important;
+        left: 15px !important;
+        font-size: 14px !important;
+        padding: 6px 16px !important;
+        background: rgba(0, 0, 0, 0.7) !important;
+    }
+}
+
+/* 小屏手机优化 */
+@media (max-width: 480px) {
+    .lightbox-container {
+        height: 80vh !important;
+    }
+    
+    .lightbox-caption {
+        bottom: 65px !important;
+        font-size: 12px !important;
+        padding: 6px 12px !important;
+    }
+    
+    .lightbox-zoom-controls button {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 16px !important;
+    }
+}
 
     </style>
     
@@ -1891,102 +1953,65 @@
         
         // ===== 修复方案：默认100%显示，超出屏幕时自动缩小以适应屏幕 =====
         function fitToScreen() {
-            const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            
-            if (!lightboxImage.complete || lightboxImage.naturalWidth === 0) return;
-            
-            // 先设置为100%原始尺寸
-            scale = 1;
-            
-            // 获取图片和容器的尺寸
-            const imageWidth = lightboxImage.naturalWidth;
-            const imageHeight = lightboxImage.naturalHeight;
-            const containerWidth = lightboxContainer.clientWidth;
-            const containerHeight = lightboxContainer.clientHeight;
-            
-            // 计算水平和垂直方向的缩放比例（留出边距）
-            const widthRatio = (containerWidth * 0.9) / imageWidth;
-            const heightRatio = (containerHeight * 0.8) / imageHeight;
-            
-            // 如果图片超出屏幕，则缩小到刚好完整显示
-            if (widthRatio < 1 || heightRatio < 1) {
-                scale = Math.min(widthRatio, heightRatio);
-            }
-            
-            translateX = 0;
-            translateY = 0;
-            
-            updateImageTransform();
-            updateZoomInfo();
-        }
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxContainer = document.getElementById('lightboxContainer');
+    
+    if (!lightboxImage.complete || lightboxImage.naturalWidth === 0) return;
+    
+    // 先设置为100%原始尺寸
+    scale = 1;
+    
+    // 获取图片和容器的尺寸
+    const imageWidth = lightboxImage.naturalWidth;
+    const imageHeight = lightboxImage.naturalHeight;
+    const containerWidth = lightboxContainer.clientWidth;
+    const containerHeight = lightboxContainer.clientHeight;
+    
+    // 判断是否为移动端
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // 计算缩放比例 - 移动端使用更宽松的限制
+    let widthRatio, heightRatio;
+    
+    if (isMobile) {
+        // 移动端：图片尽量铺满屏幕，只留少量边距
+        widthRatio = (containerWidth * 0.95) / imageWidth;
+        heightRatio = (containerHeight * 0.85) / imageHeight;  // 留出文字和按钮的空间
+    } else {
+        // PC端：保持原来的比例
+        widthRatio = (containerWidth * 0.9) / imageWidth;
+        heightRatio = (containerHeight * 0.8) / imageHeight;
+    }
+    
+    // 如果图片超出屏幕，则缩小到刚好完整显示
+    if (widthRatio < 1 || heightRatio < 1) {
+        scale = Math.min(widthRatio, heightRatio);
         
-        function zoomToOriginal() {
-            scale = 1;
-            translateX = 0;
-            translateY = 0;
-            updateImageTransform();
-            updateZoomInfo();
-            
-            // 检查是否需要缩小以适应屏幕
-            const lightboxImage = document.getElementById('lightboxImage');
-            if (lightboxImage.complete && lightboxImage.naturalWidth > 0) {
-                fitToScreen();
+        // 移动端：如果图片特别小，不要过度缩小
+        if (isMobile && scale < 0.5) {
+            scale = Math.max(scale, 0.6);  // 最小不低于60%
+        }
+    } else {
+        // 图片小于屏幕时，移动端可以适当放大一点
+        if (isMobile) {
+            // 如果图片太小，可以放大到屏幕宽度的80%
+            const maxScale = Math.min(
+                (containerWidth * 0.8) / imageWidth,
+                (containerHeight * 0.7) / imageHeight,
+                1.5  // 最大放大1.5倍
+            );
+            if (maxScale > 1) {
+                scale = Math.min(maxScale, 1.2);  // 最多放大到1.2倍
             }
         }
-        
-        function startDrag(e) {
-            if (scale <= 1) return;
-            
-            isDragging = true;
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            lightboxContainer.style.cursor = 'grabbing';
-            
-            if (e.type === 'mousedown') {
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
-                document.addEventListener('mousemove', drag);
-                document.addEventListener('mouseup', stopDrag);
-            } else if (e.type === 'touchstart') {
-                const touch = e.touches[0];
-                startX = touch.clientX - translateX;
-                startY = touch.clientY - translateY;
-                document.addEventListener('touchmove', drag);
-                document.addEventListener('touchend', stopDrag);
-            }
-        }
-        
-        function drag(e) {
-            if (!isDragging) return;
-            
-            e.preventDefault();
-            
-            let clientX, clientY;
-            if (e.type === 'mousemove') {
-                clientX = e.clientX;
-                clientY = e.clientY;
-            } else if (e.type === 'touchmove') {
-                const touch = e.touches[0];
-                clientX = touch.clientX;
-                clientY = touch.clientY;
-            }
-            
-            translateX = clientX - startX;
-            translateY = clientY - startY;
-            
-            const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            
-            const scaledWidth = lightboxImage.naturalWidth * scale;
-            const scaledHeight = lightboxImage.naturalHeight * scale;
-            const maxX = Math.max(0, (scaledWidth - lightboxContainer.clientWidth) / 2);
-            const maxY = Math.max(0, (scaledHeight - lightboxContainer.clientHeight) / 2);
-            
-            translateX = Math.max(-maxX, Math.min(maxX, translateX));
-            translateY = Math.max(-maxY, Math.min(maxY, translateY));
-            
-            updateImageTransform();
-        }
+    }
+    
+    translateX = 0;
+    translateY = 0;
+    
+    updateImageTransform();
+    updateZoomInfo();
+}
         
         function stopDrag() {
             isDragging = false;
@@ -2444,6 +2469,7 @@
     </script>
 </body>
 </html>
+
 
 
 

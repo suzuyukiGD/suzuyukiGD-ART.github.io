@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -926,6 +925,26 @@
                 z-index: 10;
             }
         }
+        /* 咕噜作品区的第一张卡片居中 */
+#gulu .cards-container {
+  position: relative;
+}
+
+#gulu .cards-container > .card-wrap:first-child {
+  flex: 0 0 100% !important;
+  max-width: 600px !important;
+  margin: 0 auto 40px !important;
+  display: flex;
+  justify-content: center;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  #gulu .cards-container > .card-wrap:first-child {
+    max-width: 100% !important;
+    margin: 0 auto 30px !important;
+  }
+}
     </style>
     
     <!-- 添加Google字体 -->
@@ -2013,6 +2032,7 @@
     </script>
 </body>
 </html>
+
 
 
 

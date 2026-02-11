@@ -926,8 +926,13 @@
             }
         }
 #gulu .cards-container > .card-wrap:first-child .card-bg {
-  background-position: center 20% !important; /* 向上调整20% */
-  background-size: contain !important; /* 改为contain保持完整显示 */
+  background-position: center 30% !important; /* 向上调整30% */
+  /* 保持原有的 cover，不改变图片裁切方式 */
+}
+
+/* 悬停时也相应调整 */
+#gulu .cards-container > .card-wrap:first-child:hover .card-bg {
+  background-position: center 28% !important;
 }
 
     </style>
@@ -2017,6 +2022,7 @@
     </script>
 </body>
 </html>
+
 
 
 

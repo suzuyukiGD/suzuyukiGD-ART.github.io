@@ -1822,28 +1822,33 @@
             }
         }
         
-        // ===== 修复方案一：统一缩放比例 =====
+        // ===== 方案一：固定默认缩放为100% =====
         function fitToScreen() {
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
             
             if (!lightboxImage.complete || lightboxImage.naturalWidth === 0) return;
             
-            // 统一使用容器宽度的85%作为标准宽度
-            const targetWidth = lightboxContainer.clientWidth * 0.85;
+            // 直接设置为100%原始尺寸
+            scale = 1;
+            
+            // 获取图片和容器尺寸
             const imageWidth = lightboxImage.naturalWidth;
+            const imageHeight = lightboxImage.naturalHeight;
+            const containerWidth = lightboxContainer.clientWidth;
+            const containerHeight = lightboxContainer.clientHeight;
             
-            // 所有图片都按相同宽度比例缩放
-            scale = targetWidth / imageWidth;
-            
-            // 如果图片高度超出容器，则限制最大高度
-            const scaledHeight = lightboxImage.naturalHeight * scale;
-            const maxHeight = lightboxContainer.clientHeight * 0.8;
-            
-            if (scaledHeight > maxHeight) {
-                scale = maxHeight / lightboxImage.naturalHeight;
+            // 如果图片太大超出屏幕，才进行缩小
+            if (imageWidth > containerWidth || imageHeight > containerHeight) {
+                // 计算适应屏幕的缩放比例
+                const scaleByWidth = containerWidth / imageWidth;
+                const scaleByHeight = containerHeight / imageHeight;
+                
+                // 取较小的比例，确保图片完全显示在屏幕内，留5%边距
+                scale = Math.min(scaleByWidth, scaleByHeight) * 0.95;
             }
             
+            // 重置位置
             translateX = 0;
             translateY = 0;
             
@@ -2365,7 +2370,6 @@
     </script>
 </body>
 </html>
-
 
 
 

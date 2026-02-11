@@ -802,7 +802,8 @@
             }
         }
         
-        /* 移动端图片保护样式 */
+        /* ============ 修复移动端滑动问题 ============ */
+        /* 修改移动端图片保护样式 */
         @media (max-width: 768px) {
             .card-bg, .card, .lightbox-img, img {
                 -webkit-touch-callout: none !important;
@@ -810,14 +811,16 @@
                 -moz-user-select: none !important;
                 -ms-user-select: none !important;
                 user-select: none !important;
-                pointer-events: auto !important;
+                pointer-events: none !important; /* 改为 none */
                 -webkit-user-drag: none !important;
                 user-drag: none !important;
             }
             
-            /* 防止图片被长按保存 */
+            /* 防止图片被长按保存 - 修改保护层 */
             .card-wrap {
                 position: relative;
+                touch-action: pan-y; /* 允许垂直滚动 */
+                -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
             }
             
             .card-wrap::after {
@@ -828,10 +831,11 @@
                 width: 100%;
                 height: 100%;
                 z-index: 5;
-                pointer-events: none;
+                pointer-events: none; /* 确保不阻止事件 */
+                background: transparent; /* 透明背景 */
             }
             
-            /* 在大图查看器中添加保护 */
+            /* 在大图查看器中添加保护 - 修改 */
             .lightbox-container::before {
                 content: '';
                 position: absolute;
@@ -840,7 +844,34 @@
                 width: 100%;
                 height: 100%;
                 z-index: 5;
+                pointer-events: none; /* 不阻止事件 */
+                background: transparent;
+            }
+            
+            /* 卡片容器允许滚动 */
+            .cards-container {
+                touch-action: pan-y;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* 确保内容区域可以滚动 */
+            .content-wrapper {
+                touch-action: pan-y;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* 允许卡片点击但阻止图片操作 */
+            .card {
                 pointer-events: none;
+            }
+            
+            .card-wrap {
+                pointer-events: auto; /* 允许卡片容器接收事件 */
+            }
+            
+            /* 修复图片保护层的触摸事件 */
+            .card-bg {
+                pointer-events: none !important;
             }
         }
         
@@ -885,15 +916,17 @@
                 -webkit-tap-highlight-color: transparent !important;
                 -webkit-user-drag: none !important;
                 user-drag: none !important;
+                pointer-events: none !important; /* 重要：设为none */
             }
             
             /* 防止图片被系统级保存菜单 */
             .card-wrap {
                 -webkit-user-select: none;
                 user-select: none;
+                touch-action: pan-y;
             }
             
-            /* 保护层增强 */
+            /* 保护层增强 - 修改为透明 */
             .card::before {
                 content: '';
                 position: absolute;
@@ -902,13 +935,13 @@
                 width: 100%;
                 height: 100%;
                 z-index: 5;
-                background: transparent;
-                pointer-events: none;
+                background: transparent; /* 改为透明 */
+                pointer-events: none; /* 不阻止事件 */
             }
             
             /* 大图查看器额外保护 */
             .lightbox-overlay.active .lightbox-img {
-                pointer-events: auto;
+                pointer-events: auto; /* 在大图查看器中允许操作 */
             }
             
             .lightbox-overlay.active .lightbox-container::after {
@@ -923,78 +956,88 @@
                 font-size: 12px;
                 z-index: 10;
             }
+            
+            /* 确保body可以滚动 */
+            body, html {
+                overflow-x: hidden;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
         }
+        
         /* 动态指针样式系统 */
-:root {
-  --cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%235D4037" opacity="0.3"/><circle cx="12" cy="12" r="4" fill="%235D4037"/></svg>') 12 12, auto;
-  --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M14 2C7.373 2 2 7.373 2 14s5.373 12 12 12 12-5.373 12-12S20.627 2 14 2z" fill="%23FF4081" opacity="0.7"/><path d="M18.5 13.5l-4.5 4.5-4.5-4.5 1.5-1.5 3 3 3-3z" fill="white"/></svg>') 14 14, pointer;
-  --cursor-grab: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FFFFFF" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="%23000000"/></svg>') 16 16, grab;
-  --cursor-grabbing: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FF4081" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="white"/></svg>') 16 16, grabbing;
-}
+        :root {
+          --cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%235D4037" opacity="0.3"/><circle cx="12" cy="12" r="4" fill="%235D4037"/></svg>') 12 12, auto;
+          --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M14 2C7.373 2 2 7.373 2 14s5.373 12 12 12 12-5.373 12-12S20.627 2 14 2z" fill="%23FF4081" opacity="0.7"/><path d="M18.5 13.5l-4.5 4.5-4.5-4.5 1.5-1.5 3 3 3-3z" fill="white"/></svg>') 14 14, pointer;
+          --cursor-grab: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FFFFFF" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="%23000000"/></svg>') 16 16, grab;
+          --cursor-grabbing: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FF4081" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="white"/></svg>') 16 16, grabbing;
+        }
 
-/* 应用指针样式 */
-body {
-  cursor: var(--cursor-default);
-}
+        /* 应用指针样式 */
+        body {
+          cursor: var(--cursor-default);
+        }
 
-/* 可交互元素 */
-.card-wrap {
-  cursor: var(--cursor-default);
-}
+        /* 可交互元素 */
+        .card-wrap {
+          cursor: var(--cursor-default);
+        }
 
-.card-wrap:hover {
-  cursor: var(--cursor-pointer);
-}
+        .card-wrap:hover {
+          cursor: var(--cursor-pointer);
+        }
 
-/* 导航链接 */
-.nav-link,
-.back-to-top {
-  cursor: var(--cursor-pointer) !important;
-}
+        /* 导航链接 */
+        .nav-link,
+        .back-to-top {
+          cursor: var(--cursor-pointer) !important;
+        }
 
-/* 大图查看器 */
-.lightbox-container {
-  cursor: var(--cursor-grab);
-}
+        /* 大图查看器 */
+        .lightbox-container {
+          cursor: var(--cursor-grab);
+        }
 
-.lightbox-container.grabbing {
-  cursor: var(--cursor-grabbing);
-}
+        .lightbox-container.grabbing {
+          cursor: var(--cursor-grabbing);
+        }
 
-/* 按钮 */
-button,
-.lightbox-toolbar button,
-.lightbox-zoom-controls button,
-.lightbox-nav {
-  cursor: var(--cursor-pointer);
-}
+        /* 按钮 */
+        button,
+        .lightbox-toolbar button,
+        .lightbox-zoom-controls button,
+        .lightbox-nav {
+          cursor: var(--cursor-pointer);
+        }
 
-/* 文字选择区域 */
-.artist-description,
-.card-info p,
-.page-subtitle {
-  cursor: text;
-}
+        /* 文字选择区域 */
+        .artist-description,
+        .card-info p,
+        .page-subtitle {
+          cursor: text;
+        }
 
-/* 移动端恢复默认指针 */
-@media (max-width: 768px) {
-  body,
-  .card-wrap,
-  .card-wrap:hover,
-  .nav-link,
-  .back-to-top,
-  button {
-    cursor: auto;
-  }
-}
-#gulu .cards-container > .card-wrap:first-child .card-bg {
-  background-position: center 30% !important; 
-}
+        /* 移动端恢复默认指针 */
+        @media (max-width: 768px) {
+          body,
+          .card-wrap,
+          .card-wrap:hover,
+          .nav-link,
+          .back-to-top,
+          button {
+            cursor: auto;
+          }
+        }
+        
+        /* 咕噜作品区第一张图片背景位置调整 */
+        #gulu .cards-container > .card-wrap:first-child .card-bg {
+          background-position: center 30% !important; 
+        }
 
-/* 悬停时也相应调整 */
-#gulu .cards-container > .card-wrap:first-child:hover .card-bg {
-  background-position: center 28% !important;
-}
+        /* 悬停时也相应调整 */
+        #gulu .cards-container > .card-wrap:first-child:hover .card-bg {
+          background-position: center 28% !important;
+        }
 
     </style>
     
@@ -1222,7 +1265,7 @@ button,
                     <div class="card">
                         <div class="card-bg"></div>
                         <div class="card-info">
-                            <h1>Yuki“请选择我”</h1>
+                            <h1>Yuki"请选择我"</h1>
                             <p>可以，选择我吗？</p>
                         </div>
                     </div>
@@ -1979,6 +2022,7 @@ button,
             
             console.log('📱 移动设备检测，启用图片保护功能');
             
+            // 移动端图片保护，但不阻止滚动
             const images = document.querySelectorAll('.card-bg, .lightbox-img');
             images.forEach(img => {
                 img.addEventListener('touchstart', function(e) {
@@ -1986,8 +2030,8 @@ button,
                         // 在大图查看器中允许触摸操作
                         return;
                     }
-                    e.preventDefault();
-                }, { passive: false });
+                    // 不阻止默认行为，允许滚动
+                }, { passive: true }); // 改为 passive: true 允许滚动
                 
                 img.addEventListener('contextmenu', function(e) {
                     e.preventDefault();
@@ -1995,34 +2039,25 @@ button,
                 });
             });
             
+            // 修复双击保护但不阻止滚动
             let lastTouchEnd = 0;
             document.addEventListener('touchend', function(e) {
                 const now = Date.now();
                 if (now - lastTouchEnd <= 300) {
                     if (!e.target.closest('.lightbox-overlay.active')) {
-                        e.preventDefault();
-                        showMobileProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
+                        // 不阻止默认行为，但显示保护消息
+                        setTimeout(() => {
+                            showMobileProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
+                        }, 100);
                     }
                 }
                 lastTouchEnd = now;
-            }, { passive: false });
+            }, { passive: true }); // 改为 passive: true
             
-            const observer = new MutationObserver((mutations) => {
-                mutations.forEach((mutation) => {
-                    if (mutation.addedNodes.length) {
-                        mutation.addedNodes.forEach((node) => {
-                            if (node.nodeType === 1 && (node.tagName === 'IMG' || node.classList.contains('card-bg'))) {
-                                addImageProtection(node);
-                            }
-                        });
-                    }
-                });
-            });
-            
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
+            // 移除可能阻止滚动的事件监听器
+            document.addEventListener('touchmove', function(e) {
+                // 允许默认的滚动行为
+            }, { passive: true });
         }
         
         function addImageProtection(imgElement) {
@@ -2032,6 +2067,7 @@ button,
             imgElement.style.webkitUserDrag = 'none';
             imgElement.style.userDrag = 'none';
             
+            // 修改为不阻止滚动
             imgElement.addEventListener('touchstart', function(e) {
                 if (e.target.closest('.lightbox-overlay.active')) return;
                 
@@ -2047,7 +2083,7 @@ button,
                 
                 imgElement.addEventListener('touchend', clearTimer, { once: true });
                 imgElement.addEventListener('touchcancel', clearTimer, { once: true });
-            }, { passive: true });
+            }, { passive: true }); // 改为 passive: true
         }
         
         function showMobileProtectionMessage(msg) {
@@ -2071,9 +2107,15 @@ button,
             initProtection();
             initMobileImageProtection();
             
+            // 确保移动端可以滚动
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                document.body.style.overflow = 'auto';
+                document.body.style.webkitOverflowScrolling = 'touch';
+            }
+            
             setTimeout(() => {
                 console.log('🎨 3D卡片画廊已初始化完成');
-                console.log('📱 移动设备保护功能已启用');
+                console.log('📱 移动设备保护功能已启用（已修复滑动问题）');
                 console.log('🖼️ 大图查看器支持缩放、拖拽操作');
             }, 500);
         });

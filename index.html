@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>凉宫春日应援团广东支部画作展示</title>
     
     <style>
@@ -576,8 +576,8 @@
         }
         
         .lightbox-img {
-            max-width: 100%;
-            max-height: 60vh;
+            max-width: none;
+            max-height: none;
             display: block;
             margin: 0 auto;
             border-radius: 5px;
@@ -585,6 +585,7 @@
             transition: transform 0.2s ease;
             transform-origin: center center;
             cursor: move;
+            object-fit: contain;
         }
         
         .lightbox-caption {
@@ -802,7 +803,8 @@
             }
             
             .lightbox-img {
-                max-height: 50vh;
+                max-height: none;
+                max-width: none;
             }
             
             .lightbox-caption {
@@ -1727,12 +1729,12 @@
             
             currentImageIndex = index % allImages.length;
             resetTransform();
-            updateLightbox();
             
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
             
+            updateLightbox();
             preloadAdjacentImages();
         }
         
@@ -1745,9 +1747,9 @@
             if (allImages.length > 0 && currentImageIndex < allImages.length) {
                 const image = allImages[currentImageIndex];
                 lightboxImage.src = image.src;
+                lightboxImage.alt = image.caption;
                 lightboxCaption.textContent = image.caption;
                 lightboxCounter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
-                lightboxZoomInfo.textContent = `${Math.round(scale * 100)}%`;
                 
                 lightboxImage.onload = function() {
                     resetTransform();
@@ -1766,14 +1768,12 @@
         function showPrevImage() {
             if (allImages.length === 0) return;
             currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
-            resetTransform();
             updateLightbox();
         }
         
         function showNextImage() {
             if (allImages.length === 0) return;
             currentImageIndex = (currentImageIndex + 1) % allImages.length;
-            resetTransform();
             updateLightbox();
         }
         
@@ -1822,26 +1822,29 @@
             }
         }
         
-        // ===== 修复方案一：统一缩放比例 =====
+        // ===== 修复方案：默认100%显示，超出屏幕时自动缩小以适应屏幕 =====
         function fitToScreen() {
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
             
             if (!lightboxImage.complete || lightboxImage.naturalWidth === 0) return;
             
-            // 统一使用容器宽度的85%作为标准宽度
-            const targetWidth = lightboxContainer.clientWidth * 0.85;
+            // 先设置为100%原始尺寸
+            scale = 1;
+            
+            // 获取图片和容器的尺寸
             const imageWidth = lightboxImage.naturalWidth;
+            const imageHeight = lightboxImage.naturalHeight;
+            const containerWidth = lightboxContainer.clientWidth;
+            const containerHeight = lightboxContainer.clientHeight;
             
-            // 所有图片都按相同宽度比例缩放
-            scale = targetWidth / imageWidth;
+            // 计算水平和垂直方向的缩放比例（留出边距）
+            const widthRatio = (containerWidth * 0.9) / imageWidth;
+            const heightRatio = (containerHeight * 0.8) / imageHeight;
             
-            // 如果图片高度超出容器，则限制最大高度
-            const scaledHeight = lightboxImage.naturalHeight * scale;
-            const maxHeight = lightboxContainer.clientHeight * 0.8;
-            
-            if (scaledHeight > maxHeight) {
-                scale = maxHeight / lightboxImage.naturalHeight;
+            // 如果图片超出屏幕，则缩小到刚好完整显示
+            if (widthRatio < 1 || heightRatio < 1) {
+                scale = Math.min(widthRatio, heightRatio);
             }
             
             translateX = 0;
@@ -1857,6 +1860,12 @@
             translateY = 0;
             updateImageTransform();
             updateZoomInfo();
+            
+            // 检查是否需要缩小以适应屏幕
+            const lightboxImage = document.getElementById('lightboxImage');
+            if (lightboxImage.complete && lightboxImage.naturalWidth > 0) {
+                fitToScreen();
+            }
         }
         
         function startDrag(e) {
@@ -2031,7 +2040,9 @@
             document.getElementById('lightboxNext').addEventListener('click', showNextImage);
             document.getElementById('lightboxZoomIn').addEventListener('click', zoomIn);
             document.getElementById('lightboxZoomOut').addEventListener('click', zoomOut);
-            document.getElementById('lightboxReset').addEventListener('click', resetTransform);
+            document.getElementById('lightboxReset').addEventListener('click', function() {
+                zoomToOriginal();
+            });
             document.getElementById('lightboxZoomFit').addEventListener('click', fitToScreen);
             document.getElementById('lightboxZoomOriginal').addEventListener('click', zoomToOriginal);
             
@@ -2356,6 +2367,7 @@
                 console.log('📱 移动设备支持陀螺仪3D效果');
                 console.log('🎮 手机端：倾斜手机触发3D效果');
                 console.log('🖱️  PC端：移动鼠标触发3D效果');
+                console.log('🖼️  大图浏览：默认100%原始尺寸显示，超出屏幕自动缩小');
             }, 500);
         });
         
@@ -2365,6 +2377,7 @@
     </script>
 </body>
 </html>
+
 
 
 

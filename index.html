@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>凉宫春日应援团广东支部画作展示</title>
     
+    <!-- 强制清除缓存 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <style>
-        /* 基础样式 */
+        /* 基础样式 - 完全重置 */
         * {
             margin: 0;
             padding: 0;
@@ -102,6 +107,7 @@
             z-index: -1;
         }
         
+        /* 内容区域 */
         .content-wrapper {
             position: relative;
             z-index: 1;
@@ -343,6 +349,7 @@
             box-shadow: 0 10px 30px rgba(93,64,55,0.4);
         }
         
+        /* 响应式调整 */
         @media (max-width: 1200px) {
             .card-wrap { flex: 0 0 calc(50% - 30px); max-width: 550px; }
             .card { height: 500px; }
@@ -402,18 +409,18 @@
         
         .gyro-hint.show { opacity: 1; }
         
-        /* ============ 大图查看器 - 终极修复版 ============ */
+        /* ============ 大图查看器 - 终极强制修复版 ============ */
         .lightbox-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.98);
-            z-index: 10000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: rgba(0, 0, 0, 0.98) !important;
+            z-index: 999999 !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -422,18 +429,18 @@
         }
         
         .lightbox-overlay.active {
-            opacity: 1;
-            visibility: visible;
+            opacity: 1 !important;
+            visibility: visible !important;
         }
         
         .lightbox-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            position: relative !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            overflow: hidden !important;
             cursor: grab;
         }
         
@@ -442,16 +449,17 @@
         }
         
         .lightbox-img {
-            display: block;
-            max-width: none;
-            max-height: none;
-            width: auto;
-            height: auto;
+            display: block !important;
+            max-width: none !important;
+            max-height: none !important;
+            width: auto !important;
+            height: auto !important;
             border-radius: 5px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             transition: transform 0.1s ease;
             transform-origin: center center;
             cursor: move;
+            object-fit: contain !important;
         }
         
         .lightbox-caption {
@@ -603,6 +611,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
+        /* 保护提示样式 */
         .protection-message {
             position: fixed;
             top: 50%;
@@ -653,22 +662,13 @@
         
         /* 移动端保护样式 */
         @media (max-width: 768px) {
-            .card-bg, .lightbox-img, img {
-                -webkit-touch-callout: none !important;
-                -webkit-user-select: none !important;
-                user-select: none !important;
-                pointer-events: none !important;
-                -webkit-user-drag: none !important;
-            }
-            
-            .card-wrap {
-                touch-action: pan-y;
-                -webkit-overflow-scrolling: touch;
-                pointer-events: auto;
-            }
-            
             .lightbox-container {
-                height: 100vh;
+                height: 100vh !important;
+            }
+            
+            .lightbox-img {
+                max-width: none !important;
+                max-height: none !important;
             }
             
             .lightbox-caption {
@@ -708,8 +708,23 @@
             
             .lightbox-prev { left: 10px; }
             .lightbox-next { right: 10px; }
+            
+            .card-bg, .lightbox-img, img {
+                -webkit-touch-callout: none !important;
+                -webkit-user-select: none !important;
+                user-select: none !important;
+                pointer-events: none !important;
+                -webkit-user-drag: none !important;
+            }
+            
+            .card-wrap {
+                touch-action: pan-y;
+                -webkit-overflow-scrolling: touch;
+                pointer-events: auto;
+            }
         }
         
+        /* 咕噜作品区第一张图片背景位置调整 */
         #gulu .cards-container > .card-wrap:first-child .card-bg {
             background-position: center 30% !important;
         }
@@ -717,18 +732,40 @@
         #gulu .cards-container > .card-wrap:first-child:hover .card-bg {
             background-position: center 28% !important;
         }
+        
+        /* 动态指针样式 */
+        :root {
+            --cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%235D4037" opacity="0.3"/><circle cx="12" cy="12" r="4" fill="%235D4037"/></svg>') 12 12, auto;
+            --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M14 2C7.373 2 2 7.373 2 14s5.373 12 12 12 12-5.373 12-12S20.627 2 14 2z" fill="%23FF4081" opacity="0.7"/><path d="M18.5 13.5l-4.5 4.5-4.5-4.5 1.5-1.5 3 3 3-3z" fill="white"/></svg>') 14 14, pointer;
+            --cursor-grab: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FFFFFF" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="%23000000"/></svg>') 16 16, grab;
+            --cursor-grabbing: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FF4081" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="white"/></svg>') 16 16, grabbing;
+        }
+        
+        body { cursor: var(--cursor-default); }
+        .card-wrap { cursor: var(--cursor-default); }
+        .card-wrap:hover { cursor: var(--cursor-pointer); }
+        .nav-link, .back-to-top { cursor: var(--cursor-pointer) !important; }
+        .lightbox-container { cursor: var(--cursor-grab); }
+        .lightbox-container.grabbing { cursor: var(--cursor-grabbing); }
+        button, .lightbox-toolbar button, .lightbox-zoom-controls button, .lightbox-nav { cursor: var(--cursor-pointer); }
+        .artist-description, .card-info p, .page-subtitle { cursor: text; }
+        
+        @media (max-width: 768px) {
+            body, .card-wrap, .card-wrap:hover, .nav-link, .back-to-top, button { cursor: auto; }
+        }
     </style>
     
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- 固定背景容器 -->
     <div class="bg-container">
         <div class="bg-mobile"></div>
         <div class="bg-pc"></div>
     </div>
     <div class="bg-overlay"></div>
     
-    <!-- 大图查看器 - 终极修复版 -->
+    <!-- 大图查看器 - 终极强制修复版 -->
     <div class="lightbox-overlay" id="lightbox">
         <div class="lightbox-toolbar">
             <button id="lightboxZoomIn" title="放大">+</button>
@@ -750,6 +787,7 @@
         </div>
     </div>
     
+    <!-- 内容区域 -->
     <div class="content-wrapper">
         <h1 class="page-title">凉宫春日应援团广东支部画作展示</h1>
         <p class="page-subtitle">汇聚广东支部美工组成员的精美作品，每一幅画作都凝聚着我们对凉宫春日系列的热爱与创意</p>
@@ -869,462 +907,524 @@
     </div>
 
     <script>
-        // ============ 大图查看器 - 终极修复版 ============
-        let currentImageIndex = 0;
-        let allImages = [];
-        let isDragging = false;
-        let startX, startY;
-        let translateX = 0, translateY = 0;
-        let scale = 1;
-        let minScale = 0.2;
-        let maxScale = 5;
-        
-        // 收集所有图片
-        function collectImages() {
-            const cardWraps = document.querySelectorAll('.card-wrap');
-            allImages = [];
-            cardWraps.forEach((card, index) => {
-                const imageUrl = card.getAttribute('data-image');
-                if (!imageUrl) return;
-                const title = card.querySelector('.card-info h1')?.textContent || '作品';
-                const description = card.querySelector('.card-info p')?.textContent || '';
-                allImages.push({
-                    src: imageUrl,
-                    caption: `${title} - ${description}`,
-                    index: index
+        // ============ 终极强制修复 - 完全重写大图查看器 ============
+        (function() {
+            'use strict';
+            
+            console.log('🔥 终极强制修复模式已启动 - 版本 2.0');
+            
+            // ============ 全局变量 ============
+            let currentImageIndex = 0;
+            let allImages = [];
+            let isDragging = false;
+            let startX = 0, startY = 0;
+            let translateX = 0, translateY = 0;
+            let scale = 1;
+            const minScale = 0.2;
+            const maxScale = 5;
+            
+            // ============ 收集图片 ============
+            window.collectImages = function() {
+                const cardWraps = document.querySelectorAll('.card-wrap');
+                allImages = [];
+                cardWraps.forEach((card, index) => {
+                    const imageUrl = card.getAttribute('data-image');
+                    if (!imageUrl) return;
+                    const title = card.querySelector('.card-info h1')?.textContent || '作品';
+                    const description = card.querySelector('.card-info p')?.textContent || '';
+                    allImages.push({
+                        src: imageUrl,
+                        caption: `${title} - ${description}`,
+                        index: index
+                    });
                 });
-            });
-        }
-        
-        // 打开大图查看器
-        function openLightbox(index) {
-            collectImages();
-            if (allImages.length === 0) return;
-            
-            currentImageIndex = index % allImages.length;
-            
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImage = document.getElementById('lightboxImage');
-            const image = allImages[currentImageIndex];
-            
-            lightboxImage.src = image.src;
-            document.getElementById('lightboxCaption').textContent = image.caption;
-            document.getElementById('lightboxCounter').textContent = `${currentImageIndex + 1} / ${allImages.length}`;
-            
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // 图片加载完成后执行居中
-            lightboxImage.onload = function() {
-                fitToScreen();
+                console.log(`📸 已收集 ${allImages.length} 张图片`);
             };
-        }
-        
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-        
-        function showPrevImage() {
-            if (allImages.length === 0) return;
-            currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
-            updateLightboxImage();
-        }
-        
-        function showNextImage() {
-            if (allImages.length === 0) return;
-            currentImageIndex = (currentImageIndex + 1) % allImages.length;
-            updateLightboxImage();
-        }
-        
-        function updateLightboxImage() {
-            const lightboxImage = document.getElementById('lightboxImage');
-            const image = allImages[currentImageIndex];
-            lightboxImage.src = image.src;
-            document.getElementById('lightboxCaption').textContent = image.caption;
-            document.getElementById('lightboxCounter').textContent = `${currentImageIndex + 1} / ${allImages.length}`;
             
-            lightboxImage.onload = function() {
-                fitToScreen();
+            // ============ 核心修复函数 - 强制100%居中 ============
+            window.fitToScreen = function() {
+                const img = document.getElementById('lightboxImage');
+                const container = document.getElementById('lightboxContainer');
+                
+                if (!img || !container) {
+                    console.error('❌ 找不到图片元素');
+                    return;
+                }
+                
+                if (!img.complete || img.naturalWidth === 0) {
+                    console.log('⏳ 图片未加载完成，等待50ms后重试');
+                    setTimeout(window.fitToScreen, 50);
+                    return;
+                }
+                
+                console.log('🎯 执行强制居中修复');
+                
+                // 1. 强制重置为100%原始尺寸
+                scale = 1;
+                
+                // 2. 强制移除所有限制
+                img.style.maxWidth = 'none';
+                img.style.maxHeight = 'none';
+                img.style.width = 'auto';
+                img.style.height = 'auto';
+                
+                // 3. 获取实际尺寸
+                const iw = img.naturalWidth;
+                const ih = img.naturalHeight;
+                const cw = container.clientWidth;
+                const ch = container.clientHeight;
+                
+                console.log(`📏 图片尺寸: ${iw}x${ih}, 容器尺寸: ${cw}x${ch}`);
+                
+                // 4. 只有当图片两边都超出屏幕时才缩小
+                if (iw > cw || ih > ch) {
+                    const scaleW = cw / iw;
+                    const scaleH = ch / ih;
+                    scale = Math.min(scaleW, scaleH) * 0.95;
+                    console.log(`📉 图片超出屏幕，缩小至 ${Math.round(scale * 100)}%`);
+                } else {
+                    console.log(`✅ 图片小于屏幕，保持100%原始尺寸`);
+                }
+                
+                // 5. 强制计算居中位置 - 这是最关键的修复！
+                const sw = iw * scale;
+                const sh = ih * scale;
+                
+                translateX = (cw - sw) / 2;
+                translateY = (ch - sh) / 2;
+                
+                // 6. 强制应用变换
+                img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+                
+                // 7. 更新缩放信息
+                const zoomInfo = document.getElementById('lightboxZoomInfo');
+                if (zoomInfo) zoomInfo.textContent = `${Math.round(scale * 100)}%`;
+                
+                console.log(`✅ 居中完成: scale=${Math.round(scale * 100)}%, x=${Math.round(translateX)}, y=${Math.round(translateY)}`);
             };
-        }
-        
-        // ============ 终极修复：100%原始尺寸 + 完美居中 ============
-        function fitToScreen() {
-            const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxContainer = document.getElementById('lightboxContainer');
             
-            if (!lightboxImage.complete || lightboxImage.naturalWidth === 0) return;
+            // ============ 放大 ============
+            window.zoomIn = function() {
+                if (scale < maxScale) {
+                    scale = Math.min(scale * 1.2, maxScale);
+                    repositionAndUpdate();
+                }
+            };
             
-            // 1. 重置为100%原始尺寸
-            scale = 1;
+            // ============ 缩小 ============
+            window.zoomOut = function() {
+                if (scale > minScale) {
+                    scale = Math.max(scale / 1.2, minScale);
+                    repositionAndUpdate();
+                }
+            };
             
-            // 2. 获取尺寸
-            const imageWidth = lightboxImage.naturalWidth;
-            const imageHeight = lightboxImage.naturalHeight;
-            const containerWidth = lightboxContainer.clientWidth;
-            const containerHeight = lightboxContainer.clientHeight;
-            
-            // 3. 只有当图片两边都超出屏幕时才缩小
-            if (imageWidth > containerWidth || imageHeight > containerHeight) {
-                const scaleByWidth = containerWidth / imageWidth;
-                const scaleByHeight = containerHeight / imageHeight;
-                scale = Math.min(scaleByWidth, scaleByHeight) * 0.95;
+            // ============ 重新定位并更新 ============
+            function repositionAndUpdate() {
+                const img = document.getElementById('lightboxImage');
+                const container = document.getElementById('lightboxContainer');
+                
+                if (!img || !container) return;
+                
+                const iw = img.naturalWidth;
+                const ih = img.naturalHeight;
+                const cw = container.clientWidth;
+                const ch = container.clientHeight;
+                
+                const sw = iw * scale;
+                const sh = ih * scale;
+                
+                translateX = (cw - sw) / 2;
+                translateY = (ch - sh) / 2;
+                
+                img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+                
+                const zoomInfo = document.getElementById('lightboxZoomInfo');
+                if (zoomInfo) zoomInfo.textContent = `${Math.round(scale * 100)}%`;
             }
             
-            // 4. 计算居中位置（核心修复）
-            const scaledWidth = imageWidth * scale;
-            const scaledHeight = imageHeight * scale;
+            // ============ 原始尺寸 ============
+            window.zoomToOriginal = function() {
+                scale = 1;
+                repositionAndUpdate();
+            };
             
-            translateX = (containerWidth - scaledWidth) / 2;
-            translateY = (containerHeight - scaledHeight) / 2;
-            
-            // 5. 应用变换
-            updateImageTransform();
-            updateZoomInfo();
-        }
-        
-        // 更新图片变换
-        function updateImageTransform() {
-            const lightboxImage = document.getElementById('lightboxImage');
-            lightboxImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-        }
-        
-        // 更新缩放信息
-        function updateZoomInfo() {
-            document.getElementById('lightboxZoomInfo').textContent = `${Math.round(scale * 100)}%`;
-        }
-        
-        // 放大
-        function zoomIn() {
-            if (scale < maxScale) {
-                scale = Math.min(scale * 1.2, maxScale);
-                // 缩放后重新居中
-                const lightboxImage = document.getElementById('lightboxImage');
-                const lightboxContainer = document.getElementById('lightboxContainer');
-                const scaledWidth = lightboxImage.naturalWidth * scale;
-                const scaledHeight = lightboxImage.naturalHeight * scale;
-                translateX = (lightboxContainer.clientWidth - scaledWidth) / 2;
-                translateY = (lightboxContainer.clientHeight - scaledHeight) / 2;
-                updateImageTransform();
-                updateZoomInfo();
-            }
-        }
-        
-        // 缩小
-        function zoomOut() {
-            if (scale > minScale) {
-                scale = Math.max(scale / 1.2, minScale);
-                // 缩小后重新居中
-                const lightboxImage = document.getElementById('lightboxImage');
-                const lightboxContainer = document.getElementById('lightboxContainer');
-                const scaledWidth = lightboxImage.naturalWidth * scale;
-                const scaledHeight = lightboxImage.naturalHeight * scale;
-                translateX = (lightboxContainer.clientWidth - scaledWidth) / 2;
-                translateY = (lightboxContainer.clientHeight - scaledHeight) / 2;
-                updateImageTransform();
-                updateZoomInfo();
-            }
-        }
-        
-        // 原始尺寸
-        function zoomToOriginal() {
-            scale = 1;
-            const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            translateX = (lightboxContainer.clientWidth - lightboxImage.naturalWidth) / 2;
-            translateY = (lightboxContainer.clientHeight - lightboxImage.naturalHeight) / 2;
-            updateImageTransform();
-            updateZoomInfo();
-        }
-        
-        // 开始拖拽
-        function startDrag(e) {
-            if (scale <= 1) return;
-            
-            isDragging = true;
-            document.getElementById('lightboxContainer').classList.add('grabbing');
-            
-            if (e.type === 'mousedown') {
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
-                document.addEventListener('mousemove', drag);
-                document.addEventListener('mouseup', stopDrag);
-            } else if (e.type === 'touchstart') {
-                const touch = e.touches[0];
-                startX = touch.clientX - translateX;
-                startY = touch.clientY - translateY;
-                document.addEventListener('touchmove', drag, { passive: false });
-                document.addEventListener('touchend', stopDrag);
-            }
-        }
-        
-        // 拖拽中
-        function drag(e) {
-            if (!isDragging) return;
-            e.preventDefault();
-            
-            let clientX, clientY;
-            if (e.type === 'mousemove') {
-                clientX = e.clientX;
-                clientY = e.clientY;
-            } else if (e.type === 'touchmove') {
-                const touch = e.touches[0];
-                clientX = touch.clientX;
-                clientY = touch.clientY;
-            }
-            
-            translateX = clientX - startX;
-            translateY = clientY - startY;
-            
-            const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            
-            const scaledWidth = lightboxImage.naturalWidth * scale;
-            const scaledHeight = lightboxImage.naturalHeight * scale;
-            const maxX = Math.max(0, (scaledWidth - lightboxContainer.clientWidth) / 2);
-            const maxY = Math.max(0, (scaledHeight - lightboxContainer.clientHeight) / 2);
-            
-            translateX = Math.max(-maxX, Math.min(maxX, translateX));
-            translateY = Math.max(-maxY, Math.min(maxY, translateY));
-            
-            updateImageTransform();
-        }
-        
-        // 停止拖拽
-        function stopDrag() {
-            isDragging = false;
-            document.getElementById('lightboxContainer').classList.remove('grabbing');
-            document.removeEventListener('mousemove', drag);
-            document.removeEventListener('mouseup', stopDrag);
-            document.removeEventListener('touchmove', drag);
-            document.removeEventListener('touchend', stopDrag);
-        }
-        
-        // 滚轮缩放
-        function handleWheel(e) {
-            e.preventDefault();
-            if (e.deltaY < 0) {
-                zoomIn();
-            } else {
-                zoomOut();
-            }
-        }
-        
-        // ============ 初始化大图查看器事件 ============
-        function initLightbox() {
-            document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-            document.getElementById('lightboxPrev').addEventListener('click', showPrevImage);
-            document.getElementById('lightboxNext').addEventListener('click', showNextImage);
-            document.getElementById('lightboxZoomIn').addEventListener('click', zoomIn);
-            document.getElementById('lightboxZoomOut').addEventListener('click', zoomOut);
-            document.getElementById('lightboxReset').addEventListener('click', fitToScreen);
-            document.getElementById('lightboxZoomFit').addEventListener('click', fitToScreen);
-            document.getElementById('lightboxZoomOriginal').addEventListener('click', zoomToOriginal);
-            
-            const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            
-            lightboxImage.addEventListener('mousedown', startDrag);
-            lightboxImage.addEventListener('touchstart', startDrag);
-            lightboxContainer.addEventListener('wheel', handleWheel, { passive: false });
-            
-            document.getElementById('lightbox').addEventListener('click', function(e) {
-                if (e.target === this) closeLightbox();
-            });
-            
-            document.addEventListener('keydown', function(e) {
+            // ============ 打开大图查看器 ============
+            window.openLightbox = function(index) {
+                window.collectImages();
+                
+                if (allImages.length === 0) {
+                    console.warn('⚠️ 没有找到图片');
+                    return;
+                }
+                
+                currentImageIndex = index % allImages.length;
+                
                 const lightbox = document.getElementById('lightbox');
-                if (!lightbox.classList.contains('active')) return;
+                const img = document.getElementById('lightboxImage');
+                const caption = document.getElementById('lightboxCaption');
+                const counter = document.getElementById('lightboxCounter');
                 
-                switch(e.key) {
-                    case 'Escape': closeLightbox(); break;
-                    case 'ArrowLeft': showPrevImage(); break;
-                    case 'ArrowRight': showNextImage(); break;
-                    case '+': case '=': e.preventDefault(); zoomIn(); break;
-                    case '-': case '_': e.preventDefault(); zoomOut(); break;
-                    case '0': e.preventDefault(); fitToScreen(); break;
+                const image = allImages[currentImageIndex];
+                
+                img.src = image.src;
+                caption.textContent = image.caption;
+                counter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
+                
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // 图片加载完成后执行居中
+                img.onload = function() {
+                    window.fitToScreen();
+                    // 多次执行确保成功
+                    setTimeout(window.fitToScreen, 100);
+                    setTimeout(window.fitToScreen, 300);
+                };
+                
+                // 如果图片已缓存，立即执行
+                if (img.complete) {
+                    window.fitToScreen();
+                    setTimeout(window.fitToScreen, 100);
                 }
-            });
-        }
-        
-        // ============ 3D卡片效果 ============
-        class Card3D {
-            constructor(element) {
-                this.element = element;
-                this.card = element.querySelector('.card');
-                this.cardBg = element.querySelector('.card-bg');
-                this.width = element.offsetWidth;
-                this.height = element.offsetHeight;
-                this.mouseX = 0;
-                this.mouseY = 0;
+            };
+            
+            // ============ 关闭大图查看器 ============
+            window.closeLightbox = function() {
+                document.getElementById('lightbox').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            };
+            
+            // ============ 上一张 ============
+            window.showPrevImage = function() {
+                if (allImages.length === 0) return;
+                currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
+                updateLightboxImage();
+            };
+            
+            // ============ 下一张 ============
+            window.showNextImage = function() {
+                if (allImages.length === 0) return;
+                currentImageIndex = (currentImageIndex + 1) % allImages.length;
+                updateLightboxImage();
+            };
+            
+            // ============ 更新大图查看器图片 ============
+            function updateLightboxImage() {
+                const img = document.getElementById('lightboxImage');
+                const caption = document.getElementById('lightboxCaption');
+                const counter = document.getElementById('lightboxCounter');
                 
-                const imageUrl = element.getAttribute('data-image');
-                if (imageUrl) {
-                    this.cardBg.style.backgroundImage = `url('${imageUrl}')`;
-                }
+                const image = allImages[currentImageIndex];
                 
-                this.init();
+                img.src = image.src;
+                caption.textContent = image.caption;
+                counter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
+                
+                img.onload = function() {
+                    window.fitToScreen();
+                    setTimeout(window.fitToScreen, 100);
+                };
             }
             
-            init() {
-                this.element.addEventListener('mousemove', (e) => {
-                    const rect = this.element.getBoundingClientRect();
-                    this.mouseX = e.clientX - rect.left - this.width / 2;
-                    this.mouseY = e.clientY - rect.top - this.height / 2;
-                    
-                    const mousePX = this.mouseX / this.width;
-                    const mousePY = this.mouseY / this.height;
-                    const rX = mousePX * 25;
-                    const rY = mousePY * -25;
-                    
-                    this.card.style.transform = `rotateY(${rX}deg) rotateX(${rY}deg)`;
-                    this.cardBg.style.transform = `translateX(${mousePX * -30}px) translateY(${mousePY * -30}px) scale(1.05)`;
-                });
+            // ============ 拖拽功能 ============
+            window.startDrag = function(e) {
+                if (scale <= 1) return;
                 
-                this.element.addEventListener('mouseleave', () => {
-                    this.card.style.transform = 'rotateY(0deg) rotateX(0deg)';
-                    this.cardBg.style.transform = 'translateX(0px) translateY(0px) scale(1.05)';
-                });
+                isDragging = true;
+                document.getElementById('lightboxContainer').classList.add('grabbing');
                 
-                this.element.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const cardWraps = Array.from(document.querySelectorAll('.card-wrap'));
-                    const index = cardWraps.indexOf(this.element);
-                    openLightbox(index);
-                });
-            }
-        }
-        
-        // ============ 页面初始化 ============
-        document.addEventListener('DOMContentLoaded', function() {
-            // 初始化卡片3D效果
-            document.querySelectorAll('.card-wrap').forEach(card => {
-                new Card3D(card);
-            });
-            
-            // 初始化大图查看器
-            initLightbox();
-            
-            // 窗口大小改变时重新居中
-            window.addEventListener('resize', function() {
-                if (document.getElementById('lightbox').classList.contains('active')) {
-                    fitToScreen();
+                if (e.type === 'mousedown') {
+                    startX = e.clientX - translateX;
+                    startY = e.clientY - translateY;
+                    document.addEventListener('mousemove', window.drag);
+                    document.addEventListener('mouseup', window.stopDrag);
+                } else if (e.type === 'touchstart') {
+                    const touch = e.touches[0];
+                    startX = touch.clientX - translateX;
+                    startY = touch.clientY - translateY;
+                    document.addEventListener('touchmove', window.drag, { passive: false });
+                    document.addEventListener('touchend', window.stopDrag);
                 }
-            });
+            };
             
-            // 导航功能
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                        this.classList.add('active');
-                        window.scrollTo({ top: targetElement.offsetTop - 80, behavior: 'smooth' });
+            window.drag = function(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                
+                let clientX, clientY;
+                if (e.type === 'mousemove') {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                } else if (e.type === 'touchmove') {
+                    const touch = e.touches[0];
+                    clientX = touch.clientX;
+                    clientY = touch.clientY;
+                }
+                
+                translateX = clientX - startX;
+                translateY = clientY - startY;
+                
+                const img = document.getElementById('lightboxImage');
+                const container = document.getElementById('lightboxContainer');
+                
+                const sw = img.naturalWidth * scale;
+                const sh = img.naturalHeight * scale;
+                const maxX = Math.max(0, (sw - container.clientWidth) / 2);
+                const maxY = Math.max(0, (sh - container.clientHeight) / 2);
+                
+                translateX = Math.max(-maxX, Math.min(maxX, translateX));
+                translateY = Math.max(-maxY, Math.min(maxY, translateY));
+                
+                img.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            };
+            
+            window.stopDrag = function() {
+                isDragging = false;
+                document.getElementById('lightboxContainer').classList.remove('grabbing');
+                document.removeEventListener('mousemove', window.drag);
+                document.removeEventListener('mouseup', window.stopDrag);
+                document.removeEventListener('touchmove', window.drag);
+                document.removeEventListener('touchend', window.stopDrag);
+            };
+            
+            // ============ 滚轮缩放 ============
+            window.handleWheel = function(e) {
+                e.preventDefault();
+                if (e.deltaY < 0) {
+                    window.zoomIn();
+                } else {
+                    window.zoomOut();
+                }
+            };
+            
+            // ============ 初始化大图查看器事件 ============
+            window.initLightboxEvents = function() {
+                console.log('🔧 初始化大图查看器事件');
+                
+                // 移除所有旧监听器，重新绑定
+                const oldButtons = {
+                    zoomFit: document.getElementById('lightboxZoomFit'),
+                    zoomOriginal: document.getElementById('lightboxZoomOriginal'),
+                    zoomIn: document.getElementById('lightboxZoomIn'),
+                    zoomOut: document.getElementById('lightboxZoomOut'),
+                    reset: document.getElementById('lightboxReset'),
+                    prev: document.getElementById('lightboxPrev'),
+                    next: document.getElementById('lightboxNext'),
+                    close: document.getElementById('lightboxClose')
+                };
+                
+                // 克隆替换以移除旧事件
+                Object.keys(oldButtons).forEach(key => {
+                    const btn = oldButtons[key];
+                    if (btn) {
+                        const newBtn = btn.cloneNode(true);
+                        btn.parentNode.replaceChild(newBtn, btn);
                     }
                 });
-            });
-            
-            // 返回顶部
-            document.querySelectorAll('.back-to-top').forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                    document.querySelector('.nav-link[href="#guyikun"]').classList.add('active');
+                
+                // 重新获取元素并绑定新事件
+                document.getElementById('lightboxZoomFit')?.addEventListener('click', window.fitToScreen);
+                document.getElementById('lightboxZoomOriginal')?.addEventListener('click', window.zoomToOriginal);
+                document.getElementById('lightboxZoomIn')?.addEventListener('click', window.zoomIn);
+                document.getElementById('lightboxZoomOut')?.addEventListener('click', window.zoomOut);
+                document.getElementById('lightboxReset')?.addEventListener('click', window.fitToScreen);
+                document.getElementById('lightboxPrev')?.addEventListener('click', window.showPrevImage);
+                document.getElementById('lightboxNext')?.addEventListener('click', window.showNextImage);
+                document.getElementById('lightboxClose')?.addEventListener('click', window.closeLightbox);
+                
+                // 图片拖拽事件
+                const img = document.getElementById('lightboxImage');
+                const container = document.getElementById('lightboxContainer');
+                
+                if (img) {
+                    img.removeEventListener('mousedown', window.startDrag);
+                    img.removeEventListener('touchstart', window.startDrag);
+                    img.addEventListener('mousedown', window.startDrag);
+                    img.addEventListener('touchstart', window.startDrag);
+                }
+                
+                if (container) {
+                    container.removeEventListener('wheel', window.handleWheel);
+                    container.addEventListener('wheel', window.handleWheel, { passive: false });
+                }
+                
+                // 点击遮罩层关闭
+                const lightbox = document.getElementById('lightbox');
+                lightbox?.addEventListener('click', function(e) {
+                    if (e.target === this) window.closeLightbox();
                 });
-            });
+                
+                // 键盘事件
+                document.removeEventListener('keydown', window.handleKeyDown);
+                document.addEventListener('keydown', window.handleKeyDown);
+            };
             
-            // 背景切换
-            function updateBackground() {
-                const mobileBg = document.querySelector('.bg-mobile');
-                const pcBg = document.querySelector('.bg-pc');
-                if (window.innerWidth >= 768) {
-                    mobileBg.style.display = 'none';
-                    pcBg.style.display = 'block';
-                } else {
-                    mobileBg.style.display = 'block';
-                    pcBg.style.display = 'none';
+            // ============ 键盘事件 ============
+            window.handleKeyDown = function(e) {
+                const lightbox = document.getElementById('lightbox');
+                if (!lightbox?.classList.contains('active')) return;
+                
+                switch(e.key) {
+                    case 'Escape': window.closeLightbox(); break;
+                    case 'ArrowLeft': window.showPrevImage(); break;
+                    case 'ArrowRight': window.showNextImage(); break;
+                    case '+': case '=': e.preventDefault(); window.zoomIn(); break;
+                    case '-': case '_': e.preventDefault(); window.zoomOut(); break;
+                    case '0': e.preventDefault(); window.fitToScreen(); break;
+                }
+            };
+            
+            // ============ 3D卡片类 ============
+            class Card3D {
+                constructor(element) {
+                    this.element = element;
+                    this.card = element.querySelector('.card');
+                    this.cardBg = element.querySelector('.card-bg');
+                    this.width = element.offsetWidth;
+                    this.height = element.offsetHeight;
+                    
+                    const imageUrl = element.getAttribute('data-image');
+                    if (imageUrl && this.cardBg) {
+                        this.cardBg.style.backgroundImage = `url('${imageUrl}')`;
+                    }
+                    
+                    this.init();
+                }
+                
+                init() {
+                    // 鼠标移动3D效果
+                    this.element.addEventListener('mousemove', (e) => {
+                        const rect = this.element.getBoundingClientRect();
+                        const mouseX = e.clientX - rect.left - this.width / 2;
+                        const mouseY = e.clientY - rect.top - this.height / 2;
+                        
+                        const mousePX = mouseX / this.width;
+                        const mousePY = mouseY / this.height;
+                        
+                        if (this.card) {
+                            this.card.style.transform = `rotateY(${mousePX * 25}deg) rotateX(${mousePY * -25}deg)`;
+                        }
+                        if (this.cardBg) {
+                            this.cardBg.style.transform = `translateX(${mousePX * -30}px) translateY(${mousePY * -30}px) scale(1.05)`;
+                        }
+                    });
+                    
+                    // 鼠标离开复位
+                    this.element.addEventListener('mouseleave', () => {
+                        if (this.card) this.card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+                        if (this.cardBg) this.cardBg.style.transform = 'translateX(0px) translateY(0px) scale(1.05)';
+                    });
+                    
+                    // 点击打开大图
+                    this.element.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const cardWraps = Array.from(document.querySelectorAll('.card-wrap'));
+                        const index = cardWraps.indexOf(this.element);
+                        window.openLightbox(index);
+                    });
                 }
             }
-            updateBackground();
-            window.addEventListener('resize', updateBackground);
-        });
+            
+            // ============ 页面初始化 ============
+            window.initPage = function() {
+                console.log('🚀 页面初始化开始');
+                
+                // 初始化3D卡片
+                document.querySelectorAll('.card-wrap').forEach(card => {
+                    try {
+                        new Card3D(card);
+                    } catch (error) {
+                        console.error('卡片初始化失败:', error);
+                    }
+                });
+                
+                // 初始化大图查看器事件
+                window.initLightboxEvents();
+                
+                // 初始化背景
+                function updateBackground() {
+                    const mobileBg = document.querySelector('.bg-mobile');
+                    const pcBg = document.querySelector('.bg-pc');
+                    if (window.innerWidth >= 768) {
+                        mobileBg.style.display = 'none';
+                        pcBg.style.display = 'block';
+                    } else {
+                        mobileBg.style.display = 'block';
+                        pcBg.style.display = 'none';
+                    }
+                }
+                updateBackground();
+                window.addEventListener('resize', updateBackground);
+                
+                // 窗口大小改变时重新居中
+                window.addEventListener('resize', function() {
+                    if (document.getElementById('lightbox')?.classList.contains('active')) {
+                        window.fitToScreen();
+                    }
+                });
+                
+                // 导航点击
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                            this.classList.add('active');
+                            window.scrollTo({ top: targetElement.offsetTop - 80, behavior: 'smooth' });
+                        }
+                    });
+                });
+                
+                // 返回顶部
+                document.querySelectorAll('.back-to-top').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                        document.querySelector('.nav-link[href="#guyikun"]')?.classList.add('active');
+                    });
+                });
+                
+                console.log('✅ 页面初始化完成');
+            };
+            
+            // ============ 自动执行 ============
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', window.initPage);
+            } else {
+                window.initPage();
+            }
+            
+            // ============ 强制修复定时器 ============
+            setInterval(function() {
+                const lightbox = document.getElementById('lightbox');
+                if (lightbox?.classList.contains('active')) {
+                    const img = document.getElementById('lightboxImage');
+                    if (img && img.complete) {
+                        const rect = img.getBoundingClientRect();
+                        const container = document.getElementById('lightboxContainer');
+                        const centerX = container.clientWidth / 2;
+                        const centerY = container.clientHeight / 2;
+                        const imgCenterX = rect.left + rect.width / 2;
+                        const imgCenterY = rect.top + rect.height / 2;
+                        
+                        // 如果偏离超过20px，强制重新居中
+                        if (Math.abs(imgCenterX - centerX) > 20 || Math.abs(imgCenterY - centerY) > 20) {
+                            console.log('⚠️ 检测到偏离，强制重新居中');
+                            window.fitToScreen();
+                        }
+                    }
+                }
+            }, 300);
+            
+            console.log('🔥 终极强制修复模式已就绪');
+        })();
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

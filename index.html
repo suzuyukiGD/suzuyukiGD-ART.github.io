@@ -577,7 +577,6 @@
         
         .lightbox-img {
             max-width: 100%;
-            max-height: 60vh;
             display: block;
             margin: 0 auto;
             border-radius: 5px;
@@ -802,7 +801,6 @@
             }
             
             .lightbox-img {
-                max-height: 50vh;
             }
             
             .lightbox-caption {
@@ -1824,37 +1822,50 @@
         
         // ===== 方案一：固定默认缩放为100% =====
         function fitToScreen() {
-            const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            
-            if (!lightboxImage.complete || lightboxImage.naturalWidth === 0) return;
-            
-            // 直接设置为100%原始尺寸
-            scale = 1;
-            
-            // 获取图片和容器尺寸
-            const imageWidth = lightboxImage.naturalWidth;
-            const imageHeight = lightboxImage.naturalHeight;
-            const containerWidth = lightboxContainer.clientWidth;
-            const containerHeight = lightboxContainer.clientHeight;
-            
-            // 如果图片太大超出屏幕，才进行缩小
-            if (imageWidth > containerWidth || imageHeight > containerHeight) {
-                // 计算适应屏幕的缩放比例
-                const scaleByWidth = containerWidth / imageWidth;
-                const scaleByHeight = containerHeight / imageHeight;
-                
-                // 取较小的比例，确保图片完全显示在屏幕内，留5%边距
-                scale = Math.min(scaleByWidth, scaleByHeight) * 0.95;
-            }
-            
-            // 重置位置
-            translateX = 0;
-            translateY = 0;
-            
-            updateImageTransform();
-            updateZoomInfo();
-        }
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxContainer = document.getElementById('lightboxContainer');
+    
+    if (!lightboxImage.complete || lightboxImage.naturalWidth === 0) return;
+    
+    // 强制设置为100%原始尺寸
+    scale = 1;
+    
+    // 移除所有可能限制图片显示的内联样式
+    lightboxImage.style.maxWidth = 'none';
+    lightboxImage.style.maxHeight = 'none';
+    
+    // 获取图片和容器尺寸
+    const imageWidth = lightboxImage.naturalWidth;
+    const imageHeight = lightboxImage.naturalHeight;
+    const containerWidth = lightboxContainer.clientWidth;
+    const containerHeight = lightboxContainer.clientHeight;
+    
+    // 只有当图片完全无法在屏幕上显示时，才进行缩放
+    // 判断是否两边都超出屏幕（宽度超出且高度超出）
+    if (imageWidth > containerWidth && imageHeight > containerHeight) {
+        // 计算适应屏幕的缩放比例
+        const scaleByWidth = containerWidth / imageWidth;
+        const scaleByHeight = containerHeight / imageHeight;
+        
+        // 取较大的比例，让图片尽量大
+        scale = Math.max(scaleByWidth, scaleByHeight) * 0.95;
+    } 
+    // 如果只有宽度超出，按宽度缩放
+    else if (imageWidth > containerWidth) {
+        scale = (containerWidth / imageWidth) * 0.95;
+    }
+    // 如果只有高度超出，按高度缩放
+    else if (imageHeight > containerHeight) {
+        scale = (containerHeight / imageHeight) * 0.95;
+    }
+    
+    // 重置位置到左上角，方便查看超大图片的左上部分
+    translateX = 0;
+    translateY = 0;
+    
+    updateImageTransform();
+    updateZoomInfo();
+}
         
         function zoomToOriginal() {
             scale = 1;
@@ -2370,6 +2381,7 @@
     </script>
 </body>
 </html>
+
 
 
 

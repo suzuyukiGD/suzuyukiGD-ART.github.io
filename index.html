@@ -925,6 +925,69 @@
                 z-index: 10;
             }
         }
+        /* 动态指针样式系统 */
+:root {
+  --cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%235D4037" opacity="0.3"/><circle cx="12" cy="12" r="4" fill="%235D4037"/></svg>') 12 12, auto;
+  --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M14 2C7.373 2 2 7.373 2 14s5.373 12 12 12 12-5.373 12-12S20.627 2 14 2z" fill="%23FF4081" opacity="0.7"/><path d="M18.5 13.5l-4.5 4.5-4.5-4.5 1.5-1.5 3 3 3-3z" fill="white"/></svg>') 14 14, pointer;
+  --cursor-grab: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FFFFFF" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="%23000000"/></svg>') 16 16, grab;
+  --cursor-grabbing: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FF4081" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="white"/></svg>') 16 16, grabbing;
+}
+
+/* 应用指针样式 */
+body {
+  cursor: var(--cursor-default);
+}
+
+/* 可交互元素 */
+.card-wrap {
+  cursor: var(--cursor-default);
+}
+
+.card-wrap:hover {
+  cursor: var(--cursor-pointer);
+}
+
+/* 导航链接 */
+.nav-link,
+.back-to-top {
+  cursor: var(--cursor-pointer) !important;
+}
+
+/* 大图查看器 */
+.lightbox-container {
+  cursor: var(--cursor-grab);
+}
+
+.lightbox-container.grabbing {
+  cursor: var(--cursor-grabbing);
+}
+
+/* 按钮 */
+button,
+.lightbox-toolbar button,
+.lightbox-zoom-controls button,
+.lightbox-nav {
+  cursor: var(--cursor-pointer);
+}
+
+/* 文字选择区域 */
+.artist-description,
+.card-info p,
+.page-subtitle {
+  cursor: text;
+}
+
+/* 移动端恢复默认指针 */
+@media (max-width: 768px) {
+  body,
+  .card-wrap,
+  .card-wrap:hover,
+  .nav-link,
+  .back-to-top,
+  button {
+    cursor: auto;
+  }
+}
 #gulu .cards-container > .card-wrap:first-child .card-bg {
   background-position: center 30% !important; /* 向上调整30% */
   /* 保持原有的 cover，不改变图片裁切方式 */
@@ -2022,6 +2085,7 @@
     </script>
 </body>
 </html>
+
 
 
 

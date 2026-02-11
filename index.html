@@ -1841,27 +1841,37 @@
     const containerHeight = lightboxContainer.clientHeight;
     
     // 只有当图片完全无法在屏幕上显示时，才进行缩放
-    // 判断是否两边都超出屏幕（宽度超出且高度超出）
     if (imageWidth > containerWidth && imageHeight > containerHeight) {
-        // 计算适应屏幕的缩放比例
         const scaleByWidth = containerWidth / imageWidth;
         const scaleByHeight = containerHeight / imageHeight;
-        
-        // 取较大的比例，让图片尽量大
         scale = Math.max(scaleByWidth, scaleByHeight) * 0.95;
-    } 
-    // 如果只有宽度超出，按宽度缩放
-    else if (imageWidth > containerWidth) {
+    } else if (imageWidth > containerWidth) {
         scale = (containerWidth / imageWidth) * 0.95;
-    }
-    // 如果只有高度超出，按高度缩放
-    else if (imageHeight > containerHeight) {
+    } else if (imageHeight > containerHeight) {
         scale = (containerHeight / imageHeight) * 0.95;
     }
     
-    // 重置位置到左上角，方便查看超大图片的左上部分
-    translateX = 0;
-    translateY = 0;
+    // ==== 智能居中 ====
+    const scaledWidth = imageWidth * scale;
+    const scaledHeight = imageHeight * scale;
+    
+    // 水平居中
+    translateX = (containerWidth - scaledWidth) / 2;
+    
+    // 垂直居中
+    translateY = (containerHeight - scaledHeight) / 2;
+    
+    // 对于超大图片，限制偏移范围，避免边缘出现过多空白
+    const maxTranslateX = Math.max(0, (scaledWidth - containerWidth) / 2);
+    const maxTranslateY = Math.max(0, (scaledHeight - containerHeight) / 2);
+    
+    // 如果图片超出容器，将居中位置限制在可拖拽范围内
+    if (scaledWidth > containerWidth) {
+        translateX = Math.max(-maxTranslateX, Math.min(maxTranslateX, translateX));
+    }
+    if (scaledHeight > containerHeight) {
+        translateY = Math.max(-maxTranslateY, Math.min(maxTranslateY, translateY));
+    }
     
     updateImageTransform();
     updateZoomInfo();
@@ -2381,6 +2391,7 @@
     </script>
 </body>
 </html>
+
 
 
 

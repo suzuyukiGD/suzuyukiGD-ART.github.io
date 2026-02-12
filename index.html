@@ -529,7 +529,7 @@
             transition: transform 0.2s ease-out;
         }
         
-        /* ===== 大图查看器样式 - 自适应屏幕比例 + 强制居中 ===== */
+        /* ===== 大图查看器样式 - 自适应屏幕比例 + 强制居中 + 禁止长按保存 ===== */
         .lightbox-overlay {
             position: fixed;
             top: 0;
@@ -546,6 +546,9 @@
             transition: opacity 0.3s ease, visibility 0.3s ease;
             touch-action: none;
             user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
         
         .lightbox-overlay.active {
@@ -573,7 +576,7 @@
             100% { transform: scale(1); opacity: 1; }
         }
         
-        /* 图片样式 - 强制居中 + 自适应屏幕 */
+        /* 图片样式 - 强制居中 + 自适应屏幕 + 完全禁止长按保存 */
         .lightbox-img {
             display: block;
             margin: 0 auto;
@@ -583,14 +586,33 @@
             transform-origin: center center;
             cursor: move;
             object-fit: contain;
-            max-width: 95vw;
-            max-height: 85vh;
+            
+            /* 自适应屏幕 - 放大比例 */
+            max-width: 100vw !important;
+            max-height: 100vh !important;
             width: auto;
             height: auto;
+            
+            /* 强制居中 */
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(1);
+            
+            /* 完全禁止长按保存 */
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+            -khtml-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+            -webkit-user-drag: none !important;
+            -khtml-user-drag: none !important;
+            -moz-user-drag: none !important;
+            -o-user-drag: none !important;
+            user-drag: none !important;
+            pointer-events: auto !important;
+            -webkit-tap-highlight-color: transparent !important;
         }
         
         .lightbox-caption {
@@ -613,6 +635,9 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         /* 工具栏样式 */
@@ -643,6 +668,9 @@
             align-items: center;
             transition: all 0.2s ease;
             font-family: Arial, sans-serif;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         .lightbox-toolbar button:hover {
@@ -682,6 +710,9 @@
             justify-content: center;
             align-items: center;
             transition: all 0.2s ease;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         .lightbox-zoom-controls button:hover {
@@ -701,6 +732,9 @@
             font-size: 14px;
             z-index: 10001;
             backdrop-filter: blur(10px);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         /* 导航按钮 */
@@ -721,6 +755,9 @@
             align-items: center;
             transition: background 0.3s ease;
             z-index: 10001;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         .lightbox-nav:hover {
@@ -748,6 +785,9 @@
             border-radius: 20px;
             z-index: 10001;
             backdrop-filter: blur(10px);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         /* 保护提示样式 */
@@ -804,11 +844,16 @@
             100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); display: none; }
         }
         
-        /* 移动端大图查看器调整 */
+        /* ===== 移动端大图查看器调整 - 禁止长按保存 ===== */
         @media (max-width: 768px) {
             .lightbox-img {
-                max-width: 98vw;
-                max-height: 90vh;
+                max-width: 100vw !important;
+                max-height: 100vh !important;
+                -webkit-touch-callout: none !important;
+                -webkit-user-select: none !important;
+                user-select: none !important;
+                -webkit-user-drag: none !important;
+                user-drag: none !important;
             }
             
             .lightbox-caption {
@@ -817,6 +862,9 @@
                 padding: 8px 16px;
                 white-space: normal;
                 max-width: 85%;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                user-select: none;
             }
             
             .lightbox-zoom-controls {
@@ -879,8 +927,8 @@
         /* 小屏手机优化 */
         @media (max-width: 480px) {
             .lightbox-img {
-                max-width: 98vw;
-                max-height: 85vh;
+                max-width: 100vw !important;
+                max-height: 100vh !important;
             }
             
             .lightbox-caption {
@@ -896,7 +944,7 @@
             }
         }
         
-        /* 修改移动端图片保护样式 - 不影响大图预览 */
+        /* 修改移动端图片保护样式 - 不影响大图预览但禁止保存 */
         @media (max-width: 768px) {
             .card-bg, .card, img:not(.lightbox-img) {
                 -webkit-touch-callout: none !important;
@@ -911,10 +959,11 @@
             
             .lightbox-img {
                 pointer-events: auto !important;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
+                -webkit-touch-callout: none !important;
+                -webkit-user-select: none !important;
+                user-select: none !important;
+                -webkit-user-drag: none !important;
+                user-drag: none !important;
             }
             
             .card-wrap {
@@ -1385,7 +1434,7 @@
             <button class="back-to-top">返回顶部</button>
         </section>
         <p class="page-subtitle">本网页内容由广东支部运营组成员天隐负责维护</p>
-        <p class="page-subtitle">目前版本号：v1.1.0 - 大图预览自适应居中优化</p>
+        <p class="page-subtitle">目前版本号：v1.2.0 - 大图全屏自适应 + 禁止长按保存</p>
     </div>
 
     <script>
@@ -1747,7 +1796,7 @@
             updateLightbox();
         }
         
-        // ============ 缩放和拖拽功能 - 强制居中自适应 ============
+        // ============ 缩放和拖拽功能 - 强制居中自适应 + 禁止长按保存 ============
         function resetTransform() {
             scale = 1;
             translateX = 0;
@@ -1793,7 +1842,7 @@
             }
         }
         
-        // ===== 自适应屏幕比例 - 强制居中 =====
+        // ===== 自适应屏幕比例 - 全屏显示，不留白边 =====
         function fitToScreen() {
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
@@ -1805,12 +1854,12 @@
             const imageWidth = lightboxImage.naturalWidth;
             const imageHeight = lightboxImage.naturalHeight;
             
-            // 计算宽高缩放比例，留出边距
-            const widthRatio = (containerWidth * 0.9) / imageWidth;
-            const heightRatio = (containerHeight * 0.8) / imageHeight;
+            // 计算宽高缩放比例 - 铺满屏幕，不留边距
+            const widthRatio = containerWidth / imageWidth;
+            const heightRatio = containerHeight / imageHeight;
             
-            // 取较小值，确保图片完整显示
-            scale = Math.min(widthRatio, heightRatio, 1);
+            // 取较小值，确保图片完整显示在屏幕内，但尽可能大
+            scale = Math.min(widthRatio, heightRatio);
             
             // 重置偏移量，强制居中
             translateX = 0;
@@ -2166,14 +2215,16 @@
             };
         }
         
-        // ============ 保护功能 ============
+        // ============ 保护功能 - 增强禁止长按保存 ============
         function initProtection() {
+            // 禁止右键菜单
             document.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
                 showProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
                 return false;
             });
             
+            // 禁止开发者工具快捷键
             document.addEventListener('keydown', function(e) {
                 const isBlocked = 
                     (e.key === 'F12' || e.keyCode === 123) ||
@@ -2190,11 +2241,55 @@
                 }
             });
             
+            // 禁止拖拽图片
             document.addEventListener('dragstart', function(e) {
                 if (e.target.tagName === 'IMG' || e.target.classList.contains('card-bg')) {
                     e.preventDefault();
                     return false;
                 }
+            });
+            
+            // ===== 新增：完全禁止移动端长按保存图片 =====
+            // 禁止所有图片的长按菜单
+            document.addEventListener('touchstart', function(e) {
+                if (e.target.tagName === 'IMG' || e.target.classList.contains('lightbox-img')) {
+                    e.preventDefault();
+                    return false;
+                }
+            }, { passive: false });
+            
+            // 禁止长按弹出菜单
+            document.addEventListener('touchhold', function(e) {
+                if (e.target.tagName === 'IMG' || e.target.classList.contains('lightbox-img')) {
+                    e.preventDefault();
+                    return false;
+                }
+            }, { passive: false });
+            
+            // 禁止长按选择
+            document.addEventListener('selectstart', function(e) {
+                if (e.target.tagName === 'IMG' || e.target.classList.contains('lightbox-img')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+            
+            // 禁止复制
+            document.addEventListener('copy', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁止剪切
+            document.addEventListener('cut', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁止粘贴（虽然不是直接相关，但增加保护）
+            document.addEventListener('paste', function(e) {
+                e.preventDefault();
+                return false;
             });
         }
         
@@ -2230,6 +2325,13 @@
                 }
                 lastTouchEnd = now;
             }, { passive: true });
+            
+            // 针对iOS的额外保护
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                document.addEventListener('gesturestart', function(e) {
+                    e.preventDefault();
+                });
+            }
         }
         
         function showMobileProtectionMessage(msg) {
@@ -2317,7 +2419,8 @@
                 console.log('🎨 3D卡片画廊已初始化完成');
                 console.log('📱 移动设备支持陀螺仪3D效果');
                 console.log('🖱️  PC端：移动鼠标触发3D效果');
-                console.log('🖼️  大图预览：自适应屏幕比例 + 强制居中');
+                console.log('🖼️  大图预览：全屏自适应 + 强制居中 + 禁止长按保存');
+                console.log('🔒 图片保护：已完全禁止移动端长按保存');
             }, 500);
         });
         

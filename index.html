@@ -226,7 +226,7 @@
             will-change: transform;
         }
         
-        /* 卡片背景 */
+        /* 卡片背景 - 加强保护 */
         .card-bg {
             opacity: 0.8;
             position: absolute;
@@ -241,8 +241,15 @@
             transition: 
                 opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
                 transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            pointer-events: none;
+            pointer-events: none !important;
             will-change: transform;
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+            -webkit-user-drag: none !important;
+            user-drag: none !important;
         }
         
         /* 卡片信息 */
@@ -363,7 +370,7 @@
             padding: 0 20px;
         }
         
-        /* 返回顶部按钮 */
+        /* 返回顶部按钮 - 修复样式 */
         .back-to-top {
             display: block;
             text-align: center;
@@ -380,6 +387,8 @@
             box-shadow: 0 6px 20px rgba(93, 64, 55, 0.3);
             border: none;
             cursor: pointer;
+            position: relative;
+            z-index: 50;
         }
         
         .back-to-top:hover {
@@ -457,6 +466,12 @@
                 font-size: 16px;
                 margin-bottom: 30px;
             }
+            
+            .back-to-top {
+                margin: 40px auto 20px;
+                padding: 12px 30px;
+                font-size: 1em;
+            }
         }
         
         @media (max-width: 480px) {
@@ -474,6 +489,12 @@
             
             .artist-title {
                 font-size: 1.8em;
+            }
+            
+            .back-to-top {
+                max-width: 160px;
+                padding: 10px 24px;
+                font-size: 0.95em;
             }
         }
         
@@ -529,7 +550,7 @@
             transition: transform 0.2s ease-out;
         }
         
-        /* 大图查看器样式 - 已修复遮挡问题 */
+        /* 大图查看器样式 - 修复文字覆盖问题 */
         .lightbox-overlay {
             position: fixed;
             top: 0;
@@ -586,24 +607,37 @@
             transform-origin: center center;
             cursor: move;
             object-fit: contain;
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+            -webkit-user-drag: none !important;
+            user-drag: none !important;
+            pointer-events: auto !important;
         }
         
         .lightbox-caption {
-            color: white;
-            text-align: center;
-            margin-top: 15px;
-            padding: 10px 20px;
-            font-size: 1.1em;
-            max-width: 90%;
-            z-index: 10002;
-            backdrop-filter: blur(10px);
-            position: relative;
-            margin-bottom: 10px;
-            border-radius: 12px;
-            background: rgba(102, 102, 102, 0.7);
-            box-sizing: border-box;
-            border: 1px solid #999999;
+            position: absolute !important;
+            bottom: 80px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            width: auto !important;
+            max-width: 90% !important;
+            background: rgba(102, 102, 102, 0.85) !important;
             backdrop-filter: blur(7px) saturate(100%);
+            border: 1px solid #999999;
+            border-radius: 12px;
+            padding: 12px 24px !important;
+            color: white !important;
+            font-size: 1.1em !important;
+            text-align: center !important;
+            z-index: 10010 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+            pointer-events: none;
         }
         
         /* 工具栏样式 */
@@ -802,16 +836,12 @@
                 height: 75vh;
             }
             
-            .lightbox-img {
-                max-height: none;
-                max-width: none;
-            }
-            
             .lightbox-caption {
-                font-size: 0.9em;
-                padding: 8px 15px;
-                margin-top: 10px;
-                margin-bottom: 15px;
+                bottom: 70px !important;
+                padding: 8px 16px !important;
+                font-size: 0.9em !important;
+                white-space: normal !important;
+                max-width: 85% !important;
             }
             
             .lightbox-zoom-controls {
@@ -871,7 +901,7 @@
             }
         }
         
-        /* 修改移动端图片保护样式 */
+        /* 移动端图片保护增强 */
         @media (max-width: 768px) {
             .card-bg, .card, .lightbox-img, img {
                 -webkit-touch-callout: none !important;
@@ -882,58 +912,45 @@
                 pointer-events: none !important;
                 -webkit-user-drag: none !important;
                 user-drag: none !important;
+                -webkit-tap-highlight-color: transparent !important;
             }
             
             .card-wrap {
-                position: relative;
+                pointer-events: auto;
+                -webkit-user-select: none;
+                user-select: none;
                 touch-action: pan-y;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .card-wrap::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 5;
-                pointer-events: none;
-                background: transparent;
-            }
-            
-            .lightbox-container::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 5;
-                pointer-events: none;
-                background: transparent;
-            }
-            
-            .cards-container {
-                touch-action: pan-y;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .content-wrapper {
-                touch-action: pan-y;
-                -webkit-overflow-scrolling: touch;
             }
             
             .card {
                 pointer-events: none;
             }
             
-            .card-wrap {
-                pointer-events: auto;
-            }
-            
             .card-bg {
                 pointer-events: none !important;
+            }
+            
+            .lightbox-overlay.active .lightbox-img {
+                pointer-events: auto !important;
+            }
+            
+            .lightbox-overlay.active .lightbox-container::after {
+                content: '图片已受保护';
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                background: rgba(0, 0, 0, 0.7);
+                color: #FFD54F;
+                padding: 5px 10px;
+                border-radius: 10px;
+                font-size: 12px;
+                z-index: 10;
+            }
+            
+            body, html {
+                overflow-x: hidden;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
             }
         }
         
@@ -964,62 +981,6 @@
             20% { opacity: 1; transform: translateX(-50%) translateY(0); }
             80% { opacity: 1; transform: translateX(-50%) translateY(0); }
             100% { opacity: 0; transform: translateX(-50%) translateY(-20px); display: none; }
-        }
-        
-        /* 移动端图片保护增强 */
-        @media (max-width: 768px) {
-            img, .card-bg, .card, .lightbox-img {
-                -webkit-touch-callout: none !important;
-                -webkit-user-select: none !important;
-                -moz-user-select: none !important;
-                -ms-user-select: none !important;
-                user-select: none !important;
-                -webkit-tap-highlight-color: transparent !important;
-                -webkit-user-drag: none !important;
-                user-drag: none !important;
-                pointer-events: none !important;
-            }
-            
-            .card-wrap {
-                -webkit-user-select: none;
-                user-select: none;
-                touch-action: pan-y;
-            }
-            
-            .card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 5;
-                background: transparent;
-                pointer-events: none;
-            }
-            
-            .lightbox-overlay.active .lightbox-img {
-                pointer-events: auto;
-            }
-            
-            .lightbox-overlay.active .lightbox-container::after {
-                content: '图片已受保护';
-                position: absolute;
-                bottom: 10px;
-                right: 10px;
-                background: rgba(0, 0, 0, 0.7);
-                color: #FFD54F;
-                padding: 5px 10px;
-                border-radius: 10px;
-                font-size: 12px;
-                z-index: 10;
-            }
-            
-            body, html {
-                overflow-x: hidden;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-            }
         }
         
         /* 动态指针样式系统 */
@@ -1091,139 +1052,49 @@
           background-position: center 30% !important; 
         }
 
-        /* 悬停时也相应调整 */
         #gulu .cards-container > .card-wrap:first-child:hover .card-bg {
           background-position: center 28% !important;
         }
 
         /* 修复广东支部旗帜图片右偏问题 */
-#guyikun .cards-container > .card-wrap:first-child .card-bg {
-    background-position: 30% center !important;
-}
+        #guyikun .cards-container > .card-wrap:first-child .card-bg {
+            background-position: 30% center !important;
+        }
 
-#guyikun .cards-container > .card-wrap:first-child:hover .card-bg {
-    background-position: 28% center !important;
-}
-        /* 修复大图预览模式广东支部旗帜图片右偏问题 - 精确匹配 */
-.lightbox-img[src*="Yikun Gu1.png"] {
-    object-position: 125% center !important;
-    object-fit: contain !important;
-}
-/* ===== 修复大图预览文字被图片覆盖问题 ===== */
-.lightbox-caption {
-    position: absolute !important;
-    bottom: 80px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: auto !important;
-    max-width: 90% !important;
-    background: rgba(102, 102, 102, 0.85) !important;
-    backdrop-filter: blur(7px) saturate(100%);
-    border: 1px solid #999999;
-    border-radius: 12px;
-    padding: 12px 24px !important;
-    color: white !important;
-    font-size: 1.1em !important;
-    text-align: center !important;
-    z-index: 10010 !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
-    pointer-events: none;
-}
-
-/* 图片样式调整 - 移除高度限制！ */
-.lightbox-img {
-    max-width: 100% !important;
-    /* 删除 max-height 限制 */
-    object-fit: contain !important;
-    display: block !important;
-}
-
-/* 确保图片容器不会限制图片大小 */
-.lightbox-container {
-    position: relative !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-    width: 100% !important;
-    height: 100% !important;
-}
-
-/* 移动端适配 */
-@media (max-width: 768px) {
-    .lightbox-caption {
-        bottom: 70px !important;
-        padding: 8px 16px !important;
-        font-size: 0.9em !important;
-        white-space: normal !important;
-        max-width: 85% !important;
-    }
-}
-        /* ===== 移动端大图预览优化 ===== */
-@media (max-width: 768px) {
-    .lightbox-container {
-        width: 100% !important;
-        height: 85vh !important;  /* 增加高度 */
-    }
-    
-    .lightbox-img {
-        max-width: 100% !important;
-        max-height: none !important;  /* 移除高度限制 */
-        object-fit: contain !important;
-    }
-    
-    .lightbox-caption {
-        bottom: 70px !important;
-        font-size: 14px !important;
-        padding: 8px 16px !important;
-        max-width: 90% !important;
-        white-space: nowrap !important;
-        background: rgba(102, 102, 102, 0.9) !important;
-    }
-    
-    .lightbox-zoom-controls {
-        bottom: 20px !important;
-        padding: 8px 12px !important;
-        background: rgba(0, 0, 0, 0.8) !important;
-    }
-    
-    .lightbox-counter {
-        top: 15px !important;
-        font-size: 14px !important;
-        padding: 6px 16px !important;
-        background: rgba(0, 0, 0, 0.7) !important;
-    }
-    
-    .lightbox-zoom-info {
-        top: 15px !important;
-        left: 15px !important;
-        font-size: 14px !important;
-        padding: 6px 16px !important;
-        background: rgba(0, 0, 0, 0.7) !important;
-    }
-}
-
-/* 小屏手机优化 */
-@media (max-width: 480px) {
-    .lightbox-container {
-        height: 80vh !important;
-    }
-    
-    .lightbox-caption {
-        bottom: 65px !important;
-        font-size: 12px !important;
-        padding: 6px 12px !important;
-    }
-    
-    .lightbox-zoom-controls button {
-        width: 36px !important;
-        height: 36px !important;
-        font-size: 16px !important;
-    }
-}
+        #guyikun .cards-container > .card-wrap:first-child:hover .card-bg {
+            background-position: 28% center !important;
+        }
+        
+        /* 修复大图预览模式广东支部旗帜图片右偏问题 */
+        .lightbox-img[src*="Yikun Gu1.png"] {
+            object-position: 125% center !important;
+            object-fit: contain !important;
+        }
+        
+        /* 小屏手机优化 */
+        @media (max-width: 480px) {
+            .lightbox-container {
+                height: 80vh !important;
+            }
+            
+            .lightbox-caption {
+                bottom: 65px !important;
+                font-size: 12px !important;
+                padding: 6px 12px !important;
+            }
+            
+            .lightbox-zoom-controls button {
+                width: 36px !important;
+                height: 36px !important;
+                font-size: 16px !important;
+            }
+            
+            .back-to-top {
+                margin: 30px auto 15px;
+                padding: 8px 20px;
+                font-size: 0.9em;
+            }
+        }
 
     </style>
     
@@ -1266,7 +1137,7 @@
             <div class="lightbox-caption" id="lightboxCaption"></div>
         </div>
         
-        <!-- 缩放控制按钮（放在最后，避免遮挡） -->
+        <!-- 缩放控制按钮 -->
         <div class="lightbox-zoom-controls">
             <button id="lightboxZoomFit" title="适应屏幕">⎙</button>
             <button id="lightboxZoomOriginal" title="原始尺寸">1:1</button>
@@ -1547,10 +1418,428 @@
             <button class="back-to-top">返回顶部</button>
         </section>
         <p class="page-subtitle">本网页内容由广东支部运营组成员天隐负责维护</p>
-        <p class="page-subtitle">目前版本号为v1.0.1</p>
+        <p class="page-subtitle">目前版本号为v1.0.2</p>
     </div>
 
     <script>
+        // ============ 全局变量定义 ============
+        // 大图查看器相关变量
+        let currentImageIndex = 0;
+        let allImages = [];
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let translateX = 0, translateY = 0;
+        let scale = 1;
+        let minScale = 0.1;
+        let maxScale = 10;
+        let gyroEffect = null;
+
+        // ============ 大图查看器基础功能 ============
+        function collectImages() {
+            const cardWraps = document.querySelectorAll('.card-wrap');
+            allImages = [];
+            
+            cardWraps.forEach((card, index) => {
+                const imageUrl = card.getAttribute('data-image');
+                if (!imageUrl || imageUrl.includes('via.placeholder')) return;
+                
+                const title = card.querySelector('.card-info h1')?.textContent || '作品';
+                const description = card.querySelector('.card-info p')?.textContent || '';
+                
+                allImages.push({
+                    src: imageUrl,
+                    caption: `${title} - ${description}`,
+                    index: index
+                });
+            });
+            
+            console.log('收集到的图片:', allImages.length);
+        }
+
+        function updateLightbox() {
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxCaption = document.getElementById('lightboxCaption');
+            const lightboxCounter = document.getElementById('lightboxCounter');
+            const lightboxZoomInfo = document.getElementById('lightboxZoomInfo');
+            
+            if (allImages.length > 0 && currentImageIndex < allImages.length) {
+                const image = allImages[currentImageIndex];
+                lightboxImage.src = image.src;
+                lightboxImage.alt = image.caption;
+                lightboxCaption.textContent = image.caption;
+                lightboxCounter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
+                
+                lightboxImage.onload = function() {
+                    resetTransform();
+                    fitToScreen();
+                };
+            }
+        }
+
+        function openLightbox(index) {
+            collectImages();
+            
+            if (allImages.length === 0) {
+                console.warn('没有找到可显示的图片');
+                return;
+            }
+            
+            currentImageIndex = index % allImages.length;
+            resetTransform();
+            
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            updateLightbox();
+            preloadAdjacentImages();
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            resetTransform();
+        }
+
+        function showPrevImage() {
+            if (allImages.length === 0) return;
+            currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
+            updateLightbox();
+        }
+
+        function showNextImage() {
+            if (allImages.length === 0) return;
+            currentImageIndex = (currentImageIndex + 1) % allImages.length;
+            updateLightbox();
+        }
+
+        // ============ 缩放和拖拽功能 ============
+        function resetTransform() {
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateImageTransform();
+            updateZoomInfo();
+        }
+
+        function updateImageTransform() {
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxContainer = document.getElementById('lightboxContainer');
+            
+            if (lightboxImage) {
+                lightboxImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            }
+            
+            if (scale > 1) {
+                lightboxContainer.classList.add('grabbing');
+                lightboxContainer.style.cursor = 'grab';
+            } else {
+                lightboxContainer.classList.remove('grabbing');
+                lightboxContainer.style.cursor = 'default';
+            }
+        }
+
+        function updateZoomInfo() {
+            const lightboxZoomInfo = document.getElementById('lightboxZoomInfo');
+            lightboxZoomInfo.textContent = `${Math.round(scale * 100)}%`;
+        }
+
+        function zoomIn() {
+            if (scale < maxScale) {
+                scale = Math.min(scale * 1.2, maxScale);
+                updateImageTransform();
+                updateZoomInfo();
+            }
+        }
+
+        function zoomOut() {
+            if (scale > minScale) {
+                scale = Math.max(scale / 1.2, minScale);
+                updateImageTransform();
+                updateZoomInfo();
+            }
+        }
+
+        function zoomToOriginal() {
+            scale = 1;
+            translateX = 0;
+            translateY = 0;
+            updateImageTransform();
+            updateZoomInfo();
+        }
+
+        function fitToScreen() {
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxContainer = document.getElementById('lightboxContainer');
+            
+            if (!lightboxImage.complete || lightboxImage.naturalWidth === 0) return;
+            
+            scale = 1;
+            
+            const imageWidth = lightboxImage.naturalWidth;
+            const imageHeight = lightboxImage.naturalHeight;
+            const containerWidth = lightboxContainer.clientWidth;
+            const containerHeight = lightboxContainer.clientHeight;
+            
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            let widthRatio, heightRatio;
+            
+            if (isMobile) {
+                widthRatio = (containerWidth * 0.95) / imageWidth;
+                heightRatio = (containerHeight * 0.85) / imageHeight;
+            } else {
+                widthRatio = (containerWidth * 0.9) / imageWidth;
+                heightRatio = (containerHeight * 0.8) / imageHeight;
+            }
+            
+            if (widthRatio < 1 || heightRatio < 1) {
+                scale = Math.min(widthRatio, heightRatio);
+                if (isMobile && scale < 0.5) {
+                    scale = Math.max(scale, 0.6);
+                }
+            } else {
+                if (isMobile) {
+                    const maxScale = Math.min(
+                        (containerWidth * 0.8) / imageWidth,
+                        (containerHeight * 0.7) / imageHeight,
+                        1.5
+                    );
+                    if (maxScale > 1) {
+                        scale = Math.min(maxScale, 1.2);
+                    }
+                }
+            }
+            
+            translateX = 0;
+            translateY = 0;
+            
+            updateImageTransform();
+            updateZoomInfo();
+        }
+
+        function startDrag(e) {
+            e.preventDefault();
+            if (scale <= 1) return;
+            
+            isDragging = true;
+            const lightboxContainer = document.getElementById('lightboxContainer');
+            lightboxContainer.style.cursor = 'grabbing';
+            
+            if (e.type === 'mousedown') {
+                startX = e.clientX - translateX;
+                startY = e.clientY - translateY;
+                
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', stopDrag);
+            } else if (e.type === 'touchstart' && e.touches.length === 1) {
+                startX = e.touches[0].clientX - translateX;
+                startY = e.touches[0].clientY - translateY;
+                
+                document.addEventListener('touchmove', drag, { passive: false });
+                document.addEventListener('touchend', stopDrag);
+            }
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            
+            if (e.type === 'mousemove') {
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+            } else if (e.type === 'touchmove' && e.touches.length === 1) {
+                translateX = e.touches[0].clientX - startX;
+                translateY = e.touches[0].clientY - startY;
+            }
+            
+            updateImageTransform();
+        }
+
+        function stopDrag(e) {
+            isDragging = false;
+            const lightboxContainer = document.getElementById('lightboxContainer');
+            lightboxContainer.style.cursor = scale > 1 ? 'grab' : 'default';
+            
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', stopDrag);
+            document.removeEventListener('touchmove', drag);
+            document.removeEventListener('touchend', stopDrag);
+        }
+
+        function handleWheel(e) {
+            e.preventDefault();
+            
+            if (e.deltaY < 0) {
+                zoomIn();
+            } else {
+                zoomOut();
+            }
+        }
+
+        function preloadAdjacentImages() {
+            const preloadCount = 2;
+            for (let i = 1; i <= preloadCount; i++) {
+                const nextIndex = (currentImageIndex + i) % allImages.length;
+                const prevIndex = (currentImageIndex - i + allImages.length) % allImages.length;
+                
+                if (allImages[nextIndex]) {
+                    const img = new Image();
+                    img.src = allImages[nextIndex].src;
+                }
+                
+                if (allImages[prevIndex]) {
+                    const img = new Image();
+                    img.src = allImages[prevIndex].src;
+                }
+            }
+        }
+
+        // ============ 保护功能 ============
+        function initProtection() {
+            // 禁止右键菜单
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                showProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
+                return false;
+            }, true);
+            
+            // 禁止开发者工具快捷键
+            document.addEventListener('keydown', function(e) {
+                const isDevToolsShortcut = 
+                    e.key === 'F12' || 
+                    e.keyCode === 123 ||
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+                    (e.ctrlKey && (e.key === 'U' || e.key === 'u')) ||
+                    (e.ctrlKey && (e.key === 'S' || e.key === 's')) ||
+                    (e.ctrlKey && (e.key === 'C' || e.key === 'c')) ||
+                    (e.ctrlKey && (e.key === 'V' || e.key === 'v')) ||
+                    (e.ctrlKey && (e.key === 'P' || e.key === 'p'));
+                
+                if (isDevToolsShortcut) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
+                    return false;
+                }
+            }, false);
+            
+            // 禁止拖拽图片
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.tagName === 'IMG' || 
+                    e.target.classList?.contains('card-bg') || 
+                    e.target.classList?.contains('lightbox-img')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            }, false);
+            
+            // 禁止保存图片
+            document.addEventListener('save', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 禁止选择（防止复制）
+            document.addEventListener('selectstart', function(e) {
+                if (e.target.tagName === 'IMG' || 
+                    e.target.classList?.contains('card-bg') || 
+                    e.target.classList?.contains('lightbox-img')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+
+        function showProtectionMessage(msg) {
+            const existingMsg = document.querySelector('.protection-message');
+            if (existingMsg) existingMsg.remove();
+            
+            const msgBox = document.createElement('div');
+            msgBox.className = 'protection-message';
+            msgBox.textContent = msg;
+            document.body.appendChild(msgBox);
+            
+            setTimeout(() => {
+                if (msgBox.parentNode) msgBox.remove();
+            }, 2000);
+        }
+
+        // ============ 移动端图片保护 ============
+        function initMobileImageProtection() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (!isMobile) return;
+            
+            console.log('📱 移动设备检测，启用图片保护功能');
+            
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(e) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    if (!e.target.closest('.lightbox-overlay.active')) {
+                        setTimeout(() => {
+                            showMobileProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
+                        }, 100);
+                    }
+                }
+                lastTouchEnd = now;
+            }, { passive: true });
+        }
+
+        function showMobileProtectionMessage(msg) {
+            const existingMsg = document.querySelector('.mobile-protection-message');
+            if (existingMsg) existingMsg.remove();
+            
+            const msgBox = document.createElement('div');
+            msgBox.className = 'mobile-protection-message';
+            msgBox.textContent = msg;
+            document.body.appendChild(msgBox);
+            
+            setTimeout(() => {
+                if (msgBox.parentNode) msgBox.remove();
+            }, 1500);
+        }
+
+        // ============ 返回顶部功能 ============
+        function initBackToTop() {
+            // 移除所有现有的返回顶部按钮事件监听器
+            const oldButtons = document.querySelectorAll('.back-to-top');
+            oldButtons.forEach(button => {
+                button.replaceWith(button.cloneNode(true));
+            });
+            
+            // 重新获取按钮并添加事件监听
+            const freshButtons = document.querySelectorAll('.back-to-top');
+            freshButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // 平滑滚动到顶部
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 激活导航栏中的Yikun作品链接
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    const yikunLink = document.querySelector('.nav-link[href="#guyikun"]');
+                    if (yikunLink) {
+                        yikunLink.classList.add('active');
+                    }
+                    
+                    return false;
+                });
+            });
+            
+            console.log('返回顶部按钮初始化完成，数量:', freshButtons.length);
+        }
+
         // ============ 陀螺仪3D效果系统 ============
         class Gyro3DEffect {
             constructor() {
@@ -1632,8 +1921,6 @@
                 
                 this.startAnimation();
                 console.log('🎮 陀螺仪3D效果已激活');
-                
-                this.showHint('倾斜手机查看3D效果');
             }
             
             deactivateGyro() {
@@ -1728,7 +2015,7 @@
                 });
             }
         }
-        
+
         // ============ 3D卡片交互效果 ============
         class Card3D {
             constructor(element) {
@@ -1742,7 +2029,6 @@
                 this.mouseLeaveDelay = null;
                 
                 const imageUrl = element.getAttribute('data-image');
-                console.log('初始化卡片，图片路径:', imageUrl);
                 if (imageUrl) {
                     let finalUrl = imageUrl;
                     if (!imageUrl.startsWith('http') && !imageUrl.startsWith('//')) {
@@ -1760,7 +2046,6 @@
                 const img = new Image();
                 img.src = url;
                 img.onload = () => {
-                    console.log('✅ 卡片图片加载成功:', url);
                     this.cardBg.style.opacity = '0.8';
                 };
                 img.onerror = () => {
@@ -1817,346 +2102,95 @@
                 this.cardBg.style.transform = `translateX(${tX}px) translateY(${tY}px) scale(1.05)`;
             }
         }
-        
-        // ============ 大图查看器 ============
-        let currentImageIndex = 0;
-        let allImages = [];
-        let isDragging = false;
-        let startX, startY;
-        let translateX = 0, translateY = 0;
-        let scale = 1;
-        let minScale = 0.1;
-        let maxScale = 10;
-        
-        function collectImages() {
-            const cardWraps = document.querySelectorAll('.card-wrap');
-            allImages = [];
-            
-            cardWraps.forEach((card, index) => {
-                const imageUrl = card.getAttribute('data-image');
-                if (!imageUrl || imageUrl.includes('via.placeholder')) return;
+
+        // ============ iOS陀螺仪权限请求 ============
+        function requestGyroPermission() {
+            if (typeof DeviceOrientationEvent.requestPermission === 'function' && 
+                /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 
-                const title = card.querySelector('.card-info h1')?.textContent || '作品';
-                const description = card.querySelector('.card-info p')?.textContent || '';
+                console.log('📱 iOS设备，需要请求陀螺仪权限');
                 
-                allImages.push({
-                    src: imageUrl,
-                    caption: `${title} - ${description}`,
-                    index: index
-                });
-            });
-            
-            console.log('收集到的图片:', allImages);
-        }
-        
-        function openLightbox(index) {
-            collectImages();
-            
-            if (allImages.length === 0) {
-                console.warn('没有找到可显示的图片');
-                return;
-            }
-            
-            currentImageIndex = index % allImages.length;
-            resetTransform();
-            
-            const lightbox = document.getElementById('lightbox');
-            lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            updateLightbox();
-            preloadAdjacentImages();
-        }
-        
-        function updateLightbox() {
-            const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxCaption = document.getElementById('lightboxCaption');
-            const lightboxCounter = document.getElementById('lightboxCounter');
-            const lightboxZoomInfo = document.getElementById('lightboxZoomInfo');
-            
-            if (allImages.length > 0 && currentImageIndex < allImages.length) {
-                const image = allImages[currentImageIndex];
-                lightboxImage.src = image.src;
-                lightboxImage.alt = image.caption;
-                lightboxCaption.textContent = image.caption;
-                lightboxCounter.textContent = `${currentImageIndex + 1} / ${allImages.length}`;
+                const permissionHint = document.createElement('div');
+                permissionHint.className = 'gyro-permission-hint';
+                permissionHint.innerHTML = '<div style="margin-bottom: 10px; font-size: 18px;">🚀 启用陀螺仪3D效果</div>' +
+                                          '<div style="font-size: 14px; color: #FFD54F;">点击任意位置允许陀螺仪权限</div>' +
+                                          '<div style="font-size: 12px; color: #D7CCC8; margin-top: 8px;">获得更佳的3D交互体验</div>';
+                document.body.appendChild(permissionHint);
                 
-                lightboxImage.onload = function() {
-                    resetTransform();
-                    fitToScreen();
+                setTimeout(() => {
+                    if (permissionHint.parentNode) {
+                        permissionHint.remove();
+                    }
+                }, 5000);
+                
+                const requestPermission = () => {
+                    DeviceOrientationEvent.requestPermission()
+                        .then(permissionState => {
+                            if (permissionState === 'granted') {
+                                console.log('✅ 陀螺仪权限已授予');
+                                if (gyroEffect) {
+                                    gyroEffect.isGyroAvailable = true;
+                                    gyroEffect.activateGyro();
+                                }
+                            } else {
+                                console.log('❌ 陀螺仪权限被拒绝');
+                            }
+                        })
+                        .catch(console.error);
+                    
+                    document.removeEventListener('click', requestPermission);
+                    document.removeEventListener('touchstart', requestPermission);
                 };
+                
+                document.addEventListener('click', requestPermission);
+                document.addEventListener('touchstart', requestPermission);
             }
         }
-        
-        function closeLightbox() {
-            const lightbox = document.getElementById('lightbox');
-            lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            resetTransform();
-        }
-        
-        function showPrevImage() {
-            if (allImages.length === 0) return;
-            currentImageIndex = (currentImageIndex - 1 + allImages.length) % allImages.length;
-            updateLightbox();
-        }
-        
-        function showNextImage() {
-            if (allImages.length === 0) return;
-            currentImageIndex = (currentImageIndex + 1) % allImages.length;
-            updateLightbox();
-        }
-        
-        // ============ 缩放和拖拽功能 ============
-        function resetTransform() {
-            scale = 1;
-            translateX = 0;
-            translateY = 0;
-            updateImageTransform();
-            updateZoomInfo();
-        }
-        
-        function updateImageTransform() {
+
+        // ============ 大图查看器初始化 ============
+        function initLightbox() {
+            const lightboxClose = document.getElementById('lightboxClose');
+            const lightboxPrev = document.getElementById('lightboxPrev');
+            const lightboxNext = document.getElementById('lightboxNext');
+            const lightboxZoomIn = document.getElementById('lightboxZoomIn');
+            const lightboxZoomOut = document.getElementById('lightboxZoomOut');
+            const lightboxReset = document.getElementById('lightboxReset');
+            const lightboxZoomFit = document.getElementById('lightboxZoomFit');
+            const lightboxZoomOriginal = document.getElementById('lightboxZoomOriginal');
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
             
-            lightboxImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+            if (lightboxPrev) lightboxPrev.addEventListener('click', showPrevImage);
+            if (lightboxNext) lightboxNext.addEventListener('click', showNextImage);
+            if (lightboxZoomIn) lightboxZoomIn.addEventListener('click', zoomIn);
+            if (lightboxZoomOut) lightboxZoomOut.addEventListener('click', zoomOut);
+            if (lightboxReset) lightboxReset.addEventListener('click', zoomToOriginal);
+            if (lightboxZoomFit) lightboxZoomFit.addEventListener('click', fitToScreen);
+            if (lightboxZoomOriginal) lightboxZoomOriginal.addEventListener('click', zoomToOriginal);
             
-            if (scale > 1) {
-                lightboxContainer.classList.add('grabbing');
-                lightboxContainer.style.cursor = 'grab';
-            } else {
-                lightboxContainer.classList.remove('grabbing');
-                lightboxContainer.style.cursor = 'default';
-            }
-        }
-        
-        function updateZoomInfo() {
-            const lightboxZoomInfo = document.getElementById('lightboxZoomInfo');
-            lightboxZoomInfo.textContent = `${Math.round(scale * 100)}%`;
-        }
-        
-        function zoomIn() {
-            if (scale < maxScale) {
-                scale = Math.min(scale * 1.2, maxScale);
-                updateImageTransform();
-                updateZoomInfo();
-            }
-        }
-        
-        function zoomOut() {
-            if (scale > minScale) {
-                scale = Math.max(scale / 1.2, minScale);
-                updateImageTransform();
-                updateZoomInfo();
-            }
-        }
-        
-        // ===== 修复方案：默认100%显示，超出屏幕时自动缩小以适应屏幕 =====
-        function fitToScreen() {
-    const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxContainer = document.getElementById('lightboxContainer');
-    
-    if (!lightboxImage.complete || lightboxImage.naturalWidth === 0) return;
-    
-    // 先设置为100%原始尺寸
-    scale = 1;
-    
-    // 获取图片和容器的尺寸
-    const imageWidth = lightboxImage.naturalWidth;
-    const imageHeight = lightboxImage.naturalHeight;
-    const containerWidth = lightboxContainer.clientWidth;
-    const containerHeight = lightboxContainer.clientHeight;
-    
-    // 判断是否为移动端
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    // 计算缩放比例 - 移动端使用更宽松的限制
-    let widthRatio, heightRatio;
-    
-    if (isMobile) {
-        // 移动端：图片尽量铺满屏幕，只留少量边距
-        widthRatio = (containerWidth * 0.95) / imageWidth;
-        heightRatio = (containerHeight * 0.85) / imageHeight;  // 留出文字和按钮的空间
-    } else {
-        // PC端：保持原来的比例
-        widthRatio = (containerWidth * 0.9) / imageWidth;
-        heightRatio = (containerHeight * 0.8) / imageHeight;
-    }
-    
-    // 如果图片超出屏幕，则缩小到刚好完整显示
-    if (widthRatio < 1 || heightRatio < 1) {
-        scale = Math.min(widthRatio, heightRatio);
-        
-        // 移动端：如果图片特别小，不要过度缩小
-        if (isMobile && scale < 0.5) {
-            scale = Math.max(scale, 0.6);  // 最小不低于60%
-        }
-    } else {
-        // 图片小于屏幕时，移动端可以适当放大一点
-        if (isMobile) {
-            // 如果图片太小，可以放大到屏幕宽度的80%
-            const maxScale = Math.min(
-                (containerWidth * 0.8) / imageWidth,
-                (containerHeight * 0.7) / imageHeight,
-                1.5  // 最大放大1.5倍
-            );
-            if (maxScale > 1) {
-                scale = Math.min(maxScale, 1.2);  // 最多放大到1.2倍
-            }
-        }
-    }
-    
-    translateX = 0;
-    translateY = 0;
-    
-    updateImageTransform();
-    updateZoomInfo();
-}
-        
-        function stopDrag() {
-            isDragging = false;
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            lightboxContainer.style.cursor = scale > 1 ? 'grab' : 'default';
-            
-            document.removeEventListener('mousemove', drag);
-            document.removeEventListener('mouseup', stopDrag);
-            document.removeEventListener('touchmove', drag);
-            document.removeEventListener('touchend', stopDrag);
-        }
-        
-        function handleWheel(e) {
-            e.preventDefault();
-            
-            if (e.deltaY < 0) {
-                zoomIn();
-            } else {
-                zoomOut();
-            }
-        }
-        
-        let initialDistance = null;
-        let initialScale = null;
-        
-        function handleTouchStart(e) {
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                const touch1 = e.touches[0];
-                const touch2 = e.touches[1];
-                initialDistance = Math.hypot(
-                    touch2.clientX - touch1.clientX,
-                    touch2.clientY - touch1.clientY
-                );
-                initialScale = scale;
-            }
-        }
-        
-        function handleTouchMove(e) {
-            if (e.touches.length === 2) {
-                e.preventDefault();
-                const touch1 = e.touches[0];
-                const touch2 = e.touches[1];
-                const currentDistance = Math.hypot(
-                    touch2.clientX - touch1.clientX,
-                    touch2.clientY - touch1.clientY
-                );
-                
-                if (initialDistance !== null) {
-                    const scaleChange = currentDistance / initialDistance;
-                    scale = Math.max(minScale, Math.min(maxScale, initialScale * scaleChange));
-                    updateImageTransform();
-                    updateZoomInfo();
-                }
-            }
-        }
-        
-        function handleTouchEnd() {
-            initialDistance = null;
-            initialScale = null;
-        }
-        
-        function preloadAdjacentImages() {
-            const preloadCount = 2;
-            for (let i = 1; i <= preloadCount; i++) {
-                const nextIndex = (currentImageIndex + i) % allImages.length;
-                const prevIndex = (currentImageIndex - i + allImages.length) % allImages.length;
-                
-                if (allImages[nextIndex]) {
-                    const img = new Image();
-                    img.src = allImages[nextIndex].src;
-                }
-                
-                if (allImages[prevIndex]) {
-                    const img = new Image();
-                    img.src = allImages[prevIndex].src;
-                }
-            }
-        }
-        
-        // ============ 页面初始化 ============
-        let gyroEffect = null;
-        
-        function initPage() {
-            console.log('开始初始化页面...');
-            
-            const cardWraps = document.querySelectorAll('.card-wrap');
-            console.log('找到卡片数量:', cardWraps.length);
-            
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                gyroEffect = new Gyro3DEffect();
+            if (lightboxImage) {
+                lightboxImage.addEventListener('mousedown', startDrag);
+                lightboxImage.addEventListener('touchstart', startDrag);
             }
             
-            setTimeout(() => {
-                cardWraps.forEach((card, index) => {
-                    try {
-                        new Card3D(card);
-                        console.log(`卡片 ${index + 1} 初始化成功`);
-                    } catch (error) {
-                        console.error(`卡片 ${index + 1} 初始化失败:`, error);
+            if (lightboxContainer) {
+                lightboxContainer.addEventListener('wheel', handleWheel, { passive: false });
+                lightboxContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
+                lightboxContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
+                lightboxContainer.addEventListener('touchend', handleTouchEnd);
+            }
+            
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox) {
+                lightbox.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeLightbox();
                     }
                 });
-            }, 100);
+            }
             
-            initLightbox();
-            updateBackground();
-            window.addEventListener('resize', updateBackground);
-            initNavigation();
-            initBackToTop();
-            preloadBackgrounds();
-            
-            console.log('页面初始化完成');
-        }
-        
-        function initLightbox() {
-            document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-            document.getElementById('lightboxPrev').addEventListener('click', showPrevImage);
-            document.getElementById('lightboxNext').addEventListener('click', showNextImage);
-            document.getElementById('lightboxZoomIn').addEventListener('click', zoomIn);
-            document.getElementById('lightboxZoomOut').addEventListener('click', zoomOut);
-            document.getElementById('lightboxReset').addEventListener('click', function() {
-                zoomToOriginal();
-            });
-            document.getElementById('lightboxZoomFit').addEventListener('click', fitToScreen);
-            document.getElementById('lightboxZoomOriginal').addEventListener('click', zoomToOriginal);
-            
-            const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            
-            lightboxImage.addEventListener('mousedown', startDrag);
-            lightboxImage.addEventListener('touchstart', startDrag);
-            
-            lightboxContainer.addEventListener('wheel', handleWheel, { passive: false });
-            
-            lightboxContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
-            lightboxContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
-            lightboxContainer.addEventListener('touchend', handleTouchEnd);
-            
-            document.getElementById('lightbox').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeLightbox();
-                }
-            });
-            
+            // 键盘事件
             document.addEventListener('keydown', function(e) {
                 const lightbox = document.getElementById('lightbox');
                 if (!lightbox.classList.contains('active')) return;
@@ -2192,7 +2226,49 @@
                 }
             });
         }
-        
+
+        // 触摸缩放处理
+        let initialDistance = null;
+        let initialScale = null;
+
+        function handleTouchStart(e) {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                initialDistance = Math.hypot(
+                    touch2.clientX - touch1.clientX,
+                    touch2.clientY - touch1.clientY
+                );
+                initialScale = scale;
+            }
+        }
+
+        function handleTouchMove(e) {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                const currentDistance = Math.hypot(
+                    touch2.clientX - touch1.clientX,
+                    touch2.clientY - touch1.clientY
+                );
+                
+                if (initialDistance !== null) {
+                    const scaleChange = currentDistance / initialDistance;
+                    scale = Math.max(minScale, Math.min(maxScale, initialScale * scaleChange));
+                    updateImageTransform();
+                    updateZoomInfo();
+                }
+            }
+        }
+
+        function handleTouchEnd() {
+            initialDistance = null;
+            initialScale = null;
+        }
+
+        // ============ 页面初始化 ============
         function updateBackground() {
             const mobileBg = document.querySelector('.bg-mobile');
             const pcBg = document.querySelector('.bg-pc');
@@ -2206,7 +2282,7 @@
                 pcBg.style.display = 'none';
             }
         }
-        
+
         function initNavigation() {
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('.artist-section');
@@ -2252,25 +2328,7 @@
                 }, 100);
             });
         }
-        
-        function initBackToTop() {
-            const backButtons = document.querySelectorAll('.back-to-top');
-            backButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                    
-                    document.querySelectorAll('.nav-link').forEach(l => {
-                        l.classList.remove('active');
-                    });
-                    document.querySelector('.nav-link[href="#guyikun"]').classList.add('active');
-                });
-            });
-        }
-        
+
         function preloadBackgrounds() {
             const mobileImg = new Image();
             const pcImg = new Image();
@@ -2298,224 +2356,84 @@
                 document.querySelector('.bg-pc').style.display = 'none';
             };
         }
-        
-        // ============ 保护功能 ============
-        function initProtection() {
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                showProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
-                return false;
-            });
+
+        function initPage() {
+            console.log('开始初始化页面...');
             
-            document.addEventListener('keydown', function(e) {
-                const isBlocked = 
-                    (e.key === 'F12' || e.keyCode === 123) ||
-                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                    (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-                    (e.ctrlKey && e.key === 'u') ||
-                    (e.ctrlKey && e.key === 's') ||
-                    (e.ctrlKey && e.key === 'c');
-                
-                if (isBlocked) {
-                    e.preventDefault();
-                    showProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
-                    return false;
-                }
-            });
+            const cardWraps = document.querySelectorAll('.card-wrap');
+            console.log('找到卡片数量:', cardWraps.length);
             
-            document.addEventListener('dragstart', function(e) {
-                if (e.target.tagName === 'IMG' || e.target.classList.contains('card-bg')) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-        }
-        
-        function showProtectionMessage(msg) {
-            const existingMsg = document.querySelector('.protection-message');
-            if (existingMsg) existingMsg.remove();
-            
-            const msgBox = document.createElement('div');
-            msgBox.className = 'protection-message';
-            msgBox.textContent = msg;
-            document.body.appendChild(msgBox);
-            
-            setTimeout(() => {
-                if (msgBox.parentNode) msgBox.remove();
-            }, 2000);
-        }
-        
-        function initMobileImageProtection() {
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            if (!isMobile) return;
-            
-            console.log('📱 移动设备检测，启用图片保护功能');
-            
-            const images = document.querySelectorAll('.card-bg, .lightbox-img');
-            images.forEach(img => {
-                img.addEventListener('touchstart', function(e) {
-                    if (e.target.closest('.lightbox-overlay.active')) {
-                        return;
-                    }
-                }, { passive: true });
-                
-                img.addEventListener('contextmenu', function(e) {
-                    e.preventDefault();
-                    return false;
-                });
-            });
-            
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(e) {
-                const now = Date.now();
-                if (now - lastTouchEnd <= 300) {
-                    if (!e.target.closest('.lightbox-overlay.active')) {
-                        setTimeout(() => {
-                            showMobileProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
-                        }, 100);
-                    }
-                }
-                lastTouchEnd = now;
-            }, { passive: true });
-            
-            document.addEventListener('touchmove', function(e) {
-            }, { passive: true });
-        }
-        
-        function showMobileProtectionMessage(msg) {
-            const existingMsg = document.querySelector('.mobile-protection-message');
-            if (existingMsg) existingMsg.remove();
-            
-            const msgBox = document.createElement('div');
-            msgBox.className = 'mobile-protection-message';
-            msgBox.textContent = msg;
-            document.body.appendChild(msgBox);
-            
-            setTimeout(() => {
-                if (msgBox.parentNode) msgBox.remove();
-            }, 1500);
-        }
-        
-        function requestGyroPermission() {
-            if (typeof DeviceOrientationEvent.requestPermission === 'function' && 
-                /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                
-                console.log('📱 iOS设备，需要请求陀螺仪权限');
-                
-                const permissionHint = document.createElement('div');
-                permissionHint.className = 'gyro-permission-hint';
-                permissionHint.innerHTML = '<div style="margin-bottom: 10px; font-size: 18px;">🚀 启用陀螺仪3D效果</div>' +
-                                          '<div style="font-size: 14px; color: #FFD54F;">点击任意位置允许陀螺仪权限</div>' +
-                                          '<div style="font-size: 12px; color: #D7CCC8; margin-top: 8px;">获得更佳的3D交互体验</div>';
-                document.body.appendChild(permissionHint);
-                
-                setTimeout(() => {
-                    if (permissionHint.parentNode) {
-                        permissionHint.remove();
-                    }
-                }, 5000);
-                
-                const requestPermission = () => {
-                    DeviceOrientationEvent.requestPermission()
-                        .then(permissionState => {
-                            if (permissionState === 'granted') {
-                                console.log('✅ 陀螺仪权限已授予');
-                                if (gyroEffect) {
-                                    gyroEffect.isGyroAvailable = true;
-                                    gyroEffect.activateGyro();
-                                }
-                            } else {
-                                console.log('❌ 陀螺仪权限被拒绝');
-                            }
-                        })
-                        .catch(console.error);
-                    
-                    document.removeEventListener('click', requestPermission);
-                    document.removeEventListener('touchstart', requestPermission);
-                };
-                
-                document.addEventListener('click', requestPermission);
-                document.addEventListener('touchstart', requestPermission);
+            // 初始化移动端陀螺仪
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                gyroEffect = new Gyro3DEffect();
             }
+            
+            // 初始化3D卡片
+            setTimeout(() => {
+                cardWraps.forEach((card, index) => {
+                    try {
+                        new Card3D(card);
+                        console.log(`卡片 ${index + 1} 初始化成功`);
+                    } catch (error) {
+                        console.error(`卡片 ${index + 1} 初始化失败:`, error);
+                    }
+                });
+            }, 100);
+            
+            // 初始化其他功能
+            initLightbox();
+            updateBackground();
+            window.addEventListener('resize', updateBackground);
+            initNavigation();
+            initBackToTop(); // 返回顶部按钮初始化
+            preloadBackgrounds();
+            
+            console.log('页面初始化完成');
         }
-        
+
+        // ============ DOM加载完成后的初始化 ============
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM已加载，开始初始化...');
             
+            // 先初始化保护功能
+            initProtection();
+            
+            // 初始化页面
+            initPage();
+            
+            // 移动端图片保护
+            initMobileImageProtection();
+            
+            // iOS陀螺仪权限
             if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 setTimeout(requestGyroPermission, 2000);
             }
             
-            initPage();
-            initProtection();
-            initMobileImageProtection();
-            
+            // 移动端滚动优化
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 document.body.style.overflow = 'auto';
                 document.body.style.webkitOverflowScrolling = 'touch';
             }
             
+            // 完成提示
             setTimeout(() => {
-                console.log('🎨 3D卡片画廊已初始化完成');
+                console.log('✅ 3D卡片画廊已初始化完成');
                 console.log('📱 移动设备支持陀螺仪3D效果');
-                console.log('🎮 手机端：倾斜手机触发3D效果');
                 console.log('🖱️  PC端：移动鼠标触发3D效果');
-                console.log('🖼️  大图浏览：默认100%原始尺寸显示，超出屏幕自动缩小');
+                console.log('🖼️  大图浏览：默认100%原始尺寸显示');
+                console.log('🔒 图片保护功能已启用');
+                console.log('⬆️ 返回顶部功能已修复');
             }, 500);
         });
-        
-        window.addEventListener('orientationchange', function() {
-            setTimeout(initMobileImageProtection, 100);
+
+        // 窗口大小变化时重新调整返回顶部按钮
+        window.addEventListener('resize', function() {
+            // 不重新初始化，避免重复绑定
         });
+
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>凉宫春日应援团广东支部画作展示</title>
     
     <style>
@@ -529,7 +529,7 @@
             transition: transform 0.2s ease-out;
         }
         
-        /* 大图查看器样式 - 已修复遮挡问题 */
+        /* ===== 大图查看器样式 - 自适应屏幕比例 + 强制居中 ===== */
         .lightbox-overlay {
             position: fixed;
             top: 0;
@@ -555,15 +555,13 @@
         
         .lightbox-container {
             position: relative;
-            width: 90%;
-            height: 80vh;
-            animation: lightboxZoom 0.3s ease;
-            overflow: hidden;
-            cursor: grab;
+            width: 100%;
+            height: 100%;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
+            cursor: grab;
         }
         
         .lightbox-container.grabbing {
@@ -575,9 +573,8 @@
             100% { transform: scale(1); opacity: 1; }
         }
         
+        /* 图片样式 - 强制居中 + 自适应屏幕 */
         .lightbox-img {
-            max-width: 100%;
-            max-height: 60vh;
             display: block;
             margin: 0 auto;
             border-radius: 5px;
@@ -585,29 +582,42 @@
             transition: transform 0.2s ease;
             transform-origin: center center;
             cursor: move;
+            object-fit: contain;
+            max-width: 95vw;
+            max-height: 85vh;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
         }
         
         .lightbox-caption {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
             color: white;
             text-align: center;
-            margin-top: 15px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 1.1em;
             max-width: 90%;
-            z-index: 10002;
+            z-index: 10010;
             backdrop-filter: blur(10px);
-            position: relative;
-            margin-bottom: 10px;
             border-radius: 12px;
-            background: rgba(102, 102, 102, 0.7);
-            box-sizing: border-box;
+            background: rgba(102, 102, 102, 0.85);
             border: 1px solid #999999;
-            backdrop-filter: blur(7px) saturate(100%);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            pointer-events: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         /* 工具栏样式 */
         .lightbox-toolbar {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 20px;
             display: flex;
@@ -646,7 +656,7 @@
         
         /* 缩放控制按钮 */
         .lightbox-zoom-controls {
-            position: absolute;
+            position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
@@ -681,7 +691,7 @@
         
         /* 缩放信息显示 */
         .lightbox-zoom-info {
-            position: absolute;
+            position: fixed;
             top: 20px;
             left: 20px;
             color: white;
@@ -695,7 +705,7 @@
         
         /* 导航按钮 */
         .lightbox-nav {
-            position: absolute;
+            position: fixed;
             top: 50%;
             transform: translateY(-50%);
             background: rgba(255, 255, 255, 0.2);
@@ -727,7 +737,7 @@
         }
         
         .lightbox-counter {
-            position: absolute;
+            position: fixed;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
@@ -796,20 +806,17 @@
         
         /* 移动端大图查看器调整 */
         @media (max-width: 768px) {
-            .lightbox-container {
-                width: 95%;
-                height: 75vh;
-            }
-            
             .lightbox-img {
-                max-height: 50vh;
+                max-width: 98vw;
+                max-height: 90vh;
             }
             
             .lightbox-caption {
-                font-size: 0.9em;
-                padding: 8px 15px;
-                margin-top: 10px;
-                margin-bottom: 15px;
+                bottom: 70px;
+                font-size: 0.95em;
+                padding: 8px 16px;
+                white-space: normal;
+                max-width: 85%;
             }
             
             .lightbox-zoom-controls {
@@ -818,8 +825,8 @@
             }
             
             .lightbox-zoom-controls button {
-                width: 35px;
-                height: 35px;
+                width: 36px;
+                height: 36px;
                 font-size: 16px;
             }
             
@@ -830,8 +837,8 @@
             }
             
             .lightbox-toolbar button {
-                width: 35px;
-                height: 35px;
+                width: 36px;
+                height: 36px;
                 font-size: 16px;
             }
             
@@ -869,9 +876,29 @@
             }
         }
         
-        /* 修改移动端图片保护样式 */
+        /* 小屏手机优化 */
+        @media (max-width: 480px) {
+            .lightbox-img {
+                max-width: 98vw;
+                max-height: 85vh;
+            }
+            
+            .lightbox-caption {
+                bottom: 65px;
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+            
+            .lightbox-zoom-controls button {
+                width: 34px;
+                height: 34px;
+                font-size: 15px;
+            }
+        }
+        
+        /* 修改移动端图片保护样式 - 不影响大图预览 */
         @media (max-width: 768px) {
-            .card-bg, .card, .lightbox-img, img {
+            .card-bg, .card, img:not(.lightbox-img) {
                 -webkit-touch-callout: none !important;
                 -webkit-user-select: none !important;
                 -moz-user-select: none !important;
@@ -882,34 +909,18 @@
                 user-drag: none !important;
             }
             
+            .lightbox-img {
+                pointer-events: auto !important;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            
             .card-wrap {
                 position: relative;
                 touch-action: pan-y;
                 -webkit-overflow-scrolling: touch;
-            }
-            
-            .card-wrap::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 5;
-                pointer-events: none;
-                background: transparent;
-            }
-            
-            .lightbox-container::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 5;
-                pointer-events: none;
-                background: transparent;
             }
             
             .cards-container {
@@ -962,62 +973,6 @@
             20% { opacity: 1; transform: translateX(-50%) translateY(0); }
             80% { opacity: 1; transform: translateX(-50%) translateY(0); }
             100% { opacity: 0; transform: translateX(-50%) translateY(-20px); display: none; }
-        }
-        
-        /* 移动端图片保护增强 */
-        @media (max-width: 768px) {
-            img, .card-bg, .card, .lightbox-img {
-                -webkit-touch-callout: none !important;
-                -webkit-user-select: none !important;
-                -moz-user-select: none !important;
-                -ms-user-select: none !important;
-                user-select: none !important;
-                -webkit-tap-highlight-color: transparent !important;
-                -webkit-user-drag: none !important;
-                user-drag: none !important;
-                pointer-events: none !important;
-            }
-            
-            .card-wrap {
-                -webkit-user-select: none;
-                user-select: none;
-                touch-action: pan-y;
-            }
-            
-            .card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 5;
-                background: transparent;
-                pointer-events: none;
-            }
-            
-            .lightbox-overlay.active .lightbox-img {
-                pointer-events: auto;
-            }
-            
-            .lightbox-overlay.active .lightbox-container::after {
-                content: '图片已受保护';
-                position: absolute;
-                bottom: 10px;
-                right: 10px;
-                background: rgba(0, 0, 0, 0.7);
-                color: #FFD54F;
-                padding: 5px 10px;
-                border-radius: 10px;
-                font-size: 12px;
-                z-index: 10;
-            }
-            
-            body, html {
-                overflow-x: hidden;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-            }
         }
         
         /* 动态指针样式系统 */
@@ -1094,6 +1049,20 @@
           background-position: center 28% !important;
         }
 
+        /* Yikun旗帜图片位置调整 */
+        #guyikun .cards-container > .card-wrap:first-child .card-bg {
+            background-position: 30% center !important;
+        }
+
+        #guyikun .cards-container > .card-wrap:first-child:hover .card-bg {
+            background-position: 28% center !important;
+        }
+        
+        /* 大图预览旗帜图片居中 */
+        .lightbox-img[src*="Yikun Gu1.png"] {
+            object-position: center !important;
+            object-fit: contain !important;
+        }
     </style>
     
     <!-- 添加Google字体 -->
@@ -1416,6 +1385,7 @@
             <button class="back-to-top">返回顶部</button>
         </section>
         <p class="page-subtitle">本网页内容由广东支部运营组成员天隐负责维护</p>
+        <p class="page-subtitle">目前版本号：v1.1.0 - 大图预览自适应居中优化</p>
     </div>
 
     <script>
@@ -1693,8 +1663,8 @@
         let startX, startY;
         let translateX = 0, translateY = 0;
         let scale = 1;
-        let minScale = 0.1;
-        let maxScale = 10;
+        let minScale = 0.5;
+        let maxScale = 3;
         
         function collectImages() {
             const cardWraps = document.querySelectorAll('.card-wrap');
@@ -1714,7 +1684,7 @@
                 });
             });
             
-            console.log('收集到的图片:', allImages);
+            console.log('收集到的图片:', allImages.length);
         }
         
         function openLightbox(index) {
@@ -1777,7 +1747,7 @@
             updateLightbox();
         }
         
-        // ============ 缩放和拖拽功能 ============
+        // ============ 缩放和拖拽功能 - 强制居中自适应 ============
         function resetTransform() {
             scale = 1;
             translateX = 0;
@@ -1790,7 +1760,8 @@
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
             
-            lightboxImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+            // 强制居中：transform 使用 translate(-50%, -50%) 作为基准
+            lightboxImage.style.transform = `translate(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px)) scale(${scale})`;
             
             if (scale > 1) {
                 lightboxContainer.classList.add('grabbing');
@@ -1822,28 +1793,26 @@
             }
         }
         
-        // ===== 修复方案一：统一缩放比例 =====
+        // ===== 自适应屏幕比例 - 强制居中 =====
         function fitToScreen() {
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
             
             if (!lightboxImage.complete || lightboxImage.naturalWidth === 0) return;
             
-            // 统一使用容器宽度的85%作为标准宽度
-            const targetWidth = lightboxContainer.clientWidth * 0.85;
+            const containerWidth = lightboxContainer.clientWidth;
+            const containerHeight = lightboxContainer.clientHeight;
             const imageWidth = lightboxImage.naturalWidth;
+            const imageHeight = lightboxImage.naturalHeight;
             
-            // 所有图片都按相同宽度比例缩放
-            scale = targetWidth / imageWidth;
+            // 计算宽高缩放比例，留出边距
+            const widthRatio = (containerWidth * 0.9) / imageWidth;
+            const heightRatio = (containerHeight * 0.8) / imageHeight;
             
-            // 如果图片高度超出容器，则限制最大高度
-            const scaledHeight = lightboxImage.naturalHeight * scale;
-            const maxHeight = lightboxContainer.clientHeight * 0.8;
+            // 取较小值，确保图片完整显示
+            scale = Math.min(widthRatio, heightRatio, 1);
             
-            if (scaledHeight > maxHeight) {
-                scale = maxHeight / lightboxImage.naturalHeight;
-            }
-            
+            // 重置偏移量，强制居中
             translateX = 0;
             translateY = 0;
             
@@ -1859,6 +1828,7 @@
             updateZoomInfo();
         }
         
+        // ============ 拖拽事件 ============
         function startDrag(e) {
             if (scale <= 1) return;
             
@@ -1898,6 +1868,7 @@
             translateX = clientX - startX;
             translateY = clientY - startY;
             
+            // 限制拖拽范围
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
             
@@ -2247,34 +2218,17 @@
             
             console.log('📱 移动设备检测，启用图片保护功能');
             
-            const images = document.querySelectorAll('.card-bg, .lightbox-img');
-            images.forEach(img => {
-                img.addEventListener('touchstart', function(e) {
-                    if (e.target.closest('.lightbox-overlay.active')) {
-                        return;
-                    }
-                }, { passive: true });
-                
-                img.addEventListener('contextmenu', function(e) {
-                    e.preventDefault();
-                    return false;
-                });
-            });
-            
             let lastTouchEnd = 0;
             document.addEventListener('touchend', function(e) {
                 const now = Date.now();
                 if (now - lastTouchEnd <= 300) {
-                    if (!e.target.closest('.lightbox-overlay.active')) {
+                    if (!e.target.closest('.lightbox-overlay.active') && e.target.closest('.card-bg')) {
                         setTimeout(() => {
                             showMobileProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
                         }, 100);
                     }
                 }
                 lastTouchEnd = now;
-            }, { passive: true });
-            
-            document.addEventListener('touchmove', function(e) {
             }, { passive: true });
         }
         
@@ -2335,6 +2289,14 @@
             }
         }
         
+        // ============ 窗口大小改变时重新适应 ============
+        window.addEventListener('resize', function() {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox.classList.contains('active')) {
+                fitToScreen();
+            }
+        });
+        
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM已加载，开始初始化...');
             
@@ -2354,1299 +2316,20 @@
             setTimeout(() => {
                 console.log('🎨 3D卡片画廊已初始化完成');
                 console.log('📱 移动设备支持陀螺仪3D效果');
-                console.log('🎮 手机端：倾斜手机触发3D效果');
                 console.log('🖱️  PC端：移动鼠标触发3D效果');
+                console.log('🖼️  大图预览：自适应屏幕比例 + 强制居中');
             }, 500);
         });
         
         window.addEventListener('orientationchange', function() {
             setTimeout(initMobileImageProtection, 100);
+            setTimeout(function() {
+                const lightbox = document.getElementById('lightbox');
+                if (lightbox.classList.contains('active')) {
+                    fitToScreen();
+                }
+            }, 200);
         });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

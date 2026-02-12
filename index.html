@@ -23,13 +23,9 @@
             background-color: #BCAAA4;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            overflow-y: auto !important; /* 确保body可以滚动 */
-            -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch;
         }
-        
-        /* 动画曲线 */
-        .hoverEasing { transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1); }
-        .returnEasing { transition-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95); }
         
         /* 页面标题样式 */
         .page-title {
@@ -65,7 +61,6 @@
             overflow: hidden;
         }
         
-        /* 背景图片 */
         .bg-mobile {
             position: absolute;
             top: 0;
@@ -80,7 +75,6 @@
             display: block;
         }
         
-        /* PC端背景图片 */
         .bg-pc {
             position: absolute;
             top: 0;
@@ -95,18 +89,15 @@
             display: none;
         }
         
-        /* PC端显示横版背景 */
         @media (min-width: 768px) {
             .bg-mobile {
                 display: none;
             }
-            
             .bg-pc {
                 display: block;
             }
         }
         
-        /* 半透明遮罩层*/
         .bg-overlay {
             position: fixed;
             top: 0;
@@ -117,7 +108,6 @@
             z-index: -1;
         }
         
-        /* 内容区域 */
         .content-wrapper {
             position: relative;
             z-index: 1;
@@ -172,8 +162,6 @@
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             border: none;
             box-shadow: 0 4px 15px rgba(93, 64, 55, 0.3);
-            position: relative;
-            overflow: hidden;
             cursor: pointer;
         }
         
@@ -221,18 +209,15 @@
             background-color: #1a1a1a;
             overflow: hidden;
             border-radius: 15px;
-            box-shadow:
-                rgba(0, 0, 0, 0.8) 0 40px 80px 0,
+            box-shadow: rgba(0, 0, 0, 0.8) 0 40px 80px 0,
                 inset #222 0 0 0 6px,
                 inset rgba(255, 255, 255, 0.4) 0 0 0 8px;
-            transition: 
-                transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
                 box-shadow 2s cubic-bezier(0.23, 1, 0.32, 1);
             transform-style: preserve-3d;
             will-change: transform;
         }
         
-        /* 卡片背景 */
         .card-bg {
             opacity: 0.8;
             position: absolute;
@@ -244,14 +229,12 @@
             background-position: center;
             background-size: cover;
             background-color: #333;
-            transition: 
-                opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+            transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
                 transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             pointer-events: none;
             will-change: transform;
         }
         
-        /* 卡片信息 */
         .card-info {
             padding: 40px;
             position: absolute;
@@ -260,41 +243,8 @@
             right: 0;
             color: #fff;
             transform: translateY(40%);
-            transition: 
-                transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1),
+            transition: transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1),
                 opacity 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
-            
-            p {
-                opacity: 0;
-                text-shadow: rgba(0, 0, 0, 0.9) 0 3px 6px;
-                transition: opacity 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
-                margin-top: 15px;
-                font-size: 1.2em;
-                line-height: 1.7;
-            }
-            
-            * {
-                position: relative;
-                z-index: 1;
-            }
-            
-            &:after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: 0;
-                width: 100%;
-                height: 100%;
-                background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
-                background-blend-mode: overlay;
-                opacity: 0;
-                transform: translateY(100%);
-                transition: 
-                    opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
-                    transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-                border-radius: 0 0 15px 15px;
-            }
         }
         
         .card-info h1 {
@@ -305,10 +255,17 @@
             margin-bottom: 15px;
         }
         
-        /* 悬停状态 */
+        .card-info p {
+            opacity: 0;
+            text-shadow: rgba(0, 0, 0, 0.9) 0 3px 6px;
+            transition: opacity 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+            margin-top: 15px;
+            font-size: 1.2em;
+            line-height: 1.7;
+        }
+        
         .card-wrap:hover .card {
-            box-shadow:
-                rgba(255, 255, 255, 0.3) 0 0 60px 10px,
+            box-shadow: rgba(255, 255, 255, 0.3) 0 0 60px 10px,
                 rgba(255, 255, 255, 0.8) 0 0 0 2px,
                 rgba(0, 0, 0, 0.8) 0 40px 80px 0,
                 inset #333 0 0 0 6px,
@@ -328,12 +285,6 @@
             opacity: 1;
         }
         
-        .card-wrap:hover .card-info:after {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* 画师标题 */
         .artist-title {
             text-align: center;
             color: #5D4037;
@@ -358,7 +309,6 @@
             background: linear-gradient(90deg, transparent, #8D6E63, transparent);
         }
         
-        /* 画师描述 */
         .artist-description {
             text-align: center;
             color: #795548;
@@ -369,7 +319,6 @@
             padding: 0 20px;
         }
         
-        /* 返回顶部按钮 */
         .back-to-top {
             display: block;
             text-align: center;
@@ -393,37 +342,12 @@
             box-shadow: 0 10px 30px rgba(93, 64, 55, 0.4);
         }
         
-        /* 响应式调整 */
-        @media (max-width: 1200px) {
-            .card-wrap {
-                flex: 0 0 calc(50% - 30px);
-                max-width: 550px;
-            }
-            
-            .card {
-                height: 500px;
-            }
-        }
-        
-        @media (max-width: 992px) {
-            .card-wrap {
-                flex: 0 0 calc(50% - 20px);
-                max-width: 500px;
-                min-width: 400px;
-            }
-            
-            .card {
-                height: 450px;
-            }
-        }
-        
         /* 移动端样式优化 */
         @media (max-width: 768px) {
             body {
                 overflow-y: auto !important;
                 height: auto !important;
                 position: relative !important;
-                -webkit-overflow-scrolling: touch;
             }
             
             .content-wrapper {
@@ -442,7 +366,6 @@
                 max-width: 100%;
                 min-width: unset;
                 touch-action: pan-y !important;
-                -webkit-overflow-scrolling: touch;
             }
             
             .card {
@@ -450,10 +373,6 @@
                 max-width: 500px;
                 margin: 0 auto;
                 pointer-events: none;
-            }
-            
-            .card-wrap:active {
-                -webkit-tap-highlight-color: transparent;
             }
             
             .artist-title {
@@ -485,7 +404,6 @@
                 margin-bottom: 30px;
             }
             
-            /* 陀螺仪激活时的滚动处理 */
             .card-wrap.gyro-active {
                 touch-action: pan-y !important;
             }
@@ -529,7 +447,6 @@
             opacity: 1;
         }
         
-        /* 陀螺仪提示 */
         .gyro-hint {
             position: absolute;
             bottom: 20px;
@@ -552,7 +469,6 @@
             opacity: 1;
         }
         
-        /* 陀螺仪激活状态 */
         .card-wrap.gyro-active .card {
             transition: transform 0.2s ease-out;
         }
@@ -561,7 +477,7 @@
             transition: transform 0.2s ease-out;
         }
         
-        /* ===== 大图查看器样式 - 优化移动端显示 ===== */
+        /* ===== 大图查看器样式 - 完全修复移动端显示 ===== */
         .lightbox-overlay {
             position: fixed;
             top: 0;
@@ -576,7 +492,6 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
-            touch-action: none;
         }
         
         .lightbox-overlay.active {
@@ -589,18 +504,12 @@
             width: 100%;
             height: 100%;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
         }
         
-        @keyframes lightboxZoom {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        
-        /* PC端大图预览 - 竖图适应屏幕 */
+        /* 大图预览图片 - 完美居中 */
         .lightbox-img {
             display: block;
             margin: 0 auto;
@@ -619,35 +528,52 @@
             pointer-events: auto !important;
             visibility: visible !important;
             opacity: 1 !important;
+            max-width: none;
+            max-height: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
         }
         
-        /* PC端默认100%显示 */
+        /* PC端大图预览优化 */
         @media (min-width: 769px) {
             .lightbox-img {
-                max-width: none;
-                max-height: none;
+                max-width: 90vw;
+                max-height: 90vh;
+                width: auto;
+                height: auto;
             }
         }
         
-        /* 移动端大图预览 - 优化显示 */
+        /* 移动端大图预览 - 完美居中且大小合适 */
         @media (max-width: 768px) {
-            .lightbox-img {
-                max-width: 100% !important;
-                max-height: 80vh !important;
-                width: auto !important;
-                height: auto !important;
+            .lightbox-overlay.active {
+                overflow: hidden;
             }
             
             .lightbox-container {
-                justify-content: flex-start;
-                padding-top: 60px;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
+            
+            .lightbox-img {
+                max-width: 100% !important;
+                max-height: 100% !important;
+                width: auto !important;
+                height: auto !important;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(1);
+                object-fit: contain;
             }
         }
         
         .lightbox-caption {
-            position: absolute !important;
+            position: fixed !important;
             bottom: 80px !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
@@ -669,7 +595,7 @@
             pointer-events: none;
         }
         
-        /* 工具栏样式 */
+        /* 工具栏 - 固定定位 */
         .lightbox-toolbar {
             position: fixed;
             top: 20px;
@@ -704,11 +630,6 @@
             transform: scale(1.1);
         }
         
-        .lightbox-toolbar button:active {
-            transform: scale(0.95);
-        }
-        
-        /* 缩放控制按钮 */
         .lightbox-zoom-controls {
             position: fixed;
             bottom: 30px;
@@ -738,12 +659,6 @@
             transition: all 0.2s ease;
         }
         
-        .lightbox-zoom-controls button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
-        }
-        
-        /* 缩放信息显示 */
         .lightbox-zoom-info {
             position: fixed;
             top: 20px;
@@ -757,7 +672,6 @@
             backdrop-filter: blur(10px);
         }
         
-        /* 导航按钮 */
         .lightbox-nav {
             position: fixed;
             top: 50%;
@@ -830,7 +744,6 @@
             100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); display: none; }
         }
         
-        /* 陀螺仪权限提示 */
         .gyro-permission-hint {
             position: fixed;
             top: 50%;
@@ -856,120 +769,6 @@
             20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
             80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
             100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); display: none; }
-        }
-        
-        /* ===== 移动端样式修复 ===== */
-        @media (max-width: 768px) {
-            /* 卡片图片保护 */
-            .card-bg {
-                -webkit-touch-callout: none !important;
-                -webkit-user-select: none !important;
-                -moz-user-select: none !important;
-                -ms-user-select: none !important;
-                user-select: none !important;
-                pointer-events: none !important;
-                -webkit-user-drag: none !important;
-                user-drag: none !important;
-            }
-            
-            /* 移动端大图预览优化 */
-            .lightbox-overlay.active {
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .lightbox-container {
-                height: auto;
-                min-height: 100%;
-                padding: 60px 0 100px;
-                justify-content: flex-start;
-                overflow-y: visible;
-            }
-            
-            .lightbox-img {
-                max-width: 95% !important;
-                max-height: 70vh !important;
-                width: auto !important;
-                height: auto !important;
-                margin: 20px auto !important;
-            }
-            
-            .lightbox-caption {
-                bottom: 100px !important;
-                padding: 8px 16px !important;
-                font-size: 0.9em !important;
-                white-space: normal !important;
-                max-width: 85% !important;
-                position: fixed !important;
-            }
-            
-            .lightbox-zoom-controls {
-                bottom: 20px;
-                padding: 8px 12px;
-                position: fixed;
-            }
-            
-            .lightbox-toolbar {
-                top: 10px;
-                right: 10px;
-                padding: 8px;
-                position: fixed;
-            }
-            
-            .lightbox-zoom-info {
-                top: 10px;
-                left: 10px;
-                font-size: 12px;
-                padding: 6px 12px;
-                position: fixed;
-            }
-            
-            .lightbox-counter {
-                top: 10px;
-                font-size: 0.8em;
-                padding: 6px 15px;
-                position: fixed;
-            }
-            
-            .lightbox-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-                position: fixed;
-            }
-            
-            .lightbox-prev {
-                left: 10px;
-            }
-            
-            .lightbox-next {
-                right: 10px;
-            }
-            
-            .gyro-hint {
-                font-size: 11px;
-                padding: 6px 12px;
-                bottom: 15px;
-            }
-        }
-        
-        /* 小屏手机优化 */
-        @media (max-width: 480px) {
-            .lightbox-img {
-                max-height: 60vh !important;
-            }
-            
-            .lightbox-caption {
-                bottom: 90px !important;
-                font-size: 12px !important;
-                padding: 6px 12px !important;
-            }
-            
-            .lightbox-zoom-controls button {
-                width: 36px !important;
-                height: 36px !important;
-                font-size: 16px !important;
-            }
         }
         
         /* 移动端保护提示样式 */
@@ -1001,144 +800,107 @@
             100% { opacity: 0; transform: translateX(-50%) translateY(-20px); display: none; }
         }
         
-        /* 动态指针样式系统 */
+        /* 动态指针样式 */
         :root {
-          --cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%235D4037" opacity="0.3"/><circle cx="12" cy="12" r="4" fill="%235D4037"/></svg>') 12 12, auto;
-          --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M14 2C7.373 2 2 7.373 2 14s5.373 12 12 12 12-5.373 12-12S20.627 2 14 2z" fill="%23FF4081" opacity="0.7"/><path d="M18.5 13.5l-4.5 4.5-4.5-4.5 1.5-1.5 3 3 3-3z" fill="white"/></svg>') 14 14, pointer;
-          --cursor-grab: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FFFFFF" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="%23000000"/></svg>') 16 16, grab;
-          --cursor-grabbing: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FF4081" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="white"/></svg>') 16 16, grabbing;
-        }
-
-        /* 应用指针样式 */
-        body {
-          cursor: var(--cursor-default);
-        }
-
-        .card-wrap {
-          cursor: var(--cursor-default);
-        }
-
-        .card-wrap:hover {
-          cursor: var(--cursor-pointer);
-        }
-
-        .nav-link,
-        .back-to-top {
-          cursor: var(--cursor-pointer) !important;
-        }
-
-        .lightbox-container {
-          cursor: var(--cursor-grab);
-        }
-
-        .lightbox-container.grabbing {
-          cursor: var(--cursor-grabbing);
-        }
-
-        button,
-        .lightbox-toolbar button,
-        .lightbox-zoom-controls button,
-        .lightbox-nav {
-          cursor: var(--cursor-pointer);
-        }
-
-        .artist-description,
-        .card-info p,
-        .page-subtitle {
-          cursor: text;
-        }
-
-        @media (max-width: 768px) {
-          body,
-          .card-wrap,
-          .card-wrap:hover,
-          .nav-link,
-          .back-to-top,
-          button {
-            cursor: auto;
-          }
+            --cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%235D4037" opacity="0.3"/><circle cx="12" cy="12" r="4" fill="%235D4037"/></svg>') 12 12, auto;
+            --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M14 2C7.373 2 2 7.373 2 14s5.373 12 12 12 12-5.373 12-12S20.627 2 14 2z" fill="%23FF4081" opacity="0.7"/><path d="M18.5 13.5l-4.5 4.5-4.5-4.5 1.5-1.5 3 3 3-3z" fill="white"/></svg>') 14 14, pointer;
+            --cursor-grab: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FFFFFF" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="%23000000"/></svg>') 16 16, grab;
+            --cursor-grabbing: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FF4081" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="white"/></svg>') 16 16, grabbing;
         }
         
-        /* 咕噜作品区第一张图片背景位置调整 */
+        body {
+            cursor: var(--cursor-default);
+        }
+        
+        .card-wrap {
+            cursor: var(--cursor-default);
+        }
+        
+        .card-wrap:hover {
+            cursor: var(--cursor-pointer);
+        }
+        
+        .nav-link, .back-to-top {
+            cursor: var(--cursor-pointer) !important;
+        }
+        
+        .lightbox-container {
+            cursor: var(--cursor-grab);
+        }
+        
+        .lightbox-container.grabbing {
+            cursor: var(--cursor-grabbing);
+        }
+        
+        button {
+            cursor: var(--cursor-pointer);
+        }
+        
+        @media (max-width: 768px) {
+            body, .card-wrap, .card-wrap:hover, .nav-link, .back-to-top, button {
+                cursor: auto;
+            }
+        }
+        
+        /* 图片位置修复 */
         #gulu .cards-container > .card-wrap:first-child .card-bg {
-          background-position: center 30% !important; 
+            background-position: center 30% !important;
         }
-
+        
         #gulu .cards-container > .card-wrap:first-child:hover .card-bg {
-          background-position: center 28% !important;
+            background-position: center 28% !important;
         }
-
-        /* 修复广东支部旗帜图片右偏问题 */
+        
         #guyikun .cards-container > .card-wrap:first-child .card-bg {
             background-position: 30% center !important;
         }
-
+        
         #guyikun .cards-container > .card-wrap:first-child:hover .card-bg {
             background-position: 28% center !important;
         }
         
-        /* 修复大图预览模式广东支部旗帜图片右偏问题 */
         .lightbox-img[src*="Yikun Gu5.png"],
         .lightbox-img[src*="Yikun Gu1.png"] {
-            object-position: 50% center !important;
+            object-position: center !important;
             object-fit: contain !important;
         }
-
     </style>
     
-    <!-- 添加Google字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- 固定背景容器 -->
     <div class="bg-container">
         <div class="bg-mobile"></div>
         <div class="bg-pc"></div>
     </div>
-    
-    <!-- 半透明遮罩 -->
     <div class="bg-overlay"></div>
     
     <!-- 大图查看器 -->
     <div class="lightbox-overlay" id="lightbox">
-        <!-- 工具栏 -->
         <div class="lightbox-toolbar">
             <button id="lightboxZoomIn" title="放大">+</button>
             <button id="lightboxZoomOut" title="缩小">-</button>
             <button id="lightboxReset" title="重置">↺</button>
             <button id="lightboxClose" title="关闭">×</button>
         </div>
-        
-        <!-- 缩放信息 -->
         <div class="lightbox-zoom-info" id="lightboxZoomInfo">100%</div>
-        
-        <!-- 图片计数器 -->
         <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
-        
-        <!-- 导航按钮 -->
         <button class="lightbox-nav lightbox-prev" id="lightboxPrev" title="上一张">‹</button>
         <button class="lightbox-nav lightbox-next" id="lightboxNext" title="下一张">›</button>
-        
-        <!-- 主内容区域 -->
         <div class="lightbox-container" id="lightboxContainer">
             <img src="" alt="" class="lightbox-img" id="lightboxImage">
             <div class="lightbox-caption" id="lightboxCaption"></div>
         </div>
-        
-        <!-- 缩放控制按钮 -->
         <div class="lightbox-zoom-controls">
             <button id="lightboxZoomFit" title="适应屏幕">⎙</button>
             <button id="lightboxZoomOriginal" title="原始尺寸">1:1</button>
         </div>
     </div>
     
-    <!-- 内容区域 -->
     <div class="content-wrapper">
-        <!-- 页面标题 -->
         <h1 class="page-title">凉宫春日应援团广东支部画作展示</h1>
         <p class="page-subtitle">汇聚广东支部美工组成员的精美作品，每一幅画作都凝聚着我们对凉宫春日系列的热爱与创意</p>
         
-        <!-- 导航栏 -->
         <div class="navigation">
             <div class="nav-title">美工组成员作品集</div>
             <div class="nav-links">
@@ -1151,16 +913,11 @@
             </div>
         </div>
         
-        <!-- 各个画师作品区域 -->
         <!-- Yikun作品区域 -->
         <section id="guyikun" class="artist-section">
             <h2 class="artist-title">Yikun作品集</h2>
-            <p class="artist-description">
-                这里Yikun，平平无奇的绘画人，擅长平涂，感谢欣赏我的作品。
-            </p>
-            
+            <p class="artist-description">这里Yikun，平平无奇的绘画人，擅长平涂，感谢欣赏我的作品。</p>
             <div class="cards-container">
-                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/Yikun Gu5.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1172,8 +929,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- 卡片2 -->
                 <div class="card-wrap" data-image="picture/Yikun Gu2.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1185,8 +940,6 @@
                         </div>
                     </div>
                 </div>
-                    
-                <!-- 卡片3 -->
                 <div class="card-wrap" data-image="picture/Yikun Gu3.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1198,8 +951,6 @@
                         </div>
                     </div>
                 </div>
-    
-                <!-- 卡片4 -->
                 <div class="card-wrap" data-image="picture/Yikun Gu4.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1212,19 +963,14 @@
                     </div>
                 </div>
             </div>
-            
             <button class="back-to-top">返回顶部</button>
         </section>
         
         <!-- 荡漾作品区域 -->
         <section id="dangyang" class="artist-section">
             <h2 class="artist-title">荡漾作品集</h2>
-            <p class="artist-description">
-                介绍正在编辑中。
-            </p>
-            
+            <p class="artist-description">介绍正在编辑中。</p>
             <div class="cards-container">
-                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/1.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1236,8 +982,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- 卡片2 -->
                 <div class="card-wrap" data-image="picture/1.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1250,19 +994,14 @@
                     </div>
                 </div>
             </div>
-            
             <button class="back-to-top">返回顶部</button>
         </section>
         
         <!-- 咔啦作品区域 -->
         <section id="lixing" class="artist-section">
             <h2 class="artist-title">咔啦作品集</h2>
-            <p class="artist-description">
-                介绍正在编辑中。
-            </p>
-            
+            <p class="artist-description">介绍正在编辑中。</p>
             <div class="cards-container">
-                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/1.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1274,8 +1013,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- 卡片2 -->
                 <div class="card-wrap" data-image="picture/1.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1288,19 +1025,14 @@
                     </div>
                 </div>
             </div>
-            
             <button class="back-to-top">返回顶部</button>
         </section>
         
         <!-- 咕噜作品区域 -->
         <section id="gulu" class="artist-section">
             <h2 class="artist-title">咕噜作品集</h2>
-            <p class="artist-description">
-                咕噜，凉宫春日应援团广东支部美工组成员，擅长运用平涂手法，融入对于作品的理解，希望创作更多有趣的凉宫春日系列作品，谢谢喜欢咕噜的画~
-            </p>
-            
+            <p class="artist-description">咕噜，凉宫春日应援团广东支部美工组成员，擅长运用平涂手法，融入对于作品的理解，希望创作更多有趣的凉宫春日系列作品，谢谢喜欢咕噜的画~</p>
             <div class="cards-container">
-                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/gulu1.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1312,8 +1044,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- 卡片2 -->
                 <div class="card-wrap" data-image="picture/gulu2.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1325,8 +1055,6 @@
                         </div>
                     </div>
                 </div>
-                           
-                <!-- 卡片3 -->
                 <div class="card-wrap" data-image="picture/gulu3.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1339,19 +1067,14 @@
                     </div>
                 </div>
             </div>
-            
             <button class="back-to-top">返回顶部</button>
         </section>
         
         <!-- Potaro作品区域 -->
         <section id="Potaro" class="artist-section">
             <h2 class="artist-title">Potaro作品集</h2>
-            <p class="artist-description">
-                介绍正在编辑中。
-            </p>
-            
+            <p class="artist-description">介绍正在编辑中。</p>
             <div class="cards-container">
-                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/Potaro1.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1364,19 +1087,14 @@
                     </div>
                 </div>
             </div>
-            
             <button class="back-to-top">返回顶部</button>
         </section>
         
         <!-- 阿笑作品区域 -->
         <section id="axiao" class="artist-section">
             <h2 class="artist-title">阿笑作品集</h2>
-            <p class="artist-description">
-                介绍正在编辑中。
-            </p>
-            
+            <p class="artist-description">介绍正在编辑中。</p>
             <div class="cards-container">
-                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/1.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1388,8 +1106,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- 卡片2 -->
                 <div class="card-wrap" data-image="picture/1.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1402,15 +1118,14 @@
                     </div>
                 </div>
             </div>
-            
             <button class="back-to-top">返回顶部</button>
         </section>
         <p class="page-subtitle">本网页内容由广东支部运营组成员天隐负责维护</p>
-        <p class="page-subtitle">目前版本号为v1.0.5</p>
+        <p class="page-subtitle">目前版本号为v1.0.6</p>
     </div>
 
     <script>
-        // ============ 全局变量定义 ============
+        // ============ 全局变量 ============
         let currentImageIndex = 0;
         let allImages = [];
         let isDragging = false;
@@ -1418,7 +1133,7 @@
         let translateX = 0, translateY = 0;
         let scale = 1;
         let minScale = 0.1;
-        let maxScale = 10;
+        let maxScale = 3;
         let gyroEffect = null;
         let isGyroEnabled = false;
 
@@ -1426,14 +1141,11 @@
         function collectImages() {
             const cardWraps = document.querySelectorAll('.card-wrap');
             allImages = [];
-            
             cardWraps.forEach((card, index) => {
                 const imageUrl = card.getAttribute('data-image');
-                if (!imageUrl || imageUrl.includes('via.placeholder')) return;
-                
+                if (!imageUrl) return;
                 const title = card.querySelector('.card-info h1')?.textContent || '作品';
                 const description = card.querySelector('.card-info p')?.textContent || '';
-                
                 allImages.push({
                     src: imageUrl,
                     caption: `${title} - ${description}`,
@@ -1457,31 +1169,21 @@
                 
                 lightboxImage.onload = function() {
                     resetTransform();
-                    const isPC = window.innerWidth >= 768;
-                    if (isPC) {
-                        // PC端竖图自动适应屏幕
-                        fitToScreen();
-                    } else {
-                        // 移动端自动适应屏幕
-                        fitToScreen();
-                    }
+                    fitToScreen();
                 };
             }
         }
 
         function openLightbox(index) {
             collectImages();
-            
-            if (allImages.length === 0) {
-                return;
-            }
-            
+            if (allImages.length === 0) return;
             currentImageIndex = index % allImages.length;
             resetTransform();
             
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
             
             updateLightbox();
             preloadAdjacentImages();
@@ -1490,11 +1192,13 @@
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.remove('active');
-            // 恢复滚动，修复移动端退出后无法滚动的问题
+            
+            // 恢复滚动
             document.body.style.overflow = 'auto';
             document.body.style.position = 'relative';
             document.body.style.height = 'auto';
             document.documentElement.style.overflow = 'auto';
+            document.documentElement.style.height = 'auto';
             
             resetTransform();
         }
@@ -1522,18 +1226,9 @@
 
         function updateImageTransform() {
             const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            
             if (lightboxImage) {
-                lightboxImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-            }
-            
-            if (scale > 1) {
-                lightboxContainer.classList.add('grabbing');
-                lightboxContainer.style.cursor = 'grab';
-            } else {
-                lightboxContainer.classList.remove('grabbing');
-                lightboxContainer.style.cursor = 'default';
+                // 使用translate和scale，保持居中
+                lightboxImage.style.transform = `translate(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px)) scale(${scale})`;
             }
         }
 
@@ -1577,23 +1272,20 @@
             const containerWidth = lightboxContainer.clientWidth;
             const containerHeight = lightboxContainer.clientHeight;
             
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const isMobile = window.innerWidth <= 768;
             
-            let widthRatio, heightRatio;
+            let scaleX, scaleY;
             
             if (isMobile) {
-                widthRatio = (containerWidth * 0.95) / imageWidth;
-                heightRatio = (containerHeight * 0.7) / imageHeight;
+                // 移动端：图片铺满宽度，高度自适应
+                scaleX = containerWidth / imageWidth;
+                scaleY = containerHeight / imageHeight;
+                scale = Math.min(scaleX, scaleY, 1); // 不超过100%
             } else {
-                widthRatio = (containerWidth * 0.9) / imageWidth;
-                heightRatio = (containerHeight * 0.8) / imageHeight;
-            }
-            
-            scale = Math.min(widthRatio, heightRatio);
-            
-            // PC端限制最大缩放为100%
-            if (!isMobile && scale > 1) {
-                scale = 1;
+                // PC端：图片完整显示，留出边距
+                scaleX = (containerWidth * 0.9) / imageWidth;
+                scaleY = (containerHeight * 0.8) / imageHeight;
+                scale = Math.min(scaleX, scaleY, 1);
             }
             
             translateX = 0;
@@ -1603,24 +1295,23 @@
             updateZoomInfo();
         }
 
+        // ============ 拖拽事件 ============
         function startDrag(e) {
             e.preventDefault();
             if (scale <= 1) return;
             
             isDragging = true;
             const lightboxContainer = document.getElementById('lightboxContainer');
-            lightboxContainer.style.cursor = 'grabbing';
+            lightboxContainer.classList.add('grabbing');
             
             if (e.type === 'mousedown') {
                 startX = e.clientX - translateX;
                 startY = e.clientY - translateY;
-                
                 document.addEventListener('mousemove', drag);
                 document.addEventListener('mouseup', stopDrag);
             } else if (e.type === 'touchstart' && e.touches.length === 1) {
                 startX = e.touches[0].clientX - translateX;
                 startY = e.touches[0].clientY - translateY;
-                
                 document.addEventListener('touchmove', drag, { passive: false });
                 document.addEventListener('touchend', stopDrag);
             }
@@ -1644,7 +1335,7 @@
         function stopDrag(e) {
             isDragging = false;
             const lightboxContainer = document.getElementById('lightboxContainer');
-            lightboxContainer.style.cursor = scale > 1 ? 'grab' : 'default';
+            lightboxContainer.classList.remove('grabbing');
             
             document.removeEventListener('mousemove', drag);
             document.removeEventListener('mouseup', stopDrag);
@@ -1654,7 +1345,6 @@
 
         function handleWheel(e) {
             e.preventDefault();
-            
             if (e.deltaY < 0) {
                 zoomIn();
             } else {
@@ -1663,537 +1353,15 @@
         }
 
         function preloadAdjacentImages() {
-            const preloadCount = 2;
-            for (let i = 1; i <= preloadCount; i++) {
+            for (let i = 1; i <= 2; i++) {
                 const nextIndex = (currentImageIndex + i) % allImages.length;
                 const prevIndex = (currentImageIndex - i + allImages.length) % allImages.length;
-                
-                if (allImages[nextIndex]) {
-                    const img = new Image();
-                    img.src = allImages[nextIndex].src;
-                }
-                
-                if (allImages[prevIndex]) {
-                    const img = new Image();
-                    img.src = allImages[prevIndex].src;
-                }
+                if (allImages[nextIndex]) new Image().src = allImages[nextIndex].src;
+                if (allImages[prevIndex]) new Image().src = allImages[prevIndex].src;
             }
         }
 
-        // ============ 保护功能 ============
-        function initProtection() {
-            // 禁止右键菜单
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                showProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
-                return false;
-            }, true);
-            
-            // 禁止开发者工具快捷键
-            document.addEventListener('keydown', function(e) {
-                const isDevToolsShortcut = 
-                    e.key === 'F12' || 
-                    e.keyCode === 123 ||
-                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
-                    (e.ctrlKey && (e.key === 'U' || e.key === 'u'));
-                
-                if (isDevToolsShortcut) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    showProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
-                    return false;
-                }
-            }, false);
-            
-            // 禁止拖拽图片
-            document.addEventListener('dragstart', function(e) {
-                if (e.target.tagName === 'IMG' && !e.target.closest('.lightbox-overlay.active')) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return false;
-                }
-                if (e.target.classList?.contains('card-bg')) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return false;
-                }
-            }, false);
-            
-            // 禁止选择
-            document.addEventListener('selectstart', function(e) {
-                if (e.target.tagName === 'IMG' && !e.target.closest('.lightbox-overlay.active')) {
-                    e.preventDefault();
-                    return false;
-                }
-                if (e.target.classList?.contains('card-bg')) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-        }
-
-        function showProtectionMessage(msg) {
-            const existingMsg = document.querySelector('.protection-message');
-            if (existingMsg) existingMsg.remove();
-            
-            const msgBox = document.createElement('div');
-            msgBox.className = 'protection-message';
-            msgBox.textContent = msg;
-            document.body.appendChild(msgBox);
-            
-            setTimeout(() => {
-                if (msgBox.parentNode) msgBox.remove();
-            }, 2000);
-        }
-
-        // ============ 移动端图片保护 - 修复弹出提示问题 ============
-        function initMobileImageProtection() {
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            if (!isMobile) return;
-            
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(e) {
-                const now = Date.now();
-                // 只在非大图预览模式下，且不是点击卡片时显示提示
-                if (now - lastTouchEnd <= 300 && !e.target.closest('.lightbox-overlay')) {
-                    // 检查是否点击了可交互元素
-                    const isInteractive = e.target.closest('.card-wrap') || 
-                                        e.target.closest('.nav-link') || 
-                                        e.target.closest('.back-to-top') ||
-                                        e.target.closest('button');
-                    
-                    // 只有在尝试保存图片时才显示提示
-                    if (e.target.closest('.card-bg') && !isInteractive) {
-                        setTimeout(() => {
-                            showMobileProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
-                        }, 100);
-                    }
-                }
-                lastTouchEnd = now;
-            }, { passive: true });
-            
-            // 确保卡片容器可以滚动
-            const cardWraps = document.querySelectorAll('.card-wrap');
-            cardWraps.forEach(wrap => {
-                wrap.addEventListener('touchstart', function(e) {
-                    // 不阻止默认事件，允许滚动
-                }, { passive: true });
-            });
-        }
-
-        function showMobileProtectionMessage(msg) {
-            const existingMsg = document.querySelector('.mobile-protection-message');
-            if (existingMsg) existingMsg.remove();
-            
-            const msgBox = document.createElement('div');
-            msgBox.className = 'mobile-protection-message';
-            msgBox.textContent = msg;
-            document.body.appendChild(msgBox);
-            
-            setTimeout(() => {
-                if (msgBox.parentNode) msgBox.remove();
-            }, 1500);
-        }
-
-        // ============ 返回顶部功能 ============
-        function initBackToTop() {
-            const backButtons = document.querySelectorAll('.back-to-top');
-            
-            backButtons.forEach(button => {
-                button.replaceWith(button.cloneNode(true));
-            });
-            
-            const freshButtons = document.querySelectorAll('.back-to-top');
-            freshButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                    
-                    const navLinks = document.querySelectorAll('.nav-link');
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    
-                    const yikunLink = document.querySelector('.nav-link[href="#guyikun"]');
-                    if (yikunLink) {
-                        yikunLink.classList.add('active');
-                    }
-                    
-                    return false;
-                });
-            });
-        }
-
-        // ============ 陀螺仪3D效果系统 ============
-        class Gyro3DEffect {
-            constructor() {
-                this.cardWraps = [];
-                this.isGyroActive = false;
-                this.isGyroAvailable = false;
-                this.beta = 0;
-                this.gamma = 0;
-                this.alpha = 0;
-                this.animationId = null;
-                this.lastUpdateTime = 0;
-                this.updateInterval = 16;
-                
-                this.init();
-            }
-            
-            init() {
-                this.cardWraps = document.querySelectorAll('.card-wrap');
-                
-                if (window.DeviceOrientationEvent) {
-                    this.isGyroAvailable = true;
-                    window.addEventListener('deviceorientation', this.handleOrientation.bind(this));
-                }
-                
-                this.addClickToggle();
-            }
-            
-            isMobileDevice() {
-                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            }
-            
-            addClickToggle() {
-                this.cardWraps.forEach(cardWrap => {
-                    cardWrap.addEventListener('click', (e) => {
-                        if (e.target.closest('.card-info') || e.target.closest('.lightbox-overlay')) {
-                            return;
-                        }
-                        
-                        if (this.isGyroActive) {
-                            this.deactivateGyro();
-                            this.showHint('陀螺仪3D已关闭');
-                            isGyroEnabled = false;
-                        } else {
-                            this.activateGyro();
-                            this.showHint('陀螺仪3D已激活，倾斜手机查看效果');
-                            isGyroEnabled = true;
-                        }
-                        
-                        e.stopPropagation();
-                    }, { passive: true });
-                });
-            }
-            
-            showHint(message) {
-                const hint = document.createElement('div');
-                hint.className = 'mobile-protection-message';
-                hint.textContent = message;
-                document.body.appendChild(hint);
-                
-                setTimeout(() => {
-                    hint.remove();
-                }, 2000);
-            }
-            
-            activateGyro() {
-                if (!this.isGyroAvailable || this.isGyroActive) return;
-                
-                this.isGyroActive = true;
-                this.cardWraps.forEach(cardWrap => {
-                    cardWrap.classList.add('gyro-active');
-                    cardWrap.style.touchAction = 'pan-y';
-                });
-                
-                this.startAnimation();
-            }
-            
-            deactivateGyro() {
-                if (!this.isGyroActive) return;
-                
-                this.isGyroActive = false;
-                this.cardWraps.forEach(cardWrap => {
-                    cardWrap.classList.remove('gyro-active');
-                    
-                    const card = cardWrap.querySelector('.card');
-                    const cardBg = cardWrap.querySelector('.card-bg');
-                    
-                    if (card && cardBg) {
-                        card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
-                        cardBg.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
-                        
-                        card.style.transform = 'rotateY(0deg) rotateX(0deg)';
-                        cardBg.style.transform = 'translateX(0px) translateY(0px) scale(1.05)';
-                        
-                        setTimeout(() => {
-                            card.style.transition = '';
-                            cardBg.style.transition = '';
-                        }, 600);
-                    }
-                    
-                    cardWrap.style.touchAction = 'pan-y';
-                });
-                
-                this.stopAnimation();
-            }
-            
-            handleOrientation(event) {
-                if (!this.isGyroActive) return;
-                
-                this.beta = event.beta || 0;
-                this.gamma = event.gamma || 0;
-                
-                if (this.beta !== null && this.gamma !== null) {
-                    this.updateCards();
-                }
-            }
-            
-            startAnimation() {
-                if (this.animationId) return;
-                
-                const animate = (timestamp) => {
-                    if (timestamp - this.lastUpdateTime >= this.updateInterval) {
-                        this.updateCards();
-                        this.lastUpdateTime = timestamp;
-                    }
-                    this.animationId = requestAnimationFrame(animate);
-                };
-                
-                this.animationId = requestAnimationFrame(animate);
-            }
-            
-            stopAnimation() {
-                if (this.animationId) {
-                    cancelAnimationFrame(this.animationId);
-                    this.animationId = null;
-                }
-            }
-            
-            updateCards() {
-                if (!this.isGyroActive) return;
-                
-                const rotateY = (this.gamma / 90) * 25;
-                const rotateX = (this.beta / 180) * 20;
-                
-                const limitedRotateY = Math.max(-25, Math.min(25, rotateY));
-                const limitedRotateX = Math.max(-20, Math.min(20, rotateX));
-                
-                const bgX = -this.gamma * 0.8;
-                const bgY = -this.beta * 0.5;
-                
-                this.cardWraps.forEach(cardWrap => {
-                    const card = cardWrap.querySelector('.card');
-                    const cardBg = cardWrap.querySelector('.card-bg');
-                    
-                    if (card && cardBg) {
-                        card.style.transform = `rotateY(${limitedRotateY}deg) rotateX(${limitedRotateX}deg)`;
-                        cardBg.style.transform = `translateX(${bgX}px) translateY(${bgY}px) scale(1.05)`;
-                        
-                        const gyroHint = cardWrap.querySelector('.gyro-hint');
-                        if (gyroHint && !gyroHint.classList.contains('show')) {
-                            gyroHint.classList.add('show');
-                            setTimeout(() => {
-                                gyroHint.classList.remove('show');
-                            }, 3000);
-                        }
-                    }
-                });
-            }
-        }
-
-        // ============ 3D卡片交互效果 ============
-        class Card3D {
-            constructor(element) {
-                this.element = element;
-                this.card = element.querySelector('.card');
-                this.cardBg = element.querySelector('.card-bg');
-                this.width = element.offsetWidth;
-                this.height = element.offsetHeight;
-                this.mouseX = 0;
-                this.mouseY = 0;
-                this.mouseLeaveDelay = null;
-                
-                const imageUrl = element.getAttribute('data-image');
-                if (imageUrl) {
-                    let finalUrl = imageUrl;
-                    if (!imageUrl.startsWith('http') && !imageUrl.startsWith('//')) {
-                        finalUrl = imageUrl.replace('./', '');
-                    }
-                    
-                    this.cardBg.style.backgroundImage = `url('${finalUrl}')`;
-                    this.preloadImage(finalUrl);
-                }
-                
-                this.init();
-            }
-            
-            preloadImage(url) {
-                const img = new Image();
-                img.src = url;
-                img.onload = () => {
-                    this.cardBg.style.opacity = '0.8';
-                };
-                img.onerror = () => {
-                    this.cardBg.style.backgroundImage = 'linear-gradient(135deg, #8D6E63 0%, #5D4037 100%)';
-                    this.cardBg.style.backgroundColor = '#333';
-                };
-            }
-            
-            init() {
-                // PC端鼠标交互
-                if (window.innerWidth >= 768) {
-                    this.element.addEventListener('mousemove', this.handleMouseMove.bind(this));
-                    this.element.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
-                    this.element.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
-                }
-                
-                // 点击打开大图
-                this.element.addEventListener('click', (e) => {
-                    if (!e.target.closest('.gyro-hint') && !isGyroEnabled) {
-                        e.stopPropagation();
-                        const cardWraps = Array.from(document.querySelectorAll('.card-wrap'));
-                        const index = cardWraps.indexOf(this.element);
-                        openLightbox(index);
-                    }
-                });
-                
-                // 移动端触摸优化
-                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                    this.element.addEventListener('touchstart', function(e) {
-                        // 允许滚动
-                    }, { passive: true });
-                }
-            }
-            
-            handleMouseMove(e) {
-                if (isGyroEnabled) return;
-                const rect = this.element.getBoundingClientRect();
-                this.mouseX = e.clientX - rect.left - this.width / 2;
-                this.mouseY = e.clientY - rect.top - this.height / 2;
-                this.updateCardTransform();
-            }
-            
-            handleMouseEnter() {
-                if (isGyroEnabled) return;
-                clearTimeout(this.mouseLeaveDelay);
-                this.element.classList.add('hovering');
-            }
-            
-            handleMouseLeave() {
-                if (isGyroEnabled) return;
-                this.mouseLeaveDelay = setTimeout(() => {
-                    this.mouseX = 0;
-                    this.mouseY = 0;
-                    this.updateCardTransform();
-                    this.element.classList.remove('hovering');
-                }, 1000);
-            }
-            
-            updateCardTransform() {
-                if (isGyroEnabled) return;
-                const mousePX = this.mouseX / this.width;
-                const mousePY = this.mouseY / this.height;
-                const rX = mousePX * 25;
-                const rY = mousePY * -25;
-                this.card.style.transform = `rotateY(${rX}deg) rotateX(${rY}deg)`;
-                const tX = mousePX * -30;
-                const tY = mousePY * -30;
-                this.cardBg.style.transform = `translateX(${tX}px) translateY(${tY}px) scale(1.05)`;
-            }
-        }
-
-        // ============ iOS陀螺仪权限请求 ============
-        function requestGyroPermission() {
-            if (typeof DeviceOrientationEvent.requestPermission === 'function' && 
-                /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                
-                const permissionHint = document.createElement('div');
-                permissionHint.className = 'gyro-permission-hint';
-                permissionHint.innerHTML = '<div style="margin-bottom: 10px; font-size: 18px;">🚀 启用陀螺仪3D效果</div>' +
-                                          '<div style="font-size: 14px; color: #FFD54F;">点击任意位置允许陀螺仪权限</div>';
-                document.body.appendChild(permissionHint);
-                
-                setTimeout(() => {
-                    if (permissionHint.parentNode) {
-                        permissionHint.remove();
-                    }
-                }, 5000);
-                
-                const requestPermission = () => {
-                    DeviceOrientationEvent.requestPermission()
-                        .then(permissionState => {
-                            if (permissionState === 'granted') {
-                                if (gyroEffect) {
-                                    gyroEffect.isGyroAvailable = true;
-                                }
-                            }
-                        })
-                        .catch(console.error);
-                    
-                    document.removeEventListener('click', requestPermission);
-                    document.removeEventListener('touchstart', requestPermission);
-                };
-                
-                document.addEventListener('click', requestPermission);
-                document.addEventListener('touchstart', requestPermission);
-            }
-        }
-
-        // ============ 大图查看器初始化 ============
-        function initLightbox() {
-            const lightboxClose = document.getElementById('lightboxClose');
-            const lightboxPrev = document.getElementById('lightboxPrev');
-            const lightboxNext = document.getElementById('lightboxNext');
-            const lightboxZoomIn = document.getElementById('lightboxZoomIn');
-            const lightboxZoomOut = document.getElementById('lightboxZoomOut');
-            const lightboxReset = document.getElementById('lightboxReset');
-            const lightboxZoomFit = document.getElementById('lightboxZoomFit');
-            const lightboxZoomOriginal = document.getElementById('lightboxZoomOriginal');
-            const lightboxImage = document.getElementById('lightboxImage');
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            
-            if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
-            if (lightboxPrev) lightboxPrev.addEventListener('click', showPrevImage);
-            if (lightboxNext) lightboxNext.addEventListener('click', showNextImage);
-            if (lightboxZoomIn) lightboxZoomIn.addEventListener('click', zoomIn);
-            if (lightboxZoomOut) lightboxZoomOut.addEventListener('click', zoomOut);
-            if (lightboxReset) lightboxReset.addEventListener('click', zoomToOriginal);
-            if (lightboxZoomFit) lightboxZoomFit.addEventListener('click', fitToScreen);
-            if (lightboxZoomOriginal) lightboxZoomOriginal.addEventListener('click', zoomToOriginal);
-            
-            if (lightboxImage) {
-                lightboxImage.addEventListener('mousedown', startDrag);
-                lightboxImage.addEventListener('touchstart', startDrag);
-            }
-            
-            if (lightboxContainer) {
-                lightboxContainer.addEventListener('wheel', handleWheel, { passive: false });
-                lightboxContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
-                lightboxContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
-                lightboxContainer.addEventListener('touchend', handleTouchEnd);
-            }
-            
-            const lightbox = document.getElementById('lightbox');
-            if (lightbox) {
-                lightbox.addEventListener('click', function(e) {
-                    if (e.target === this) {
-                        closeLightbox();
-                    }
-                });
-            }
-            
-            document.addEventListener('keydown', function(e) {
-                const lightbox = document.getElementById('lightbox');
-                if (!lightbox.classList.contains('active')) return;
-                
-                switch(e.key) {
-                    case 'Escape': closeLightbox(); break;
-                    case 'ArrowLeft': showPrevImage(); break;
-                    case 'ArrowRight': showNextImage(); break;
-                    case '+': case '=': e.preventDefault(); zoomIn(); break;
-                    case '-': case '_': e.preventDefault(); zoomOut(); break;
-                    case '0': e.preventDefault(); resetTransform(); break;
-                    case '1': e.preventDefault(); fitToScreen(); break;
-                }
-            });
-        }
-
+        // ============ 触摸缩放 ============
         let initialDistance = null;
         let initialScale = null;
 
@@ -2234,12 +1402,388 @@
             initialScale = null;
         }
 
+        // ============ 保护功能 ============
+        function initProtection() {
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                showProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
+                return false;
+            }, true);
+            
+            document.addEventListener('keydown', function(e) {
+                const isDevToolsShortcut = 
+                    e.key === 'F12' || 
+                    e.keyCode === 123 ||
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+                    (e.ctrlKey && (e.key === 'U' || e.key === 'u'));
+                
+                if (isDevToolsShortcut) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
+                    return false;
+                }
+            }, false);
+            
+            document.addEventListener('dragstart', function(e) {
+                if (e.target.tagName === 'IMG' && !e.target.closest('.lightbox-overlay.active')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+                if (e.target.classList?.contains('card-bg')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }
+            }, false);
+        }
+
+        function showProtectionMessage(msg) {
+            const existingMsg = document.querySelector('.protection-message');
+            if (existingMsg) existingMsg.remove();
+            const msgBox = document.createElement('div');
+            msgBox.className = 'protection-message';
+            msgBox.textContent = msg;
+            document.body.appendChild(msgBox);
+            setTimeout(() => msgBox.remove(), 2000);
+        }
+
+        // ============ 移动端保护 ============
+        function initMobileImageProtection() {
+            const isMobile = window.innerWidth <= 768;
+            if (!isMobile) return;
+            
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(e) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300 && !e.target.closest('.lightbox-overlay')) {
+                    if (e.target.closest('.card-bg') && !e.target.closest('.card-wrap')) {
+                        showMobileProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
+                    }
+                }
+                lastTouchEnd = now;
+            }, { passive: true });
+        }
+
+        function showMobileProtectionMessage(msg) {
+            const existingMsg = document.querySelector('.mobile-protection-message');
+            if (existingMsg) existingMsg.remove();
+            const msgBox = document.createElement('div');
+            msgBox.className = 'mobile-protection-message';
+            msgBox.textContent = msg;
+            document.body.appendChild(msgBox);
+            setTimeout(() => msgBox.remove(), 1500);
+        }
+
+        // ============ 返回顶部 ============
+        function initBackToTop() {
+            const backButtons = document.querySelectorAll('.back-to-top');
+            backButtons.forEach(button => button.replaceWith(button.cloneNode(true)));
+            const freshButtons = document.querySelectorAll('.back-to-top');
+            freshButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    const yikunLink = document.querySelector('.nav-link[href="#guyikun"]');
+                    if (yikunLink) yikunLink.classList.add('active');
+                    return false;
+                });
+            });
+        }
+
+        // ============ 陀螺仪 ============
+        class Gyro3DEffect {
+            constructor() {
+                this.cardWraps = [];
+                this.isGyroActive = false;
+                this.isGyroAvailable = false;
+                this.beta = 0;
+                this.gamma = 0;
+                this.animationId = null;
+                this.lastUpdateTime = 0;
+                this.updateInterval = 16;
+                this.init();
+            }
+            
+            init() {
+                this.cardWraps = document.querySelectorAll('.card-wrap');
+                if (window.DeviceOrientationEvent) {
+                    this.isGyroAvailable = true;
+                    window.addEventListener('deviceorientation', this.handleOrientation.bind(this));
+                }
+                this.addClickToggle();
+            }
+            
+            addClickToggle() {
+                this.cardWraps.forEach(cardWrap => {
+                    cardWrap.addEventListener('click', (e) => {
+                        if (e.target.closest('.card-info') || e.target.closest('.lightbox-overlay')) return;
+                        if (this.isGyroActive) {
+                            this.deactivateGyro();
+                            this.showHint('陀螺仪3D已关闭');
+                            isGyroEnabled = false;
+                        } else {
+                            this.activateGyro();
+                            this.showHint('陀螺仪3D已激活，倾斜手机查看效果');
+                            isGyroEnabled = true;
+                        }
+                        e.stopPropagation();
+                    }, { passive: true });
+                });
+            }
+            
+            showHint(message) {
+                const hint = document.createElement('div');
+                hint.className = 'mobile-protection-message';
+                hint.textContent = message;
+                document.body.appendChild(hint);
+                setTimeout(() => hint.remove(), 2000);
+            }
+            
+            activateGyro() {
+                if (!this.isGyroAvailable || this.isGyroActive) return;
+                this.isGyroActive = true;
+                this.cardWraps.forEach(cardWrap => {
+                    cardWrap.classList.add('gyro-active');
+                    cardWrap.style.touchAction = 'pan-y';
+                });
+                this.startAnimation();
+            }
+            
+            deactivateGyro() {
+                if (!this.isGyroActive) return;
+                this.isGyroActive = false;
+                this.cardWraps.forEach(cardWrap => {
+                    cardWrap.classList.remove('gyro-active');
+                    const card = cardWrap.querySelector('.card');
+                    const cardBg = cardWrap.querySelector('.card-bg');
+                    if (card && cardBg) {
+                        card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+                        cardBg.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+                        card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+                        cardBg.style.transform = 'translateX(0px) translateY(0px) scale(1.05)';
+                        setTimeout(() => {
+                            card.style.transition = '';
+                            cardBg.style.transition = '';
+                        }, 600);
+                    }
+                    cardWrap.style.touchAction = 'pan-y';
+                });
+                this.stopAnimation();
+            }
+            
+            handleOrientation(event) {
+                if (!this.isGyroActive) return;
+                this.beta = event.beta || 0;
+                this.gamma = event.gamma || 0;
+                if (this.beta !== null && this.gamma !== null) this.updateCards();
+            }
+            
+            startAnimation() {
+                if (this.animationId) return;
+                const animate = (timestamp) => {
+                    if (timestamp - this.lastUpdateTime >= this.updateInterval) {
+                        this.updateCards();
+                        this.lastUpdateTime = timestamp;
+                    }
+                    this.animationId = requestAnimationFrame(animate);
+                };
+                this.animationId = requestAnimationFrame(animate);
+            }
+            
+            stopAnimation() {
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                    this.animationId = null;
+                }
+            }
+            
+            updateCards() {
+                if (!this.isGyroActive) return;
+                const rotateY = Math.max(-25, Math.min(25, (this.gamma / 90) * 25));
+                const rotateX = Math.max(-20, Math.min(20, (this.beta / 180) * 20));
+                const bgX = -this.gamma * 0.8;
+                const bgY = -this.beta * 0.5;
+                
+                this.cardWraps.forEach(cardWrap => {
+                    const card = cardWrap.querySelector('.card');
+                    const cardBg = cardWrap.querySelector('.card-bg');
+                    if (card && cardBg) {
+                        card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+                        cardBg.style.transform = `translateX(${bgX}px) translateY(${bgY}px) scale(1.05)`;
+                    }
+                });
+            }
+        }
+
+        // ============ 3D卡片 ============
+        class Card3D {
+            constructor(element) {
+                this.element = element;
+                this.card = element.querySelector('.card');
+                this.cardBg = element.querySelector('.card-bg');
+                this.width = element.offsetWidth;
+                this.height = element.offsetHeight;
+                this.mouseX = 0;
+                this.mouseY = 0;
+                this.mouseLeaveDelay = null;
+                
+                const imageUrl = element.getAttribute('data-image');
+                if (imageUrl) {
+                    let finalUrl = imageUrl;
+                    if (!imageUrl.startsWith('http') && !imageUrl.startsWith('//')) {
+                        finalUrl = imageUrl.replace('./', '');
+                    }
+                    this.cardBg.style.backgroundImage = `url('${finalUrl}')`;
+                }
+                this.init();
+            }
+            
+            init() {
+                if (window.innerWidth >= 768) {
+                    this.element.addEventListener('mousemove', this.handleMouseMove.bind(this));
+                    this.element.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
+                    this.element.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
+                }
+                
+                this.element.addEventListener('click', (e) => {
+                    if (!e.target.closest('.gyro-hint') && !isGyroEnabled) {
+                        e.stopPropagation();
+                        const cardWraps = Array.from(document.querySelectorAll('.card-wrap'));
+                        const index = cardWraps.indexOf(this.element);
+                        openLightbox(index);
+                    }
+                });
+            }
+            
+            handleMouseMove(e) {
+                if (isGyroEnabled) return;
+                const rect = this.element.getBoundingClientRect();
+                this.mouseX = e.clientX - rect.left - this.width / 2;
+                this.mouseY = e.clientY - rect.top - this.height / 2;
+                this.updateCardTransform();
+            }
+            
+            handleMouseEnter() {
+                if (isGyroEnabled) return;
+                clearTimeout(this.mouseLeaveDelay);
+                this.element.classList.add('hovering');
+            }
+            
+            handleMouseLeave() {
+                if (isGyroEnabled) return;
+                this.mouseLeaveDelay = setTimeout(() => {
+                    this.mouseX = 0;
+                    this.mouseY = 0;
+                    this.updateCardTransform();
+                    this.element.classList.remove('hovering');
+                }, 1000);
+            }
+            
+            updateCardTransform() {
+                if (isGyroEnabled) return;
+                const mousePX = this.mouseX / this.width;
+                const mousePY = this.mouseY / this.height;
+                const rX = mousePX * 25;
+                const rY = mousePY * -25;
+                this.card.style.transform = `rotateY(${rX}deg) rotateX(${rY}deg)`;
+                const tX = mousePX * -30;
+                const tY = mousePY * -30;
+                this.cardBg.style.transform = `translateX(${tX}px) translateY(${tY}px) scale(1.05)`;
+            }
+        }
+
+        // ============ iOS陀螺仪权限 ============
+        function requestGyroPermission() {
+            if (typeof DeviceOrientationEvent.requestPermission === 'function' && /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                const permissionHint = document.createElement('div');
+                permissionHint.className = 'gyro-permission-hint';
+                permissionHint.innerHTML = '<div style="margin-bottom: 10px; font-size: 18px;">🚀 启用陀螺仪3D效果</div><div style="font-size: 14px; color: #FFD54F;">点击任意位置允许陀螺仪权限</div>';
+                document.body.appendChild(permissionHint);
+                setTimeout(() => permissionHint.remove(), 5000);
+                
+                const requestPermission = () => {
+                    DeviceOrientationEvent.requestPermission()
+                        .then(permissionState => {
+                            if (permissionState === 'granted' && gyroEffect) {
+                                gyroEffect.isGyroAvailable = true;
+                            }
+                        })
+                        .catch(console.error);
+                    document.removeEventListener('click', requestPermission);
+                    document.removeEventListener('touchstart', requestPermission);
+                };
+                document.addEventListener('click', requestPermission);
+                document.addEventListener('touchstart', requestPermission);
+            }
+        }
+
+        // ============ 初始化大图查看器 ============
+        function initLightbox() {
+            const lightboxClose = document.getElementById('lightboxClose');
+            const lightboxPrev = document.getElementById('lightboxPrev');
+            const lightboxNext = document.getElementById('lightboxNext');
+            const lightboxZoomIn = document.getElementById('lightboxZoomIn');
+            const lightboxZoomOut = document.getElementById('lightboxZoomOut');
+            const lightboxReset = document.getElementById('lightboxReset');
+            const lightboxZoomFit = document.getElementById('lightboxZoomFit');
+            const lightboxZoomOriginal = document.getElementById('lightboxZoomOriginal');
+            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxContainer = document.getElementById('lightboxContainer');
+            
+            if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+            if (lightboxPrev) lightboxPrev.addEventListener('click', showPrevImage);
+            if (lightboxNext) lightboxNext.addEventListener('click', showNextImage);
+            if (lightboxZoomIn) lightboxZoomIn.addEventListener('click', zoomIn);
+            if (lightboxZoomOut) lightboxZoomOut.addEventListener('click', zoomOut);
+            if (lightboxReset) lightboxReset.addEventListener('click', zoomToOriginal);
+            if (lightboxZoomFit) lightboxZoomFit.addEventListener('click', fitToScreen);
+            if (lightboxZoomOriginal) lightboxZoomOriginal.addEventListener('click', zoomToOriginal);
+            
+            if (lightboxImage) {
+                lightboxImage.addEventListener('mousedown', startDrag);
+                lightboxImage.addEventListener('touchstart', startDrag);
+            }
+            
+            if (lightboxContainer) {
+                lightboxContainer.addEventListener('wheel', handleWheel, { passive: false });
+                lightboxContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
+                lightboxContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
+                lightboxContainer.addEventListener('touchend', handleTouchEnd);
+            }
+            
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox) {
+                lightbox.addEventListener('click', function(e) {
+                    if (e.target === this) closeLightbox();
+                });
+            }
+            
+            document.addEventListener('keydown', function(e) {
+                const lightbox = document.getElementById('lightbox');
+                if (!lightbox.classList.contains('active')) return;
+                switch(e.key) {
+                    case 'Escape': closeLightbox(); break;
+                    case 'ArrowLeft': showPrevImage(); break;
+                    case 'ArrowRight': showNextImage(); break;
+                    case '+': case '=': e.preventDefault(); zoomIn(); break;
+                    case '-': case '_': e.preventDefault(); zoomOut(); break;
+                    case '0': e.preventDefault(); resetTransform(); break;
+                    case '1': e.preventDefault(); fitToScreen(); break;
+                }
+            });
+        }
+
         // ============ 页面初始化 ============
         function updateBackground() {
             const mobileBg = document.querySelector('.bg-mobile');
             const pcBg = document.querySelector('.bg-pc');
             const isPC = window.innerWidth >= 768;
-            
             if (isPC) {
                 mobileBg.style.display = 'none';
                 pcBg.style.display = 'block';
@@ -2258,15 +1802,10 @@
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
-                    
                     if (targetElement) {
                         navLinks.forEach(l => l.classList.remove('active'));
                         this.classList.add('active');
-                        
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
+                        window.scrollTo({ top: targetElement.offsetTop - 80, behavior: 'smooth' });
                     }
                 });
             });
@@ -2276,12 +1815,10 @@
                 clearTimeout(scrollTimeout);
                 scrollTimeout = setTimeout(() => {
                     const scrollPosition = window.scrollY + 100;
-                    
                     sections.forEach(section => {
                         const sectionTop = section.offsetTop;
                         const sectionHeight = section.offsetHeight;
                         const sectionId = section.getAttribute('id');
-                        
                         if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
                             navLinks.forEach(link => {
                                 link.classList.remove('active');
@@ -2295,46 +1832,16 @@
             });
         }
 
-        function preloadBackgrounds() {
-            const mobileImg = new Image();
-            const pcImg = new Image();
-            
-            mobileImg.src = 'picture/Text2.jpg';
-            pcImg.src = 'picture/suzumiya.png';
-            
-            mobileImg.onload = function() {
-                document.querySelector('.bg-mobile').style.opacity = '0.4';
-            };
-            
-            pcImg.onload = function() {
-                document.querySelector('.bg-pc').style.opacity = '0.4';
-            };
-            
-            mobileImg.onerror = function() {
-                document.querySelector('.bg-mobile').style.display = 'none';
-            };
-            
-            pcImg.onerror = function() {
-                document.querySelector('.bg-pc').style.display = 'none';
-            };
-        }
-
         function initPage() {
             const cardWraps = document.querySelectorAll('.card-wrap');
             
-            // 移动端初始化陀螺仪
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            if (window.innerWidth <= 768) {
                 gyroEffect = new Gyro3DEffect();
             }
             
-            // 初始化3D卡片
             setTimeout(() => {
                 cardWraps.forEach((card, index) => {
-                    try {
-                        new Card3D(card);
-                    } catch (error) {
-                        console.error(`卡片 ${index + 1} 初始化失败:`, error);
-                    }
+                    try { new Card3D(card); } catch (error) {}
                 });
             }, 100);
             
@@ -2343,10 +1850,9 @@
             window.addEventListener('resize', updateBackground);
             initNavigation();
             initBackToTop();
-            preloadBackgrounds();
         }
 
-        // ============ DOM加载完成后的初始化 ============
+        // ============ DOM加载完成 ============
         document.addEventListener('DOMContentLoaded', function() {
             initProtection();
             initPage();
@@ -2356,8 +1862,7 @@
                 setTimeout(requestGyroPermission, 2000);
             }
             
-            // 确保移动端可以滚动
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            if (window.innerWidth <= 768) {
                 document.body.style.overflow = 'auto';
                 document.body.style.position = 'relative';
                 document.body.style.height = 'auto';
@@ -2366,7 +1871,6 @@
             }
         });
 
-        // 窗口大小变化时重新适应
         window.addEventListener('resize', function() {
             const lightbox = document.getElementById('lightbox');
             if (lightbox.classList.contains('active')) {
@@ -2377,19 +1881,6 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

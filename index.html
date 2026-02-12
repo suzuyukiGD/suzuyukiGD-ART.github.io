@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -938,7 +937,7 @@
                 border: 1px solid rgba(255, 255, 255, 0.2);
             }
             
-            /* 移动端导航按钮 - 更大、更亮、更清晰 */
+            /* 移动端导航按钮 */
             .lightbox-nav {
                 width: 48px;
                 height: 48px;
@@ -1014,7 +1013,7 @@
             }
         }
         
-        /* 修改移动端图片保护样式 - 不影响大图预览但禁止保存 */
+        /* 修改移动端图片保护样式 */
         @media (max-width: 768px) {
             .card-bg, .card, img:not(.lightbox-img) {
                 -webkit-touch-callout: none !important;
@@ -1446,7 +1445,7 @@
         <section id="Potaro" class="artist-section">
             <h2 class="artist-title">Potaro作品集</h2>
             <p class="artist-description">
-                介绍正在编辑中。
+                画画找土豆🥔不找豆包🤖（🍌NanoBanana也不行！）
             </p>
             
             <div class="cards-container">
@@ -1457,7 +1456,7 @@
                     <div class="card">
                         <div class="card-bg"></div>
                         <div class="card-info">
-                            <h1>摊宣底图</h1>
+                            <h1>凉宫春日</h1>
                             <p>哈？本团长难得来到漫展出摊，你居然敢不来？</p>
                         </div>
                     </div>
@@ -1505,7 +1504,7 @@
             <button class="back-to-top">返回顶部</button>
         </section>
         <p class="page-subtitle">本网页内容由广东支部运营组成员天隐负责维护</p>
-        <p class="page-subtitle">目前版本号：v1.5.0 - 移动端陀螺仪默认开启，无需点击</p>
+        <p class="page-subtitle">目前版本号：v1.0.2 - 已修复目前已知若干问题</p>
     </div>
 
     <script>
@@ -1529,7 +1528,7 @@
                 this.cardWraps = document.querySelectorAll('.card-wrap');
                 
                 if (window.DeviceOrientationEvent) {
-                    console.log('📱 设备支持陀螺仪');
+                    console.log('设备支持陀螺仪');
                     this.isGyroAvailable = true;
                     
                     window.addEventListener('deviceorientation', this.handleOrientation.bind(this));
@@ -1542,7 +1541,7 @@
                         }, 500);
                     }
                 } else {
-                    console.log('⚠️ 设备不支持陀螺仪');
+                    console.log('设备不支持陀螺仪');
                     this.isGyroAvailable = false;
                 }
                 
@@ -1573,7 +1572,7 @@
                 });
                 
                 this.startAnimation();
-                console.log('🎮 陀螺仪3D效果已激活');
+                console.log('陀螺仪3D效果已激活');
                 
                 // 不显示提示
                 // this.showHint('倾斜手机查看3D效果');
@@ -1604,7 +1603,7 @@
                 });
                 
                 this.stopAnimation();
-                console.log('🎮 陀螺仪3D效果已关闭');
+                console.log('陀螺仪3D效果已关闭');
             }
             
             handleOrientation(event) {
@@ -1704,11 +1703,11 @@
                 const img = new Image();
                 img.src = url;
                 img.onload = () => {
-                    console.log('✅ 卡片图片加载成功:', url);
+                    console.log('卡片图片加载成功:', url);
                     this.cardBg.style.opacity = '0.8';
                 };
                 img.onerror = () => {
-                    console.error('❌ 卡片图片加载失败:', url);
+                    console.error('卡片图片加载失败:', url);
                     this.cardBg.style.backgroundImage = 'linear-gradient(135deg, #8D6E63 0%, #5D4037 100%)';
                     this.cardBg.style.backgroundColor = '#333';
                 };
@@ -1879,7 +1878,7 @@
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
             
-            // 强制居中：transform 使用 translate(-50%, -50%) 作为基准
+            // 强制居中
             lightboxImage.style.transform = `translate(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px)) scale(${scale})`;
             
             if (scale > 1) {
@@ -1912,7 +1911,7 @@
             }
         }
         
-        // ===== 统一自适应函数 - 移动端和PC端都使用最佳显示比例 =====
+        // ===== 统一自适应函数 =====
         function fitToScreen() {
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
@@ -2304,22 +2303,22 @@
             pcImg.src = 'picture/suzumiya.png';
             
             mobileImg.onload = function() {
-                console.log('✅ 移动端背景图加载成功');
+                console.log('移动端背景图加载成功');
                 document.querySelector('.bg-mobile').style.opacity = '0.4';
             };
             
             pcImg.onload = function() {
-                console.log('✅ PC端背景图加载成功');
+                console.log('PC端背景图加载成功');
                 document.querySelector('.bg-pc').style.opacity = '0.4';
             };
             
             mobileImg.onerror = function() {
-                console.warn('❌ 移动端背景图加载失败');
+                console.warn('移动端背景图加载失败');
                 document.querySelector('.bg-mobile').style.display = 'none';
             };
             
             pcImg.onerror = function() {
-                console.warn('❌ PC端背景图加载失败');
+                console.warn('PC端背景图加载失败');
                 document.querySelector('.bg-pc').style.display = 'none';
             };
         }
@@ -2460,11 +2459,11 @@
             if (typeof DeviceOrientationEvent.requestPermission === 'function' && 
                 /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 
-                console.log('📱 iOS设备，需要请求陀螺仪权限');
+                console.log('iOS设备，需要请求陀螺仪权限');
                 
                 const permissionHint = document.createElement('div');
                 permissionHint.className = 'gyro-permission-hint';
-                permissionHint.innerHTML = '<div style="margin-bottom: 10px; font-size: 18px;">🚀 启用陀螺仪3D效果</div>' +
+                permissionHint.innerHTML = '<div style="margin-bottom: 10px; font-size: 18px;">启用陀螺仪3D效果</div>' +
                                           '<div style="font-size: 14px; color: #FFD54F;">点击任意位置允许陀螺仪权限</div>';
                 document.body.appendChild(permissionHint);
                 
@@ -2478,7 +2477,7 @@
                     DeviceOrientationEvent.requestPermission()
                         .then(permissionState => {
                             if (permissionState === 'granted') {
-                                console.log('✅ 陀螺仪权限已授予');
+                                console.log('陀螺仪权限已授予');
                                 if (gyroEffect) {
                                     gyroEffect.isGyroAvailable = true;
                                     gyroEffect.activateGyro();
@@ -2521,11 +2520,11 @@
             }
             
             setTimeout(() => {
-                console.log('🎨 3D卡片画廊已初始化完成');
-                console.log('📱 移动端：陀螺仪3D效果默认开启，无需点击');
-                console.log('💻 PC端：鼠标移动触发3D效果');
-                console.log('🔒 图片保护：已完全禁止移动端长按保存');
-                console.log('⬅️➡️ 移动端导航按钮：已增强，更清晰可见');
+                console.log('3D卡片画廊已初始化完成');
+                console.log('移动端：陀螺仪3D效果默认开启，无需点击');
+                console.log('PC端：鼠标移动触发3D效果');
+                console.log('图片保护：已完全禁止移动端长按保存');
+                console.log('移动端导航按钮：已增强，更清晰可见');
             }, 500);
         });
         
@@ -2541,3 +2540,4 @@
     </script>
 </body>
 </html>
+

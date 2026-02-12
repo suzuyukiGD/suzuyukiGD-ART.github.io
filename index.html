@@ -6,7 +6,7 @@
     <title>凉宫春日应援团广东支部画作展示</title>
     
     <style>
-        /* 基础样式 */
+        /* 基础样式 - 保持不变 */
         * {
             margin: 0;
             padding: 0;
@@ -24,10 +24,6 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
-        
-        /* 动画曲线 */
-        .hoverEasing { transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1); }
-        .returnEasing { transition-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95); }
         
         /* 页面标题样式 */
         .page-title {
@@ -63,7 +59,6 @@
             overflow: hidden;
         }
         
-        /* 背景图片 */
         .bg-mobile {
             position: absolute;
             top: 0;
@@ -78,7 +73,6 @@
             display: block;
         }
         
-        /* PC端背景图片 */
         .bg-pc {
             position: absolute;
             top: 0;
@@ -93,18 +87,11 @@
             display: none;
         }
         
-        /* PC端显示横版背景 */
         @media (min-width: 768px) {
-            .bg-mobile {
-                display: none;
-            }
-            
-            .bg-pc {
-                display: block;
-            }
+            .bg-mobile { display: none; }
+            .bg-pc { display: block; }
         }
         
-        /* 半透明遮罩层*/
         .bg-overlay {
             position: fixed;
             top: 0;
@@ -115,7 +102,6 @@
             z-index: -1;
         }
         
-        /* 内容区域 */
         .content-wrapper {
             position: relative;
             z-index: 1;
@@ -168,8 +154,6 @@
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             border: none;
             box-shadow: 0 4px 15px rgba(93, 64, 55, 0.3);
-            position: relative;
-            overflow: hidden;
             cursor: pointer;
         }
         
@@ -215,18 +199,15 @@
             background-color: #1a1a1a;
             overflow: hidden;
             border-radius: 15px;
-            box-shadow:
-                rgba(0, 0, 0, 0.8) 0 40px 80px 0,
+            box-shadow: rgba(0, 0, 0, 0.8) 0 40px 80px 0,
                 inset #222 0 0 0 6px,
                 inset rgba(255, 255, 255, 0.4) 0 0 0 8px;
-            transition: 
-                transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
                 box-shadow 2s cubic-bezier(0.23, 1, 0.32, 1);
             transform-style: preserve-3d;
             will-change: transform;
         }
         
-        /* 卡片背景 */
         .card-bg {
             opacity: 0.8;
             position: absolute;
@@ -238,14 +219,12 @@
             background-position: center;
             background-size: cover;
             background-color: #333;
-            transition: 
-                opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+            transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
                 transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             pointer-events: none;
             will-change: transform;
         }
         
-        /* 卡片信息 */
         .card-info {
             padding: 40px;
             position: absolute;
@@ -254,41 +233,8 @@
             right: 0;
             color: #fff;
             transform: translateY(40%);
-            transition: 
-                transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1),
+            transition: transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1),
                 opacity 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
-            
-            p {
-                opacity: 0;
-                text-shadow: rgba(0, 0, 0, 0.9) 0 3px 6px;
-                transition: opacity 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
-                margin-top: 15px;
-                font-size: 1.2em;
-                line-height: 1.7;
-            }
-            
-            * {
-                position: relative;
-                z-index: 1;
-            }
-            
-            &:after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: 0;
-                width: 100%;
-                height: 100%;
-                background-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
-                background-blend-mode: overlay;
-                opacity: 0;
-                transform: translateY(100%);
-                transition: 
-                    opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
-                    transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-                border-radius: 0 0 15px 15px;
-            }
         }
         
         .card-info h1 {
@@ -299,10 +245,17 @@
             margin-bottom: 15px;
         }
         
-        /* 悬停状态 */
+        .card-info p {
+            opacity: 0;
+            text-shadow: rgba(0, 0, 0, 0.9) 0 3px 6px;
+            transition: opacity 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+            margin-top: 15px;
+            font-size: 1.2em;
+            line-height: 1.7;
+        }
+        
         .card-wrap:hover .card {
-            box-shadow:
-                rgba(255, 255, 255, 0.3) 0 0 60px 10px,
+            box-shadow: rgba(255, 255, 255, 0.3) 0 0 60px 10px,
                 rgba(255, 255, 255, 0.8) 0 0 0 2px,
                 rgba(0, 0, 0, 0.8) 0 40px 80px 0,
                 inset #333 0 0 0 6px,
@@ -320,11 +273,6 @@
         
         .card-wrap:hover .card-info p {
             opacity: 1;
-        }
-        
-        .card-wrap:hover .card-info:after {
-            opacity: 1;
-            transform: translateY(0);
         }
         
         /* 画师标题 */
@@ -352,7 +300,6 @@
             background: linear-gradient(90deg, transparent, #8D6E63, transparent);
         }
         
-        /* 画师描述 */
         .artist-description {
             text-align: center;
             color: #795548;
@@ -363,7 +310,6 @@
             padding: 0 20px;
         }
         
-        /* 返回顶部按钮 */
         .back-to-top {
             display: block;
             text-align: center;
@@ -387,94 +333,33 @@
             box-shadow: 0 10px 30px rgba(93, 64, 55, 0.4);
         }
         
-        /* 响应式调整 */
         @media (max-width: 1200px) {
-            .card-wrap {
-                flex: 0 0 calc(50% - 30px);
-                max-width: 550px;
-            }
-            
-            .card {
-                height: 500px;
-            }
+            .card-wrap { flex: 0 0 calc(50% - 30px); max-width: 550px; }
+            .card { height: 500px; }
         }
         
         @media (max-width: 992px) {
-            .card-wrap {
-                flex: 0 0 calc(50% - 20px);
-                max-width: 500px;
-                min-width: 400px;
-            }
-            
-            .card {
-                height: 450px;
-            }
+            .card-wrap { flex: 0 0 calc(50% - 20px); max-width: 500px; min-width: 400px; }
+            .card { height: 450px; }
         }
         
         @media (max-width: 768px) {
-            .cards-container {
-                padding: 20px 10px;
-                gap: 30px;
-            }
-            
-            .card-wrap {
-                flex: 0 0 100%;
-                max-width: 100%;
-                min-width: unset;
-            }
-            
-            .card {
-                height: 450px;
-                max-width: 500px;
-                margin: 0 auto;
-            }
-            
-            .artist-title {
-                font-size: 2em;
-                margin: 40px 0 30px;
-            }
-            
-            .navigation {
-                padding: 15px 20px;
-                margin: 10px auto 30px;
-            }
-            
-            .nav-links {
-                gap: 10px;
-            }
-            
-            .nav-link {
-                padding: 8px 16px;
-                font-size: 0.9em;
-            }
-            
-            .page-title {
-                font-size: 28px;
-                margin: 30px 0 15px;
-            }
-            
-            .page-subtitle {
-                font-size: 16px;
-                margin-bottom: 30px;
-            }
+            .cards-container { padding: 20px 10px; gap: 30px; }
+            .card-wrap { flex: 0 0 100%; max-width: 100%; min-width: unset; }
+            .card { height: 450px; max-width: 500px; margin: 0 auto; }
+            .artist-title { font-size: 2em; margin: 40px 0 30px; }
+            .navigation { padding: 15px 20px; margin: 10px auto 30px; }
+            .nav-links { gap: 10px; }
+            .nav-link { padding: 8px 16px; font-size: 0.9em; }
+            .page-title { font-size: 28px; margin: 30px 0 15px; }
+            .page-subtitle { font-size: 16px; margin-bottom: 30px; }
         }
         
         @media (max-width: 480px) {
-            .card {
-                height: 400px;
-            }
-            
-            .card-info {
-                padding: 20px;
-            }
-            
-            .card-info h1 {
-                font-size: 24px;
-            }
-            
-            .artist-title {
-                font-size: 1.8em;
-            }
+            .card { height: 400px; }
+            .card-info { padding: 20px; }
+            .card-info h1 { font-size: 24px; }
+            .artist-title { font-size: 1.8em; }
         }
         
         /* 交互提示 */
@@ -493,11 +378,8 @@
             transition: opacity 0.3s ease;
         }
         
-        .card-wrap:hover .interactive-hint {
-            opacity: 1;
-        }
+        .card-wrap:hover .interactive-hint { opacity: 1; }
         
-        /* 陀螺仪提示 */
         .gyro-hint {
             position: absolute;
             bottom: 20px;
@@ -516,18 +398,10 @@
             border: 1px solid #8D6E63;
         }
         
-        .gyro-hint.show {
-            opacity: 1;
-        }
+        .gyro-hint.show { opacity: 1; }
         
-        /* 陀螺仪激活状态 */
-        .card-wrap.gyro-active .card {
-            transition: transform 0.2s ease-out;
-        }
-        
-        .card-wrap.gyro-active .card-bg {
-            transition: transform 0.2s ease-out;
-        }
+        .card-wrap.gyro-active .card { transition: transform 0.2s ease-out; }
+        .card-wrap.gyro-active .card-bg { transition: transform 0.2s ease-out; }
         
         /* ===== 大图查看器样式 - 移动端左右滑动切换 ===== */
         .lightbox-overlay {
@@ -544,11 +418,9 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
-            touch-action: pan-y !important; /* 允许垂直滚动，但我们会处理水平滑动 */
+            touch-action: pan-y !important;
             user-select: none;
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
         }
         
         .lightbox-overlay.active {
@@ -567,52 +439,42 @@
             cursor: grab;
         }
         
-        .lightbox-container.grabbing {
-            cursor: grabbing;
-        }
+        .lightbox-container.grabbing { cursor: grabbing; }
         
         @keyframes lightboxZoom {
             0% { transform: scale(0.8); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
         
-        /* 图片样式 - 无CSS限制，完全由JS控制 */
         .lightbox-img {
             display: block;
             margin: 0 auto;
             border-radius: 5px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            transition: transform 0.2s ease;
             transform-origin: center center;
             cursor: move;
             object-fit: contain;
-            
-            /* 无CSS限制，完全由JS控制 */
             max-width: none;
             max-height: none;
             width: auto;
             height: auto;
-            
-            /* 强制居中 - 滑动时会临时改变 */
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(1);
-            
-            /* 完全禁止长按保存 */
             -webkit-touch-callout: none !important;
             -webkit-user-select: none !important;
-            -khtml-user-select: none !important;
-            -moz-user-select: none !important;
-            -ms-user-select: none !important;
             user-select: none !important;
             -webkit-user-drag: none !important;
-            -khtml-user-drag: none !important;
-            -moz-user-drag: none !important;
-            -o-user-drag: none !important;
             user-drag: none !important;
             pointer-events: auto !important;
             -webkit-tap-highlight-color: transparent !important;
+            /* 滑动动画 - 默认开启，滑动时临时关闭 */
+            transition: transform 0.2s ease-out;
+        }
+        
+        .lightbox-img.no-transition {
+            transition: none !important;
         }
         
         .lightbox-caption {
@@ -640,7 +502,6 @@
             user-select: none;
         }
         
-        /* 工具栏样式 */
         .lightbox-toolbar {
             position: fixed;
             top: 20px;
@@ -678,11 +539,6 @@
             transform: scale(1.1);
         }
         
-        .lightbox-toolbar button:active {
-            transform: scale(0.95);
-        }
-        
-        /* 缩放控制按钮 */
         .lightbox-zoom-controls {
             position: fixed;
             bottom: 30px;
@@ -720,7 +576,6 @@
             transform: scale(1.1);
         }
         
-        /* 缩放信息显示 */
         .lightbox-zoom-info {
             position: fixed;
             top: 20px;
@@ -737,7 +592,6 @@
             user-select: none;
         }
         
-        /* 导航按钮 */
         .lightbox-nav {
             position: fixed;
             top: 50%;
@@ -765,20 +619,8 @@
             transform: translateY(-50%) scale(1.1);
         }
         
-        .lightbox-prev {
-            left: 20px;
-        }
-        
-        .lightbox-next {
-            right: 20px;
-        }
-        
-        /* 移动端隐藏导航按钮，使用滑动切换 */
-        @media (max-width: 768px) {
-            .lightbox-nav {
-                display: none;
-            }
-        }
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
         
         .lightbox-counter {
             position: fixed;
@@ -797,74 +639,22 @@
             user-select: none;
         }
         
-        /* 保护提示样式 */
-        .protection-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            z-index: 1000000;
-            font-family: Arial, sans-serif;
-            font-size: 16px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            animation: fadeInOut 2s ease forwards;
-            border: 2px solid #8D6E63;
-        }
-        
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-            20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); display: none; }
-        }
-        
-        /* 陀螺仪权限提示 */
-        .gyro-permission-hint {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(93, 64, 55, 0.95);
-            color: #FFD54F;
-            padding: 20px 30px;
-            border-radius: 15px;
-            z-index: 1000000;
-            font-family: "Raleway", sans-serif;
-            font-size: 16px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: permissionHint 3s ease forwards;
-            border: 2px solid #8D6E63;
-            max-width: 80%;
-            backdrop-filter: blur(10px);
-        }
-        
-        @keyframes permissionHint {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
-            20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); display: none; }
-        }
-        
-        /* ===== 移动端大图查看器 - 左右滑动切换 ===== */
+        /* 移动端样式 - 显示导航按钮 + 支持滑动 */
         @media (max-width: 768px) {
-            .lightbox-img {
-                -webkit-touch-callout: none !important;
-                -webkit-user-select: none !important;
-                user-select: none !important;
-                -webkit-user-drag: none !important;
-                user-drag: none !important;
-                /* 滑动动画 */
-                transition: transform 0.3s ease-out;
+            /* 移动端显示导航按钮，方便点击切换 */
+            .lightbox-nav {
+                display: flex !important;
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+                background: rgba(0, 0, 0, 0.5);
             }
             
-            .lightbox-img.swiping {
-                transition: none; /* 滑动时无动画，更跟手 */
+            .lightbox-prev { left: 10px; }
+            .lightbox-next { right: 10px; }
+            
+            .lightbox-img {
+                transition: transform 0.2s ease-out;
             }
             
             .lightbox-caption {
@@ -873,9 +663,6 @@
                 padding: 8px 16px;
                 white-space: normal;
                 max-width: 85%;
-                -webkit-touch-callout: none;
-                -webkit-user-select: none;
-                user-select: none;
             }
             
             .lightbox-zoom-controls {
@@ -921,7 +708,60 @@
             }
         }
         
-        /* 修改移动端图片保护样式 - 不影响大图预览但禁止保存 */
+        /* 保护提示样式 */
+        .protection-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            z-index: 1000000;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            animation: fadeInOut 2s ease forwards;
+            border: 2px solid #8D6E63;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); display: none; }
+        }
+        
+        .gyro-permission-hint {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(93, 64, 55, 0.95);
+            color: #FFD54F;
+            padding: 20px 30px;
+            border-radius: 15px;
+            z-index: 1000000;
+            font-family: "Raleway", sans-serif;
+            font-size: 16px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: permissionHint 3s ease forwards;
+            border: 2px solid #8D6E63;
+            max-width: 80%;
+            backdrop-filter: blur(10px);
+        }
+        
+        @keyframes permissionHint {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); display: none; }
+        }
+        
+        /* 移动端图片保护 */
         @media (max-width: 768px) {
             .card-bg, .card, img:not(.lightbox-img) {
                 -webkit-touch-callout: none !important;
@@ -959,20 +799,11 @@
                 -webkit-overflow-scrolling: touch;
             }
             
-            .card {
-                pointer-events: none;
-            }
-            
-            .card-wrap {
-                pointer-events: auto;
-            }
-            
-            .card-bg {
-                pointer-events: none !important;
-            }
+            .card { pointer-events: none; }
+            .card-wrap { pointer-events: auto; }
+            .card-bg { pointer-events: none !important; }
         }
         
-        /* 移动端保护提示样式 */
         .mobile-protection-message {
             position: fixed;
             top: 20%;
@@ -1001,97 +832,52 @@
             100% { opacity: 0; transform: translateX(-50%) translateY(-20px); display: none; }
         }
         
-        /* 动态指针样式系统 */
+        /* 动态指针样式 */
         :root {
-          --cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%235D4037" opacity="0.3"/><circle cx="12" cy="12" r="4" fill="%235D4037"/></svg>') 12 12, auto;
-          --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M14 2C7.373 2 2 7.373 2 14s5.373 12 12 12 12-5.373 12-12S20.627 2 14 2z" fill="%23FF4081" opacity="0.7"/><path d="M18.5 13.5l-4.5 4.5-4.5-4.5 1.5-1.5 3 3 3-3z" fill="white"/></svg>') 14 14, pointer;
-          --cursor-grab: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FFFFFF" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="%23000000"/></svg>') 16 16, grab;
-          --cursor-grabbing: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FF4081" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="white"/></svg>') 16 16, grabbing;
+            --cursor-default: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="%235D4037" opacity="0.3"/><circle cx="12" cy="12" r="4" fill="%235D4037"/></svg>') 12 12, auto;
+            --cursor-pointer: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M14 2C7.373 2 2 7.373 2 14s5.373 12 12 12 12-5.373 12-12S20.627 2 14 2z" fill="%23FF4081" opacity="0.7"/><path d="M18.5 13.5l-4.5 4.5-4.5-4.5 1.5-1.5 3 3 3-3z" fill="white"/></svg>') 14 14, pointer;
+            --cursor-grab: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FFFFFF" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="%23000000"/></svg>') 16 16, grab;
+            --cursor-grabbing: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="%23FF4081" opacity="0.9"/><path d="M11 13h2v6h-2zM15 13h2v6h-2zM19 13h2v6h-2z" fill="white"/></svg>') 16 16, grabbing;
         }
-
-        /* 应用指针样式 */
-        body {
-          cursor: var(--cursor-default);
-        }
-
-        /* 可交互元素 */
-        .card-wrap {
-          cursor: var(--cursor-default);
-        }
-
-        .card-wrap:hover {
-          cursor: var(--cursor-pointer);
-        }
-
-        /* 导航链接 */
-        .nav-link,
-        .back-to-top {
-          cursor: var(--cursor-pointer) !important;
-        }
-
-        /* 大图查看器 */
-        .lightbox-container {
-          cursor: var(--cursor-grab);
-        }
-
-        .lightbox-container.grabbing {
-          cursor: var(--cursor-grabbing);
-        }
-
-        /* 按钮 */
-        button,
-        .lightbox-toolbar button,
-        .lightbox-zoom-controls button,
-        .lightbox-nav {
-          cursor: var(--cursor-pointer);
-        }
-
-        /* 文字选择区域 */
-        .artist-description,
-        .card-info p,
-        .page-subtitle {
-          cursor: text;
-        }
-
-        /* 移动端恢复默认指针 */
+        
+        body { cursor: var(--cursor-default); }
+        .card-wrap { cursor: var(--cursor-default); }
+        .card-wrap:hover { cursor: var(--cursor-pointer); }
+        .nav-link, .back-to-top { cursor: var(--cursor-pointer) !important; }
+        .lightbox-container { cursor: var(--cursor-grab); }
+        .lightbox-container.grabbing { cursor: var(--cursor-grabbing); }
+        button { cursor: var(--cursor-pointer); }
+        
         @media (max-width: 768px) {
-          body,
-          .card-wrap,
-          .card-wrap:hover,
-          .nav-link,
-          .back-to-top,
-          button {
-            cursor: auto;
-          }
+            body, .card-wrap, .card-wrap:hover, .nav-link, .back-to-top, button {
+                cursor: auto;
+            }
         }
         
         /* 咕噜作品区第一张图片背景位置调整 */
         #gulu .cards-container > .card-wrap:first-child .card-bg {
-          background-position: center 30% !important; 
+            background-position: center 30% !important;
         }
-
-        /* 悬停时也相应调整 */
+        
         #gulu .cards-container > .card-wrap:first-child:hover .card-bg {
-          background-position: center 28% !important;
+            background-position: center 28% !important;
         }
-
+        
         /* Yikun旗帜图片位置调整 */
         #guyikun .cards-container > .card-wrap:first-child .card-bg {
             background-position: 30% center !important;
         }
-
+        
         #guyikun .cards-container > .card-wrap:first-child:hover .card-bg {
             background-position: 28% center !important;
         }
         
-        /* 大图预览旗帜图片居中 */
         .lightbox-img[src*="Yikun Gu1.png"] {
             object-position: center !important;
             object-fit: contain !important;
         }
     </style>
     
-    <!-- 添加Google字体 -->
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -1101,12 +887,10 @@
         <div class="bg-pc"></div>
     </div>
     
-    <!-- 半透明遮罩 -->
     <div class="bg-overlay"></div>
     
     <!-- 大图查看器 -->
     <div class="lightbox-overlay" id="lightbox">
-        <!-- 工具栏 -->
         <div class="lightbox-toolbar">
             <button id="lightboxZoomIn" title="放大">+</button>
             <button id="lightboxZoomOut" title="缩小">-</button>
@@ -1114,36 +898,27 @@
             <button id="lightboxClose" title="关闭">×</button>
         </div>
         
-        <!-- 缩放信息 -->
         <div class="lightbox-zoom-info" id="lightboxZoomInfo">100%</div>
-        
-        <!-- 图片计数器 -->
         <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
         
-        <!-- 导航按钮 - 移动端隐藏，PC端显示 -->
         <button class="lightbox-nav lightbox-prev" id="lightboxPrev" title="上一张">‹</button>
         <button class="lightbox-nav lightbox-next" id="lightboxNext" title="下一张">›</button>
         
-        <!-- 主内容区域 -->
         <div class="lightbox-container" id="lightboxContainer">
             <img src="" alt="" class="lightbox-img" id="lightboxImage">
             <div class="lightbox-caption" id="lightboxCaption"></div>
         </div>
         
-        <!-- 缩放控制按钮（放在最后，避免遮挡） -->
         <div class="lightbox-zoom-controls">
             <button id="lightboxZoomFit" title="适应屏幕">⎙</button>
             <button id="lightboxZoomOriginal" title="原始尺寸">1:1</button>
         </div>
     </div>
     
-    <!-- 内容区域 -->
     <div class="content-wrapper">
-        <!-- 页面标题 -->
         <h1 class="page-title">凉宫春日应援团广东支部画作展示</h1>
         <p class="page-subtitle">汇聚广东支部美工组成员的精美作品，每一幅画作都凝聚着我们对凉宫春日系列的热爱与创意</p>
         
-        <!-- 导航栏 -->
         <div class="navigation">
             <div class="nav-title">美工组成员作品集</div>
             <div class="nav-links">
@@ -1156,16 +931,11 @@
             </div>
         </div>
         
-        <!-- 各个画师作品区域 -->
         <!-- Yikun作品区域 -->
         <section id="guyikun" class="artist-section">
             <h2 class="artist-title">Yikun作品集</h2>
-            <p class="artist-description">
-                这里Yikun，平平无奇的绘画人，擅长平涂，感谢欣赏我的作品。
-            </p>
-            
+            <p class="artist-description">这里Yikun，平平无奇的绘画人，擅长平涂，感谢欣赏我的作品。</p>
             <div class="cards-container">
-                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/Yikun Gu1.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1177,8 +947,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- 卡片2 -->
                 <div class="card-wrap" data-image="picture/Yikun Gu2.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1190,8 +958,6 @@
                         </div>
                     </div>
                 </div>
-                    
-                <!-- 卡片3 -->
                 <div class="card-wrap" data-image="picture/Yikun Gu3.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1203,8 +969,6 @@
                         </div>
                     </div>
                 </div>
-    
-                <!-- 卡片4 -->
                 <div class="card-wrap" data-image="picture/Yikun Gu4.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1217,19 +981,14 @@
                     </div>
                 </div>
             </div>
-            
             <button class="back-to-top">返回顶部</button>
         </section>
         
         <!-- 荡漾作品区域 -->
         <section id="dangyang" class="artist-section">
             <h2 class="artist-title">荡漾作品集</h2>
-            <p class="artist-description">
-                介绍正在编辑中。
-            </p>
-            
+            <p class="artist-description">介绍正在编辑中。</p>
             <div class="cards-container">
-                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/1.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1241,8 +1000,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- 卡片2 -->
                 <div class="card-wrap" data-image="picture/1.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1255,19 +1012,14 @@
                     </div>
                 </div>
             </div>
-            
             <button class="back-to-top">返回顶部</button>
         </section>
         
         <!-- 咔啦作品区域 -->
         <section id="lixing" class="artist-section">
             <h2 class="artist-title">咔啦作品集</h2>
-            <p class="artist-description">
-                介绍正在编辑中。
-            </p>
-            
+            <p class="artist-description">介绍正在编辑中。</p>
             <div class="cards-container">
-                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/1.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1279,8 +1031,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- 卡片2 -->
                 <div class="card-wrap" data-image="picture/1.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1293,19 +1043,14 @@
                     </div>
                 </div>
             </div>
-            
             <button class="back-to-top">返回顶部</button>
         </section>
         
         <!-- 咕噜作品区域 -->
         <section id="gulu" class="artist-section">
             <h2 class="artist-title">咕噜作品集</h2>
-            <p class="artist-description">
-                咕噜，凉宫春日应援团广东支部美工组成员，擅长运用平涂手法，融入对于作品的理解，希望创作更多有趣的凉宫春日系列作品，谢谢喜欢咕噜的画~
-            </p>
-            
+            <p class="artist-description">咕噜，凉宫春日应援团广东支部美工组成员，擅长运用平涂手法，融入对于作品的理解，希望创作更多有趣的凉宫春日系列作品，谢谢喜欢咕噜的画~</p>
             <div class="cards-container">
-                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/gulu1.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1317,8 +1062,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- 卡片2 -->
                 <div class="card-wrap" data-image="picture/gulu2.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1330,8 +1073,6 @@
                         </div>
                     </div>
                 </div>
-                           
-                <!-- 卡片3 -->
                 <div class="card-wrap" data-image="picture/gulu3.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1344,19 +1085,14 @@
                     </div>
                 </div>
             </div>
-            
             <button class="back-to-top">返回顶部</button>
         </section>
         
         <!-- Potaro作品区域 -->
         <section id="Potaro" class="artist-section">
             <h2 class="artist-title">Potaro作品集</h2>
-            <p class="artist-description">
-                介绍正在编辑中。
-            </p>
-            
+            <p class="artist-description">介绍正在编辑中。</p>
             <div class="cards-container">
-                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/Potaro1.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1369,19 +1105,14 @@
                     </div>
                 </div>
             </div>
-            
             <button class="back-to-top">返回顶部</button>
         </section>
         
         <!-- 阿笑作品区域 -->
         <section id="axiao" class="artist-section">
             <h2 class="artist-title">阿笑作品集</h2>
-            <p class="artist-description">
-                介绍正在编辑中。
-            </p>
-            
+            <p class="artist-description">介绍正在编辑中。</p>
             <div class="cards-container">
-                <!-- 卡片1 -->
                 <div class="card-wrap" data-image="picture/1.png">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1393,8 +1124,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- 卡片2 -->
                 <div class="card-wrap" data-image="picture/1.jpg">
                     <div class="interactive-hint">移动鼠标查看3D效果</div>
                     <div class="gyro-hint">倾斜手机查看3D效果</div>
@@ -1407,11 +1136,10 @@
                     </div>
                 </div>
             </div>
-            
             <button class="back-to-top">返回顶部</button>
         </section>
         <p class="page-subtitle">本网页内容由广东支部运营组成员天隐负责维护</p>
-        <p class="page-subtitle">目前版本号：v1.5.0 - 移动端大图左右滑动切换</p>
+        <p class="page-subtitle">目前版本号：v1.5.1 - 修复移动端滑动切换 + 显示导航按钮</p>
     </div>
 
     <script>
@@ -1423,33 +1151,21 @@
                 this.isGyroAvailable = false;
                 this.beta = 0;
                 this.gamma = 0;
-                this.alpha = 0;
                 this.animationId = null;
                 this.lastUpdateTime = 0;
                 this.updateInterval = 16;
-                
                 this.init();
             }
             
             init() {
                 this.cardWraps = document.querySelectorAll('.card-wrap');
-                
                 if (window.DeviceOrientationEvent) {
-                    console.log('📱 设备支持陀螺仪');
                     this.isGyroAvailable = true;
-                    
                     window.addEventListener('deviceorientation', this.handleOrientation.bind(this));
-                    
                     if (this.isMobileDevice()) {
-                        setTimeout(() => {
-                            this.activateGyro();
-                        }, 1000);
+                        setTimeout(() => this.activateGyro(), 1000);
                     }
-                } else {
-                    console.log('⚠️ 设备不支持陀螺仪');
-                    this.isGyroAvailable = false;
                 }
-                
                 this.addClickToggle();
             }
             
@@ -1460,10 +1176,7 @@
             addClickToggle() {
                 this.cardWraps.forEach(cardWrap => {
                     cardWrap.addEventListener('click', (e) => {
-                        if (e.target.closest('.card-info') || e.target.closest('.lightbox-overlay')) {
-                            return;
-                        }
-                        
+                        if (e.target.closest('.card-info') || e.target.closest('.lightbox-overlay')) return;
                         if (this.isGyroActive) {
                             this.deactivateGyro();
                             this.showHint('点击卡片激活陀螺仪');
@@ -1480,69 +1193,47 @@
                 hint.className = 'mobile-protection-message';
                 hint.textContent = message;
                 document.body.appendChild(hint);
-                
-                setTimeout(() => {
-                    hint.remove();
-                }, 2000);
+                setTimeout(() => hint.remove(), 2000);
             }
             
             activateGyro() {
                 if (!this.isGyroAvailable || this.isGyroActive) return;
-                
                 this.isGyroActive = true;
-                this.cardWraps.forEach(cardWrap => {
-                    cardWrap.classList.add('gyro-active');
-                });
-                
+                this.cardWraps.forEach(cardWrap => cardWrap.classList.add('gyro-active'));
                 this.startAnimation();
-                console.log('🎮 陀螺仪3D效果已激活');
-                
                 this.showHint('倾斜手机查看3D效果');
             }
             
             deactivateGyro() {
                 if (!this.isGyroActive) return;
-                
                 this.isGyroActive = false;
                 this.cardWraps.forEach(cardWrap => {
                     cardWrap.classList.remove('gyro-active');
-                    
                     const card = cardWrap.querySelector('.card');
                     const cardBg = cardWrap.querySelector('.card-bg');
-                    
                     if (card && cardBg) {
                         card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
                         cardBg.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
-                        
                         card.style.transform = 'rotateY(0deg) rotateX(0deg)';
                         cardBg.style.transform = 'translateX(0px) translateY(0px) scale(1.05)';
-                        
                         setTimeout(() => {
                             card.style.transition = '';
                             cardBg.style.transition = '';
                         }, 600);
                     }
                 });
-                
                 this.stopAnimation();
-                console.log('🎮 陀螺仪3D效果已关闭');
             }
             
             handleOrientation(event) {
                 if (!this.isGyroActive) return;
-                
                 this.beta = event.beta || 0;
                 this.gamma = event.gamma || 0;
-                this.alpha = event.alpha || 0;
-                
-                if (this.beta !== null && this.gamma !== null) {
-                    this.updateCards();
-                }
+                if (this.beta !== null && this.gamma !== null) this.updateCards();
             }
             
             startAnimation() {
                 if (this.animationId) return;
-                
                 const animate = (timestamp) => {
                     if (timestamp - this.lastUpdateTime >= this.updateInterval) {
                         this.updateCards();
@@ -1550,7 +1241,6 @@
                     }
                     this.animationId = requestAnimationFrame(animate);
                 };
-                
                 this.animationId = requestAnimationFrame(animate);
             }
             
@@ -1563,31 +1253,16 @@
             
             updateCards() {
                 if (!this.isGyroActive) return;
-                
-                const rotateY = (this.gamma / 90) * 25;
-                const rotateX = (this.beta / 180) * 20;
-                
-                const limitedRotateY = Math.max(-25, Math.min(25, rotateY));
-                const limitedRotateX = Math.max(-20, Math.min(20, rotateX));
-                
+                const rotateY = Math.max(-25, Math.min(25, (this.gamma / 90) * 25));
+                const rotateX = Math.max(-20, Math.min(20, (this.beta / 180) * 20));
                 const bgX = -this.gamma * 0.8;
                 const bgY = -this.beta * 0.5;
-                
                 this.cardWraps.forEach(cardWrap => {
                     const card = cardWrap.querySelector('.card');
                     const cardBg = cardWrap.querySelector('.card-bg');
-                    
                     if (card && cardBg) {
-                        card.style.transform = `rotateY(${limitedRotateY}deg) rotateX(${limitedRotateX}deg)`;
+                        card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
                         cardBg.style.transform = `translateX(${bgX}px) translateY(${bgY}px) scale(1.05)`;
-                        
-                        const gyroHint = cardWrap.querySelector('.gyro-hint');
-                        if (gyroHint && !gyroHint.classList.contains('show')) {
-                            gyroHint.classList.add('show');
-                            setTimeout(() => {
-                                gyroHint.classList.remove('show');
-                            }, 3000);
-                        }
                     }
                 });
             }
@@ -1606,29 +1281,22 @@
                 this.mouseLeaveDelay = null;
                 
                 const imageUrl = element.getAttribute('data-image');
-                console.log('初始化卡片，图片路径:', imageUrl);
                 if (imageUrl) {
                     let finalUrl = imageUrl;
                     if (!imageUrl.startsWith('http') && !imageUrl.startsWith('//')) {
                         finalUrl = imageUrl.replace('./', '');
                     }
-                    
                     this.cardBg.style.backgroundImage = `url('${finalUrl}')`;
                     this.preloadImage(finalUrl);
                 }
-                
                 this.init();
             }
             
             preloadImage(url) {
                 const img = new Image();
                 img.src = url;
-                img.onload = () => {
-                    console.log('✅ 卡片图片加载成功:', url);
-                    this.cardBg.style.opacity = '0.8';
-                };
+                img.onload = () => this.cardBg.style.opacity = '0.8';
                 img.onerror = () => {
-                    console.error('❌ 卡片图片加载失败:', url);
                     this.cardBg.style.backgroundImage = 'linear-gradient(135deg, #8D6E63 0%, #5D4037 100%)';
                     this.cardBg.style.backgroundColor = '#333';
                 };
@@ -1638,7 +1306,6 @@
                 this.element.addEventListener('mousemove', this.handleMouseMove.bind(this));
                 this.element.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
                 this.element.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
-                
                 this.element.addEventListener('click', (e) => {
                     if (!e.target.closest('.gyro-hint')) {
                         e.stopPropagation();
@@ -1695,41 +1362,29 @@
         // 移动端滑动切换相关变量
         let touchStartX = 0;
         let touchStartY = 0;
-        let touchEndX = 0;
-        let touchEndY = 0;
         let isSwiping = false;
         let swipeOffset = 0;
-        let isZoomed = false; // 是否已放大（缩放>1）
+        let isZoomed = false;
         
         function collectImages() {
             const cardWraps = document.querySelectorAll('.card-wrap');
             allImages = [];
-            
             cardWraps.forEach((card, index) => {
                 const imageUrl = card.getAttribute('data-image');
-                if (!imageUrl || imageUrl.includes('via.placeholder')) return;
-                
+                if (!imageUrl) return;
                 const title = card.querySelector('.card-info h1')?.textContent || '作品';
                 const description = card.querySelector('.card-info p')?.textContent || '';
-                
                 allImages.push({
                     src: imageUrl,
                     caption: `${title} - ${description}`,
                     index: index
                 });
             });
-            
-            console.log('收集到的图片:', allImages.length);
         }
         
         function openLightbox(index) {
             collectImages();
-            
-            if (allImages.length === 0) {
-                console.warn('没有找到可显示的图片');
-                return;
-            }
-            
+            if (allImages.length === 0) return;
             currentImageIndex = index % allImages.length;
             resetTransform();
             updateLightbox();
@@ -1737,7 +1392,6 @@
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
             preloadAdjacentImages();
         }
         
@@ -1756,15 +1410,11 @@
                 
                 lightboxImage.onload = function() {
                     resetTransform();
-                    // 统一调用自适应函数
                     fitToScreen();
-                    
-                    // 重置滑动相关变量
+                    // 重置滑动状态
                     swipeOffset = 0;
                     isSwiping = false;
-                    isZoomed = false;
-                    lightboxImage.classList.remove('swiping');
-                    lightboxImage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                    lightboxImage.classList.remove('no-transition');
                 };
             }
         }
@@ -1774,10 +1424,6 @@
             lightbox.classList.remove('active');
             document.body.style.overflow = 'auto';
             resetTransform();
-            
-            // 移除滑动事件监听
-            const lightboxImage = document.getElementById('lightboxImage');
-            lightboxImage.classList.remove('swiping');
         }
         
         function showPrevImage() {
@@ -1799,6 +1445,8 @@
             scale = 1;
             translateX = 0;
             translateY = 0;
+            swipeOffset = 0;
+            isSwiping = false;
             updateImageTransform();
             updateZoomInfo();
         }
@@ -1806,13 +1454,10 @@
         function updateImageTransform() {
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
-            
-            // 强制居中：transform 使用 translate(-50%, -50%) 作为基准
-            // 如果有滑动偏移，则加上偏移量
             const isMobile = window.innerWidth <= 768;
             
             if (isMobile && isSwiping) {
-                // 移动端滑动时，不改变垂直位置，只水平滑动
+                // 移动端滑动时，只水平移动，不改变垂直位置
                 lightboxImage.style.transform = `translate(calc(-50% + ${swipeOffset}px), -50%) scale(${scale})`;
             } else {
                 // 正常拖拽或PC端
@@ -1821,11 +1466,9 @@
             
             if (scale > 1) {
                 lightboxContainer.classList.add('grabbing');
-                lightboxContainer.style.cursor = 'grab';
                 isZoomed = true;
             } else {
                 lightboxContainer.classList.remove('grabbing');
-                lightboxContainer.style.cursor = 'default';
                 isZoomed = false;
             }
         }
@@ -1851,7 +1494,6 @@
             }
         }
         
-        // ===== 统一自适应函数 =====
         function fitToScreen() {
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
@@ -1864,48 +1506,26 @@
             const imageHeight = lightboxImage.naturalHeight;
             
             const isMobile = window.innerWidth <= 768;
-            
             let targetScale = 1;
             
             if (isMobile) {
                 // 移动端：优先铺满宽度，同时确保完整显示
                 const widthRatio = containerWidth / imageWidth;
                 const heightRatio = containerHeight / imageHeight;
-                
-                // 取较小值，确保图片完整显示在屏幕内
                 targetScale = Math.min(widthRatio, heightRatio, 1);
-                
-                // 如果图片本身小于屏幕，不放大（避免模糊）
-                if (targetScale > 1) {
-                    targetScale = 1;
-                }
             } else {
-                // PC端：智能适配
+                // PC端智能适配
                 const isLandscape = imageWidth > imageHeight;
-                const isPortrait = imageHeight > imageWidth;
-                
                 if (isLandscape) {
-                    // 横版图片：限制最大宽度为容器宽度的85%，高度自适应
                     targetScale = (containerWidth * 0.85) / imageWidth;
-                } else if (isPortrait) {
-                    // 竖版图片：铺满容器高度的90%
+                } else {
                     targetScale = (containerHeight * 0.9) / imageHeight;
-                    
-                    // 检查宽度是否超出容器
                     const widthAfterScale = imageWidth * targetScale;
                     if (widthAfterScale > containerWidth * 0.95) {
                         targetScale = (containerWidth * 0.95) / imageWidth;
                     }
-                } else {
-                    // 方形图片：限制最大尺寸
-                    const maxSize = Math.min(containerWidth, containerHeight) * 0.85;
-                    targetScale = maxSize / Math.max(imageWidth, imageHeight);
                 }
-                
-                // 如果图片本身小于屏幕，不放大
-                if (targetScale > 1) {
-                    targetScale = 1;
-                }
+                if (targetScale > 1) targetScale = 1;
             }
             
             scale = targetScale;
@@ -1928,69 +1548,49 @@
             updateZoomInfo();
         }
         
-        // ============ 拖拽事件 ============
-        function startDrag(e) {
-            const isMobile = window.innerWidth <= 768;
+        // ============ 移动端滑动切换事件处理 ============
+        function handleTouchStart(e) {
+            if (window.innerWidth > 768) return;
             
-            if (e.type === 'touchstart' && isMobile) {
-                // 移动端：记录触摸开始位置，用于判断是滑动切换还是拖拽
-                const touch = e.touches[0];
-                touchStartX = touch.clientX;
-                touchStartY = touch.clientY;
-                swipeOffset = 0;
-                isSwiping = false;
-                
-                // 添加swiping类以移除动画
-                const lightboxImage = document.getElementById('lightboxImage');
-                lightboxImage.classList.add('swiping');
-                
-                return;
-            }
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            isSwiping = false;
+            swipeOffset = 0;
             
-            // PC端或移动端缩放后的拖拽
-            if (scale <= 1) return;
-            
-            isDragging = true;
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            lightboxContainer.style.cursor = 'grabbing';
-            
-            if (e.type === 'mousedown') {
-                startX = e.clientX - translateX;
-                startY = e.clientY - translateY;
-                document.addEventListener('mousemove', drag);
-                document.addEventListener('mouseup', stopDrag);
-            }
+            // 移除动画，使滑动更跟手
+            const lightboxImage = document.getElementById('lightboxImage');
+            lightboxImage.classList.add('no-transition');
         }
         
         function handleTouchMove(e) {
-            const isMobile = window.innerWidth <= 768;
-            if (!isMobile) return;
+            if (window.innerWidth > 768) return;
             
-            const lightboxImage = document.getElementById('lightboxImage');
             const touch = e.touches[0];
             const deltaX = touch.clientX - touchStartX;
             const deltaY = touch.clientY - touchStartY;
             
-            // 判断是否是水平滑动（水平移动距离大于垂直移动距离，且大于阈值）
+            // 判断是否为水平滑动（水平距离 > 垂直距离 且 水平距离 > 10px）
             if (!isSwiping && Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
                 isSwiping = true;
-                isDragging = false;
+                e.preventDefault(); // 阻止滚动
             }
             
             if (isSwiping) {
-                // 水平滑动切换图片
-                e.preventDefault(); // 阻止默认滚动
+                e.preventDefault();
                 
-                // 限制滑动偏移量，添加阻力效果
+                // 计算滑动偏移，添加阻力效果
                 swipeOffset = deltaX * 0.5;
                 
-                // 最大偏移为屏幕宽度的30%
+                // 限制最大偏移为屏幕宽度的30%
                 const maxOffset = window.innerWidth * 0.3;
                 swipeOffset = Math.max(-maxOffset, Math.min(maxOffset, swipeOffset));
                 
+                // 更新图片位置
+                const lightboxImage = document.getElementById('lightboxImage');
                 lightboxImage.style.transform = `translate(calc(-50% + ${swipeOffset}px), -50%) scale(${scale})`;
-            } else if (scale > 1) {
-                // 缩放后的拖拽
+            } else if (scale > 1 && !isSwiping) {
+                // 缩放状态下的拖拽
                 e.preventDefault();
                 if (!isDragging) {
                     isDragging = true;
@@ -2002,6 +1602,7 @@
                 translateY = touch.clientY - startY;
                 
                 // 限制拖拽范围
+                const lightboxImage = document.getElementById('lightboxImage');
                 const lightboxContainer = document.getElementById('lightboxContainer');
                 const scaledWidth = lightboxImage.naturalWidth * scale;
                 const scaledHeight = lightboxImage.naturalHeight * scale;
@@ -2016,15 +1617,15 @@
         }
         
         function handleTouchEnd(e) {
-            const isMobile = window.innerWidth <= 768;
-            if (!isMobile) return;
+            if (window.innerWidth > 768) return;
             
             const lightboxImage = document.getElementById('lightboxImage');
-            lightboxImage.classList.remove('swiping');
+            
+            // 恢复动画
+            lightboxImage.classList.remove('no-transition');
             
             if (isSwiping) {
-                // 判断是否切换图片
-                const threshold = window.innerWidth * 0.15; // 滑动距离超过屏幕宽度的15%才切换
+                const threshold = window.innerWidth * 0.15; // 滑动距离超过15%才切换
                 
                 if (swipeOffset > threshold) {
                     // 向右滑动，上一张
@@ -2033,39 +1634,39 @@
                     // 向左滑动，下一张
                     showNextImage();
                 } else {
-                    // 滑动距离不够，回弹
+                    // 滑动距离不够，回弹复位
                     lightboxImage.style.transform = `translate(-50%, -50%) scale(${scale})`;
                 }
                 
-                // 重置滑动状态
-                swipeOffset = 0;
                 isSwiping = false;
+                swipeOffset = 0;
             }
             
-            // 重置拖拽状态
             isDragging = false;
-            touchStartX = 0;
-            touchStartY = 0;
         }
         
-        function drag(e) {
-            if (!isDragging) return;
+        // ============ PC端拖拽事件 ============
+        function handleMouseDown(e) {
+            if (scale <= 1) return;
             
+            isDragging = true;
+            startX = e.clientX - translateX;
+            startY = e.clientY - translateY;
+            
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+        }
+        
+        function handleMouseMove(e) {
+            if (!isDragging) return;
             e.preventDefault();
             
-            let clientX, clientY;
-            if (e.type === 'mousemove') {
-                clientX = e.clientX;
-                clientY = e.clientY;
-            }
-            
-            translateX = clientX - startX;
-            translateY = clientY - startY;
+            translateX = e.clientX - startX;
+            translateY = e.clientY - startY;
             
             // 限制拖拽范围
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
-            
             const scaledWidth = lightboxImage.naturalWidth * scale;
             const scaledHeight = lightboxImage.naturalHeight * scale;
             const maxX = Math.max(0, (scaledWidth - lightboxContainer.clientWidth) / 2);
@@ -2077,29 +1678,17 @@
             updateImageTransform();
         }
         
-        function stopDrag() {
+        function handleMouseUp() {
             isDragging = false;
-            const lightboxContainer = document.getElementById('lightboxContainer');
-            lightboxContainer.style.cursor = scale > 1 ? 'grab' : 'default';
-            
-            document.removeEventListener('mousemove', drag);
-            document.removeEventListener('mouseup', stopDrag);
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mouseup', handleMouseUp);
         }
         
-        function handleWheel(e) {
-            e.preventDefault();
-            
-            if (e.deltaY < 0) {
-                zoomIn();
-            } else {
-                zoomOut();
-            }
-        }
-        
+        // ============ 触摸缩放 ============
         let initialDistance = null;
         let initialScale = null;
         
-        function handleTouchStart(e) {
+        function handlePinchStart(e) {
             if (e.touches.length === 2) {
                 e.preventDefault();
                 const touch1 = e.touches[0];
@@ -2112,7 +1701,7 @@
             }
         }
         
-        function handleTouchMove(e) {
+        function handlePinchMove(e) {
             if (e.touches.length === 2) {
                 e.preventDefault();
                 const touch1 = e.touches[0];
@@ -2131,147 +1720,87 @@
             }
         }
         
-        function handleTouchEnd() {
+        function handlePinchEnd() {
             initialDistance = null;
             initialScale = null;
         }
         
+        function handleWheel(e) {
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                zoomIn();
+            } else {
+                zoomOut();
+            }
+        }
+        
         function preloadAdjacentImages() {
-            const preloadCount = 2;
-            for (let i = 1; i <= preloadCount; i++) {
+            for (let i = 1; i <= 2; i++) {
                 const nextIndex = (currentImageIndex + i) % allImages.length;
                 const prevIndex = (currentImageIndex - i + allImages.length) % allImages.length;
-                
-                if (allImages[nextIndex]) {
-                    const img = new Image();
-                    img.src = allImages[nextIndex].src;
-                }
-                
-                if (allImages[prevIndex]) {
-                    const img = new Image();
-                    img.src = allImages[prevIndex].src;
-                }
+                if (allImages[nextIndex]) new Image().src = allImages[nextIndex].src;
+                if (allImages[prevIndex]) new Image().src = allImages[prevIndex].src;
             }
         }
         
         // ============ 页面初始化 ============
         let gyroEffect = null;
         
-        function initPage() {
-            console.log('开始初始化页面...');
-            
-            const cardWraps = document.querySelectorAll('.card-wrap');
-            console.log('找到卡片数量:', cardWraps.length);
-            
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                gyroEffect = new Gyro3DEffect();
-            }
-            
-            setTimeout(() => {
-                cardWraps.forEach((card, index) => {
-                    try {
-                        new Card3D(card);
-                        console.log(`卡片 ${index + 1} 初始化成功`);
-                    } catch (error) {
-                        console.error(`卡片 ${index + 1} 初始化失败:`, error);
-                    }
-                });
-            }, 100);
-            
-            initLightbox();
-            updateBackground();
-            window.addEventListener('resize', updateBackground);
-            initNavigation();
-            initBackToTop();
-            preloadBackgrounds();
-            
-            console.log('页面初始化完成');
-        }
-        
         function initLightbox() {
-            document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-            document.getElementById('lightboxPrev').addEventListener('click', showPrevImage);
-            document.getElementById('lightboxNext').addEventListener('click', showNextImage);
-            document.getElementById('lightboxZoomIn').addEventListener('click', zoomIn);
-            document.getElementById('lightboxZoomOut').addEventListener('click', zoomOut);
-            document.getElementById('lightboxReset').addEventListener('click', resetTransform);
-            document.getElementById('lightboxZoomFit').addEventListener('click', fitToScreen);
-            document.getElementById('lightboxZoomOriginal').addEventListener('click', zoomToOriginal);
-            
-            const lightboxImage = document.getElementById('lightboxImage');
+            const lightboxClose = document.getElementById('lightboxClose');
+            const lightboxPrev = document.getElementById('lightboxPrev');
+            const lightboxNext = document.getElementById('lightboxNext');
+            const lightboxZoomIn = document.getElementById('lightboxZoomIn');
+            const lightboxZoomOut = document.getElementById('lightboxZoomOut');
+            const lightboxReset = document.getElementById('lightboxReset');
+            const lightboxZoomFit = document.getElementById('lightboxZoomFit');
+            const lightboxZoomOriginal = document.getElementById('lightboxZoomOriginal');
             const lightboxContainer = document.getElementById('lightboxContainer');
+            const lightboxImage = document.getElementById('lightboxImage');
             
-            lightboxImage.addEventListener('mousedown', startDrag);
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxPrev.addEventListener('click', showPrevImage);
+            lightboxNext.addEventListener('click', showNextImage);
+            lightboxZoomIn.addEventListener('click', zoomIn);
+            lightboxZoomOut.addEventListener('click', zoomOut);
+            lightboxReset.addEventListener('click', resetTransform);
+            lightboxZoomFit.addEventListener('click', fitToScreen);
+            lightboxZoomOriginal.addEventListener('click', zoomToOriginal);
             
-            // 移动端触摸事件 - 滑动切换
+            // PC端鼠标事件
+            lightboxImage.addEventListener('mousedown', handleMouseDown);
+            
+            // 移动端触摸事件 - 滑动切换 + 缩放
             lightboxContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
-            lightboxContainer.addEventListener('touchstart', startDrag, { passive: false });
-            lightboxContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
             lightboxContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
             lightboxContainer.addEventListener('touchend', handleTouchEnd);
             
-            // 移动端滑动切换事件
-            lightboxContainer.addEventListener('touchstart', function(e) {
-                if (window.innerWidth <= 768) {
-                    handleTouchStart(e);
-                    startDrag(e);
-                }
-            }, { passive: false });
+            // 双指缩放
+            lightboxContainer.addEventListener('touchstart', handlePinchStart, { passive: false });
+            lightboxContainer.addEventListener('touchmove', handlePinchMove, { passive: false });
+            lightboxContainer.addEventListener('touchend', handlePinchEnd);
             
-            lightboxContainer.addEventListener('touchmove', function(e) {
-                if (window.innerWidth <= 768) {
-                    handleTouchMove(e);
-                    handleTouchMove(e);
-                }
-            }, { passive: false });
-            
-            lightboxContainer.addEventListener('touchend', function(e) {
-                if (window.innerWidth <= 768) {
-                    handleTouchEnd(e);
-                    stopDrag();
-                }
-            });
-            
+            // 滚轮缩放
             lightboxContainer.addEventListener('wheel', handleWheel, { passive: false });
             
+            // 点击背景关闭
             document.getElementById('lightbox').addEventListener('click', function(e) {
-                if (e.target === this) {
-                    closeLightbox();
-                }
+                if (e.target === this) closeLightbox();
             });
             
+            // 键盘事件
             document.addEventListener('keydown', function(e) {
                 const lightbox = document.getElementById('lightbox');
                 if (!lightbox.classList.contains('active')) return;
                 
                 switch(e.key) {
-                    case 'Escape':
-                        closeLightbox();
-                        break;
-                    case 'ArrowLeft':
-                        showPrevImage();
-                        break;
-                    case 'ArrowRight':
-                        showNextImage();
-                        break;
-                    case '+':
-                    case '=':
-                        e.preventDefault();
-                        zoomIn();
-                        break;
-                    case '-':
-                    case '_':
-                        e.preventDefault();
-                        zoomOut();
-                        break;
-                    case '0':
-                        e.preventDefault();
-                        resetTransform();
-                        break;
-                    case '1':
-                        e.preventDefault();
-                        fitToScreen();
-                        break;
+                    case 'Escape': closeLightbox(); break;
+                    case 'ArrowLeft': showPrevImage(); break;
+                    case 'ArrowRight': showNextImage(); break;
+                    case '+': case '=': e.preventDefault(); zoomIn(); break;
+                    case '-': case '_': e.preventDefault(); zoomOut(); break;
+                    case '0': e.preventDefault(); resetTransform(); break;
+                    case '1': e.preventDefault(); fitToScreen(); break;
                 }
             });
         }
@@ -2280,14 +1809,8 @@
             const mobileBg = document.querySelector('.bg-mobile');
             const pcBg = document.querySelector('.bg-pc');
             const isPC = window.innerWidth >= 768;
-            
-            if (isPC) {
-                mobileBg.style.display = 'none';
-                pcBg.style.display = 'block';
-            } else {
-                mobileBg.style.display = 'block';
-                pcBg.style.display = 'none';
-            }
+            mobileBg.style.display = isPC ? 'none' : 'block';
+            pcBg.style.display = isPC ? 'block' : 'none';
         }
         
         function initNavigation() {
@@ -2299,15 +1822,10 @@
                     e.preventDefault();
                     const targetId = this.getAttribute('href');
                     const targetElement = document.querySelector(targetId);
-                    
                     if (targetElement) {
                         navLinks.forEach(l => l.classList.remove('active'));
                         this.classList.add('active');
-                        
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
+                        window.scrollTo({ top: targetElement.offsetTop - 80, behavior: 'smooth' });
                     }
                 });
             });
@@ -2317,12 +1835,10 @@
                 clearTimeout(scrollTimeout);
                 scrollTimeout = setTimeout(() => {
                     const scrollPosition = window.scrollY + 100;
-                    
                     sections.forEach(section => {
                         const sectionTop = section.offsetTop;
                         const sectionHeight = section.offsetHeight;
                         const sectionId = section.getAttribute('id');
-                        
                         if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
                             navLinks.forEach(link => {
                                 link.classList.remove('active');
@@ -2341,14 +1857,8 @@
             backButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                    });
-                    
-                    document.querySelectorAll('.nav-link').forEach(l => {
-                        l.classList.remove('active');
-                    });
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
                     document.querySelector('.nav-link[href="#guyikun"]').classList.add('active');
                 });
             });
@@ -2357,49 +1867,46 @@
         function preloadBackgrounds() {
             const mobileImg = new Image();
             const pcImg = new Image();
-            
             mobileImg.src = 'picture/Text2.jpg';
             pcImg.src = 'picture/suzumiya.png';
+        }
+        
+        function initPage() {
+            const cardWraps = document.querySelectorAll('.card-wrap');
             
-            mobileImg.onload = function() {
-                console.log('✅ 移动端背景图加载成功');
-                document.querySelector('.bg-mobile').style.opacity = '0.4';
-            };
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                gyroEffect = new Gyro3DEffect();
+            }
             
-            pcImg.onload = function() {
-                console.log('✅ PC端背景图加载成功');
-                document.querySelector('.bg-pc').style.opacity = '0.4';
-            };
+            setTimeout(() => {
+                cardWraps.forEach((card, index) => {
+                    try { new Card3D(card); } catch (error) {}
+                });
+            }, 100);
             
-            mobileImg.onerror = function() {
-                console.warn('❌ 移动端背景图加载失败');
-                document.querySelector('.bg-mobile').style.display = 'none';
-            };
-            
-            pcImg.onerror = function() {
-                console.warn('❌ PC端背景图加载失败');
-                document.querySelector('.bg-pc').style.display = 'none';
-            };
+            initLightbox();
+            updateBackground();
+            window.addEventListener('resize', updateBackground);
+            initNavigation();
+            initBackToTop();
+            preloadBackgrounds();
         }
         
         // ============ 保护功能 ============
         function initProtection() {
-            // 禁止右键菜单
             document.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
                 showProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
                 return false;
             });
             
-            // 禁止开发者工具快捷键
             document.addEventListener('keydown', function(e) {
                 const isBlocked = 
                     (e.key === 'F12' || e.keyCode === 123) ||
-                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
-                    (e.ctrlKey && e.shiftKey && e.key === 'J') ||
-                    (e.ctrlKey && e.key === 'u') ||
-                    (e.ctrlKey && e.key === 's') ||
-                    (e.ctrlKey && e.key === 'c');
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+                    (e.ctrlKey && (e.key === 'u' || e.key === 'U')) ||
+                    (e.ctrlKey && (e.key === 's' || e.key === 'S')) ||
+                    (e.ctrlKey && (e.key === 'c' || e.key === 'C'));
                 
                 if (isBlocked) {
                     e.preventDefault();
@@ -2408,7 +1915,6 @@
                 }
             });
             
-            // 禁止拖拽图片
             document.addEventListener('dragstart', function(e) {
                 if (e.target.tagName === 'IMG' || e.target.classList.contains('card-bg')) {
                     e.preventDefault();
@@ -2416,135 +1922,70 @@
                 }
             });
             
-            // 禁止移动端长按保存图片
             document.addEventListener('touchstart', function(e) {
-                if (e.target.tagName === 'IMG' || e.target.classList.contains('lightbox-img')) {
+                if (e.target.tagName === 'IMG' && !e.target.closest('.lightbox-overlay')) {
                     e.preventDefault();
                     return false;
                 }
             }, { passive: false });
-            
-            // 禁止长按弹出菜单
-            document.addEventListener('touchhold', function(e) {
-                if (e.target.tagName === 'IMG' || e.target.classList.contains('lightbox-img')) {
-                    e.preventDefault();
-                    return false;
-                }
-            }, { passive: false });
-            
-            // 禁止长按选择
-            document.addEventListener('selectstart', function(e) {
-                if (e.target.tagName === 'IMG' || e.target.classList.contains('lightbox-img')) {
-                    e.preventDefault();
-                    return false;
-                }
-            });
-            
-            // 禁止复制
-            document.addEventListener('copy', function(e) {
-                e.preventDefault();
-                return false;
-            });
-            
-            // 禁止剪切
-            document.addEventListener('cut', function(e) {
-                e.preventDefault();
-                return false;
-            });
-            
-            // 禁止粘贴
-            document.addEventListener('paste', function(e) {
-                e.preventDefault();
-                return false;
-            });
         }
         
         function showProtectionMessage(msg) {
             const existingMsg = document.querySelector('.protection-message');
             if (existingMsg) existingMsg.remove();
-            
             const msgBox = document.createElement('div');
             msgBox.className = 'protection-message';
             msgBox.textContent = msg;
             document.body.appendChild(msgBox);
-            
-            setTimeout(() => {
-                if (msgBox.parentNode) msgBox.remove();
-            }, 2000);
+            setTimeout(() => msgBox.remove(), 2000);
         }
         
         function initMobileImageProtection() {
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             if (!isMobile) return;
             
-            console.log('📱 移动设备检测，启用图片保护功能');
-            
             let lastTouchEnd = 0;
             document.addEventListener('touchend', function(e) {
                 const now = Date.now();
                 if (now - lastTouchEnd <= 300) {
                     if (!e.target.closest('.lightbox-overlay.active') && e.target.closest('.card-bg')) {
-                        setTimeout(() => {
-                            showMobileProtectionMessage("谢谢你的喜欢，请尊重作者版权哦");
-                        }, 100);
+                        setTimeout(() => showMobileProtectionMessage("谢谢你的喜欢，请尊重作者版权哦"), 100);
                     }
                 }
                 lastTouchEnd = now;
             }, { passive: true });
-            
-            // 针对iOS的额外保护
-            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                document.addEventListener('gesturestart', function(e) {
-                    e.preventDefault();
-                });
-            }
         }
         
         function showMobileProtectionMessage(msg) {
             const existingMsg = document.querySelector('.mobile-protection-message');
             if (existingMsg) existingMsg.remove();
-            
             const msgBox = document.createElement('div');
             msgBox.className = 'mobile-protection-message';
             msgBox.textContent = msg;
             document.body.appendChild(msgBox);
-            
-            setTimeout(() => {
-                if (msgBox.parentNode) msgBox.remove();
-            }, 1500);
+            setTimeout(() => msgBox.remove(), 1500);
         }
         
         function requestGyroPermission() {
             if (typeof DeviceOrientationEvent.requestPermission === 'function' && 
                 /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 
-                console.log('📱 iOS设备，需要请求陀螺仪权限');
-                
                 const permissionHint = document.createElement('div');
                 permissionHint.className = 'gyro-permission-hint';
                 permissionHint.innerHTML = '<div style="margin-bottom: 10px; font-size: 18px;">🚀 启用陀螺仪3D效果</div>' +
                                           '<div style="font-size: 14px; color: #FFD54F;">点击任意位置允许陀螺仪权限</div>';
                 document.body.appendChild(permissionHint);
-                
-                setTimeout(() => {
-                    if (permissionHint.parentNode) {
-                        permissionHint.remove();
-                    }
-                }, 5000);
+                setTimeout(() => permissionHint.remove(), 5000);
                 
                 const requestPermission = () => {
                     DeviceOrientationEvent.requestPermission()
                         .then(permissionState => {
-                            if (permissionState === 'granted') {
-                                console.log('✅ 陀螺仪权限已授予');
-                                if (gyroEffect) {
-                                    gyroEffect.isGyroAvailable = true;
-                                    gyroEffect.activateGyro();
-                                }
+                            if (permissionState === 'granted' && gyroEffect) {
+                                gyroEffect.isGyroAvailable = true;
+                                gyroEffect.activateGyro();
                             }
                         })
                         .catch(console.error);
-                    
                     document.removeEventListener('click', requestPermission);
                     document.removeEventListener('touchstart', requestPermission);
                 };
@@ -2554,17 +1995,19 @@
             }
         }
         
-        // ============ 窗口大小改变时重新适应 ============
         window.addEventListener('resize', function() {
             const lightbox = document.getElementById('lightbox');
-            if (lightbox.classList.contains('active')) {
-                fitToScreen();
-            }
+            if (lightbox.classList.contains('active')) fitToScreen();
+        });
+        
+        window.addEventListener('orientationchange', function() {
+            setTimeout(() => {
+                const lightbox = document.getElementById('lightbox');
+                if (lightbox.classList.contains('active')) fitToScreen();
+            }, 200);
         });
         
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM已加载，开始初始化...');
-            
             if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 setTimeout(requestGyroPermission, 2000);
             }
@@ -2580,20 +2023,10 @@
             
             setTimeout(() => {
                 console.log('🎨 3D卡片画廊已初始化完成');
-                console.log('📱 移动端：大图自适应 + 左右滑动切换图片');
+                console.log('📱 移动端：大图自适应 + 左右滑动切换图片 + 导航按钮');
                 console.log('💻 PC端：横版限制宽度，竖版铺满高度');
                 console.log('🔒 图片保护：已完全禁止移动端长按保存');
             }, 500);
-        });
-        
-        window.addEventListener('orientationchange', function() {
-            setTimeout(initMobileImageProtection, 100);
-            setTimeout(function() {
-                const lightbox = document.getElementById('lightbox');
-                if (lightbox.classList.contains('active')) {
-                    fitToScreen();
-                }
-            }, 200);
         });
     </script>
 </body>

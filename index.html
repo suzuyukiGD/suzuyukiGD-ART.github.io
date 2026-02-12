@@ -529,7 +529,7 @@
             transition: transform 0.2s ease-out;
         }
         
-        /* ===== 大图查看器样式 - 移动端自适应，PC端竖图铺满高度 ===== */
+        /* ===== 大图查看器样式 - 移动端左右滑动切换 ===== */
         .lightbox-overlay {
             position: fixed;
             top: 0;
@@ -544,7 +544,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
-            touch-action: none;
+            touch-action: pan-y !important; /* 允许垂直滚动，但我们会处理水平滑动 */
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -576,7 +576,7 @@
             100% { transform: scale(1); opacity: 1; }
         }
         
-        /* 图片样式 - 默认无限制，由JS控制缩放 */
+        /* 图片样式 - 无CSS限制，完全由JS控制 */
         .lightbox-img {
             display: block;
             margin: 0 auto;
@@ -593,7 +593,7 @@
             width: auto;
             height: auto;
             
-            /* 强制居中 */
+            /* 强制居中 - 滑动时会临时改变 */
             position: absolute;
             top: 50%;
             left: 50%;
@@ -773,6 +773,13 @@
             right: 20px;
         }
         
+        /* 移动端隐藏导航按钮，使用滑动切换 */
+        @media (max-width: 768px) {
+            .lightbox-nav {
+                display: none;
+            }
+        }
+        
         .lightbox-counter {
             position: fixed;
             top: 20px;
@@ -844,7 +851,7 @@
             100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); display: none; }
         }
         
-        /* ===== 移动端大图查看器 - 自适应屏幕 ===== */
+        /* ===== 移动端大图查看器 - 左右滑动切换 ===== */
         @media (max-width: 768px) {
             .lightbox-img {
                 -webkit-touch-callout: none !important;
@@ -852,6 +859,12 @@
                 user-select: none !important;
                 -webkit-user-drag: none !important;
                 user-drag: none !important;
+                /* 滑动动画 */
+                transition: transform 0.3s ease-out;
+            }
+            
+            .lightbox-img.swiping {
+                transition: none; /* 滑动时无动画，更跟手 */
             }
             
             .lightbox-caption {
@@ -899,20 +912,6 @@
                 top: 10px;
                 font-size: 0.8em;
                 padding: 6px 15px;
-            }
-            
-            .lightbox-nav {
-                width: 40px;
-                height: 40px;
-                font-size: 20px;
-            }
-            
-            .lightbox-prev {
-                left: 10px;
-            }
-            
-            .lightbox-next {
-                right: 10px;
             }
             
             .gyro-hint {
@@ -1121,7 +1120,7 @@
         <!-- 图片计数器 -->
         <div class="lightbox-counter" id="lightboxCounter">1 / 1</div>
         
-        <!-- 导航按钮 -->
+        <!-- 导航按钮 - 移动端隐藏，PC端显示 -->
         <button class="lightbox-nav lightbox-prev" id="lightboxPrev" title="上一张">‹</button>
         <button class="lightbox-nav lightbox-next" id="lightboxNext" title="下一张">›</button>
         
@@ -1412,7 +1411,7 @@
             <button class="back-to-top">返回顶部</button>
         </section>
         <p class="page-subtitle">本网页内容由广东支部运营组成员天隐负责维护</p>
-        <p class="page-subtitle">目前版本号：v1.4.0 - 移动端自适应，PC端竖图铺满高度</p>
+        <p class="page-subtitle">目前版本号：v1.5.0 - 移动端大图左右滑动切换</p>
     </div>
 
     <script>
@@ -1693,6 +1692,15 @@
         let minScale = 0.5;
         let maxScale = 3;
         
+        // 移动端滑动切换相关变量
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        let isSwiping = false;
+        let swipeOffset = 0;
+        let isZoomed = false; // 是否已放大（缩放>1）
+        
         function collectImages() {
             const cardWraps = document.querySelectorAll('.card-wrap');
             allImages = [];
@@ -1750,6 +1758,13 @@
                     resetTransform();
                     // 统一调用自适应函数
                     fitToScreen();
+                    
+                    // 重置滑动相关变量
+                    swipeOffset = 0;
+                    isSwiping = false;
+                    isZoomed = false;
+                    lightboxImage.classList.remove('swiping');
+                    lightboxImage.style.transform = `translate(-50%, -50%) scale(${scale})`;
                 };
             }
         }
@@ -1759,6 +1774,10 @@
             lightbox.classList.remove('active');
             document.body.style.overflow = 'auto';
             resetTransform();
+            
+            // 移除滑动事件监听
+            const lightboxImage = document.getElementById('lightboxImage');
+            lightboxImage.classList.remove('swiping');
         }
         
         function showPrevImage() {
@@ -1789,14 +1808,25 @@
             const lightboxContainer = document.getElementById('lightboxContainer');
             
             // 强制居中：transform 使用 translate(-50%, -50%) 作为基准
-            lightboxImage.style.transform = `translate(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px)) scale(${scale})`;
+            // 如果有滑动偏移，则加上偏移量
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile && isSwiping) {
+                // 移动端滑动时，不改变垂直位置，只水平滑动
+                lightboxImage.style.transform = `translate(calc(-50% + ${swipeOffset}px), -50%) scale(${scale})`;
+            } else {
+                // 正常拖拽或PC端
+                lightboxImage.style.transform = `translate(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px)) scale(${scale})`;
+            }
             
             if (scale > 1) {
                 lightboxContainer.classList.add('grabbing');
                 lightboxContainer.style.cursor = 'grab';
+                isZoomed = true;
             } else {
                 lightboxContainer.classList.remove('grabbing');
                 lightboxContainer.style.cursor = 'default';
+                isZoomed = false;
             }
         }
         
@@ -1821,7 +1851,7 @@
             }
         }
         
-        // ===== 统一自适应函数 - 移动端和PC端都使用最佳显示比例 =====
+        // ===== 统一自适应函数 =====
         function fitToScreen() {
             const lightboxImage = document.getElementById('lightboxImage');
             const lightboxContainer = document.getElementById('lightboxContainer');
@@ -1858,7 +1888,7 @@
                     // 横版图片：限制最大宽度为容器宽度的85%，高度自适应
                     targetScale = (containerWidth * 0.85) / imageWidth;
                 } else if (isPortrait) {
-                    // 竖版图片：铺满容器高度的90%，不再限制85%
+                    // 竖版图片：铺满容器高度的90%
                     targetScale = (containerHeight * 0.9) / imageHeight;
                     
                     // 检查宽度是否超出容器
@@ -1881,6 +1911,8 @@
             scale = targetScale;
             translateX = 0;
             translateY = 0;
+            swipeOffset = 0;
+            isSwiping = false;
             
             updateImageTransform();
             updateZoomInfo();
@@ -1890,12 +1922,32 @@
             scale = 1;
             translateX = 0;
             translateY = 0;
+            swipeOffset = 0;
+            isSwiping = false;
             updateImageTransform();
             updateZoomInfo();
         }
         
         // ============ 拖拽事件 ============
         function startDrag(e) {
+            const isMobile = window.innerWidth <= 768;
+            
+            if (e.type === 'touchstart' && isMobile) {
+                // 移动端：记录触摸开始位置，用于判断是滑动切换还是拖拽
+                const touch = e.touches[0];
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+                swipeOffset = 0;
+                isSwiping = false;
+                
+                // 添加swiping类以移除动画
+                const lightboxImage = document.getElementById('lightboxImage');
+                lightboxImage.classList.add('swiping');
+                
+                return;
+            }
+            
+            // PC端或移动端缩放后的拖拽
             if (scale <= 1) return;
             
             isDragging = true;
@@ -1907,13 +1959,93 @@
                 startY = e.clientY - translateY;
                 document.addEventListener('mousemove', drag);
                 document.addEventListener('mouseup', stopDrag);
-            } else if (e.type === 'touchstart') {
-                const touch = e.touches[0];
-                startX = touch.clientX - translateX;
-                startY = touch.clientY - translateY;
-                document.addEventListener('touchmove', drag);
-                document.addEventListener('touchend', stopDrag);
             }
+        }
+        
+        function handleTouchMove(e) {
+            const isMobile = window.innerWidth <= 768;
+            if (!isMobile) return;
+            
+            const lightboxImage = document.getElementById('lightboxImage');
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - touchStartX;
+            const deltaY = touch.clientY - touchStartY;
+            
+            // 判断是否是水平滑动（水平移动距离大于垂直移动距离，且大于阈值）
+            if (!isSwiping && Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 10) {
+                isSwiping = true;
+                isDragging = false;
+            }
+            
+            if (isSwiping) {
+                // 水平滑动切换图片
+                e.preventDefault(); // 阻止默认滚动
+                
+                // 限制滑动偏移量，添加阻力效果
+                swipeOffset = deltaX * 0.5;
+                
+                // 最大偏移为屏幕宽度的30%
+                const maxOffset = window.innerWidth * 0.3;
+                swipeOffset = Math.max(-maxOffset, Math.min(maxOffset, swipeOffset));
+                
+                lightboxImage.style.transform = `translate(calc(-50% + ${swipeOffset}px), -50%) scale(${scale})`;
+            } else if (scale > 1) {
+                // 缩放后的拖拽
+                e.preventDefault();
+                if (!isDragging) {
+                    isDragging = true;
+                    startX = touch.clientX - translateX;
+                    startY = touch.clientY - translateY;
+                }
+                
+                translateX = touch.clientX - startX;
+                translateY = touch.clientY - startY;
+                
+                // 限制拖拽范围
+                const lightboxContainer = document.getElementById('lightboxContainer');
+                const scaledWidth = lightboxImage.naturalWidth * scale;
+                const scaledHeight = lightboxImage.naturalHeight * scale;
+                const maxX = Math.max(0, (scaledWidth - lightboxContainer.clientWidth) / 2);
+                const maxY = Math.max(0, (scaledHeight - lightboxContainer.clientHeight) / 2);
+                
+                translateX = Math.max(-maxX, Math.min(maxX, translateX));
+                translateY = Math.max(-maxY, Math.min(maxY, translateY));
+                
+                lightboxImage.style.transform = `translate(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px)) scale(${scale})`;
+            }
+        }
+        
+        function handleTouchEnd(e) {
+            const isMobile = window.innerWidth <= 768;
+            if (!isMobile) return;
+            
+            const lightboxImage = document.getElementById('lightboxImage');
+            lightboxImage.classList.remove('swiping');
+            
+            if (isSwiping) {
+                // 判断是否切换图片
+                const threshold = window.innerWidth * 0.15; // 滑动距离超过屏幕宽度的15%才切换
+                
+                if (swipeOffset > threshold) {
+                    // 向右滑动，上一张
+                    showPrevImage();
+                } else if (swipeOffset < -threshold) {
+                    // 向左滑动，下一张
+                    showNextImage();
+                } else {
+                    // 滑动距离不够，回弹
+                    lightboxImage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                }
+                
+                // 重置滑动状态
+                swipeOffset = 0;
+                isSwiping = false;
+            }
+            
+            // 重置拖拽状态
+            isDragging = false;
+            touchStartX = 0;
+            touchStartY = 0;
         }
         
         function drag(e) {
@@ -1925,10 +2057,6 @@
             if (e.type === 'mousemove') {
                 clientX = e.clientX;
                 clientY = e.clientY;
-            } else if (e.type === 'touchmove') {
-                const touch = e.touches[0];
-                clientX = touch.clientX;
-                clientY = touch.clientY;
             }
             
             translateX = clientX - startX;
@@ -1956,8 +2084,6 @@
             
             document.removeEventListener('mousemove', drag);
             document.removeEventListener('mouseup', stopDrag);
-            document.removeEventListener('touchmove', drag);
-            document.removeEventListener('touchend', stopDrag);
         }
         
         function handleWheel(e) {
@@ -2076,13 +2202,37 @@
             const lightboxContainer = document.getElementById('lightboxContainer');
             
             lightboxImage.addEventListener('mousedown', startDrag);
-            lightboxImage.addEventListener('touchstart', startDrag);
             
-            lightboxContainer.addEventListener('wheel', handleWheel, { passive: false });
-            
+            // 移动端触摸事件 - 滑动切换
             lightboxContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
+            lightboxContainer.addEventListener('touchstart', startDrag, { passive: false });
+            lightboxContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
             lightboxContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
             lightboxContainer.addEventListener('touchend', handleTouchEnd);
+            
+            // 移动端滑动切换事件
+            lightboxContainer.addEventListener('touchstart', function(e) {
+                if (window.innerWidth <= 768) {
+                    handleTouchStart(e);
+                    startDrag(e);
+                }
+            }, { passive: false });
+            
+            lightboxContainer.addEventListener('touchmove', function(e) {
+                if (window.innerWidth <= 768) {
+                    handleTouchMove(e);
+                    handleTouchMove(e);
+                }
+            }, { passive: false });
+            
+            lightboxContainer.addEventListener('touchend', function(e) {
+                if (window.innerWidth <= 768) {
+                    handleTouchEnd(e);
+                    stopDrag();
+                }
+            });
+            
+            lightboxContainer.addEventListener('wheel', handleWheel, { passive: false });
             
             document.getElementById('lightbox').addEventListener('click', function(e) {
                 if (e.target === this) {
@@ -2232,7 +2382,7 @@
             };
         }
         
-        // ============ 保护功能 - 增强禁止长按保存 ============
+        // ============ 保护功能 ============
         function initProtection() {
             // 禁止右键菜单
             document.addEventListener('contextmenu', function(e) {
@@ -2430,7 +2580,7 @@
             
             setTimeout(() => {
                 console.log('🎨 3D卡片画廊已初始化完成');
-                console.log('📱 移动端：大图自适应，完整显示图片');
+                console.log('📱 移动端：大图自适应 + 左右滑动切换图片');
                 console.log('💻 PC端：横版限制宽度，竖版铺满高度');
                 console.log('🔒 图片保护：已完全禁止移动端长按保存');
             }, 500);

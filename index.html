@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -205,6 +206,7 @@
             min-width: 450px;
             transition: transform 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
             position: relative;
+            pointer-events: auto !important;
         }
         
         .card {
@@ -223,6 +225,7 @@
                 box-shadow 2s cubic-bezier(0.23, 1, 0.32, 1);
             transform-style: preserve-3d;
             will-change: transform;
+            pointer-events: none !important;
         }
         
         /* 卡片背景 */
@@ -240,7 +243,7 @@
             transition: 
                 opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
                 transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            pointer-events: none;
+            pointer-events: none !important;
             will-change: transform;
         }
         
@@ -256,6 +259,7 @@
             transition: 
                 transform 0.6s cubic-bezier(0.215, 0.61, 0.355, 1),
                 opacity 0.6s cubic-bezier(0.215, 0.61, 0.355, 1);
+            pointer-events: none !important;
             
             p {
                 opacity: 0;
@@ -269,6 +273,7 @@
             * {
                 position: relative;
                 z-index: 1;
+                pointer-events: none !important;
             }
             
             &:after {
@@ -287,6 +292,7 @@
                     opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
                     transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
                 border-radius: 0 0 15px 15px;
+                pointer-events: none !important;
             }
         }
         
@@ -296,6 +302,7 @@
             font-weight: 700;
             text-shadow: rgba(0, 0, 0, 0.7) 0 8px 16px;
             margin-bottom: 15px;
+            pointer-events: none !important;
         }
         
         /* 悬停状态 */
@@ -487,7 +494,7 @@
             border-radius: 15px;
             font-size: 12px;
             z-index: 10;
-            pointer-events: none;
+            pointer-events: none !important;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -508,7 +515,7 @@
             border-radius: 20px;
             font-size: 12px;
             z-index: 10;
-            pointer-events: none;
+            pointer-events: none !important;
             opacity: 0;
             transition: opacity 0.5s ease;
             backdrop-filter: blur(10px);
@@ -1093,12 +1100,22 @@
             }
         }
 
-        /* ===== 图片保护增强样式 ===== */
+        /* ===== 统一图片保护样式 ===== */
         img, 
         .card-bg, 
-        .lightbox-img,
         .bg-mobile,
         .bg-pc {
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+            -moz-user-select: none !important;
+            -ms-user-select: none !important;
+            user-select: none !important;
+            -webkit-user-drag: none !important;
+            user-drag: none !important;
+            pointer-events: none !important;
+        }
+
+        .lightbox-img {
             -webkit-touch-callout: none !important;
             -webkit-user-select: none !important;
             -moz-user-select: none !important;
@@ -1136,9 +1153,33 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* 移动端图片保护增强 */
+        /* ===== 移动端统一修复 ===== */
         @media (max-width: 768px) {
-            img, .card-bg, .lightbox-img {
+            /* 卡片容器可滑动 */
+            .cards-container,
+            .content-wrapper,
+            body,
+            html {
+                touch-action: pan-y !important;
+                -webkit-overflow-scrolling: touch !important;
+                overflow-y: auto !important;
+            }
+            
+            /* 卡片包装器 - 可点击，可滑动 */
+            .card-wrap {
+                pointer-events: auto !important;
+                touch-action: pan-y !important;
+                -webkit-user-select: none;
+                user-select: none;
+                position: relative;
+                z-index: 10;
+            }
+            
+            /* 所有图片元素 - 禁止长按菜单，不拦截触摸事件 */
+            img, 
+            .card-bg, 
+            .bg-mobile,
+            .bg-pc {
                 -webkit-touch-callout: none !important;
                 -webkit-user-select: none !important;
                 -moz-user-select: none !important;
@@ -1147,54 +1188,34 @@
                 -webkit-tap-highlight-color: transparent !important;
                 -webkit-user-drag: none !important;
                 user-drag: none !important;
+                pointer-events: none !important;
+            }
+            
+            /* 大图查看器内的图片可以交互 */
+            .lightbox-img,
+            .lightbox-overlay.active .lightbox-img {
                 pointer-events: auto !important;
             }
             
-            .card-wrap {
-                -webkit-user-select: none;
-                user-select: none;
-                touch-action: pan-y;
+            /* 卡片内部所有元素都不拦截事件，让点击穿透到card-wrap */
+            .card,
+            .card-bg,
+            .card-info,
+            .card-info *,
+            .interactive-hint,
+            .gyro-hint {
+                pointer-events: none !important;
+            }
+            
+            /* 移除所有可能冲突的设置 */
+            .card-bg, .card, .lightbox-img {
+                pointer-events: none !important;
             }
             
             .lightbox-overlay.active .lightbox-img {
                 pointer-events: auto !important;
             }
         }
-        /* ===== 修复移动端滑动问题 ===== */
-@media (max-width: 768px) {
-    /* 让卡片区域可以正常滑动 */
-    .cards-container,
-    .content-wrapper,
-    body,
-    html {
-        touch-action: pan-y !important;
-        -webkit-overflow-scrolling: touch !important;
-        overflow-y: auto !important;
-    }
-    
-    /* 图片不拦截触摸事件 */
-    .card-bg,
-    .card img,
-    img:not(.lightbox-overlay.active img) {
-        pointer-events: none !important;
-    }
-    
-    /* 卡片包装器传递触摸事件 */
-    .card-wrap {
-        pointer-events: auto !important;
-        touch-action: pan-y !important;
-    }
-    
-    /* 卡片本身不拦截事件 */
-    .card {
-        pointer-events: none !important;
-    }
-    
-    /* 大图查看器内正常交互 */
-    .lightbox-overlay.active .lightbox-img {
-        pointer-events: auto !important;
-    }
-}
     </style>
     
     <!-- 添加Google字体 -->
@@ -2171,30 +2192,49 @@
                 }, 1000);
             }
             
-            // 2. 移动端：禁止长按保存图片
+            // 2. 移动端：禁止长按保存图片，但不影响点击和滑动
             if (isMobile) {
-                // 禁止所有图片元素的长按菜单
-                document.querySelectorAll('img, .card-bg, .lightbox-img').forEach(el => {
-                    el.addEventListener('contextmenu', function(e) {
-                        e.preventDefault();
-                    }, { passive: false });
-                    
-                    el.addEventListener('contextmenu', function(e) {
-                        e.preventDefault();
-                        return false;
-                    }, { passive: false });
-                });
-                
-                // 禁止长按保存
-                let lastTouchEnd = 0;
-                document.addEventListener('touchend', function(e) {
-                    const now = Date.now();
-                    if (now - lastTouchEnd <= 300) {
-                        e.preventDefault();
-                        showMobileProtectionMessage('谢谢你的喜欢，请尊重作者版权哦');
+                // 移除所有冲突的touch事件监听
+                const style = document.createElement('style');
+                style.textContent = `
+                    @media (max-width: 768px) {
+                        img, .card-bg, .lightbox-img {
+                            -webkit-touch-callout: none !important;
+                            -webkit-user-select: none !important;
+                            user-select: none !important;
+                            -webkit-user-drag: none !important;
+                            user-drag: none !important;
+                            pointer-events: none !important;
+                        }
+                        .lightbox-overlay.active .lightbox-img {
+                            pointer-events: auto !important;
+                        }
                     }
-                    lastTouchEnd = now;
-                }, { passive: false });
+                `;
+                document.head.appendChild(style);
+                
+                // 长按检测 - 只显示提示，不阻止默认事件
+                document.querySelectorAll('.card-wrap').forEach(wrap => {
+                    let touchTimer;
+                    
+                    wrap.addEventListener('touchstart', function(e) {
+                        touchTimer = setTimeout(() => {
+                            showMobileProtectionMessage('谢谢你的喜欢，请尊重作者版权哦');
+                        }, 500);
+                    }, { passive: true });
+                    
+                    wrap.addEventListener('touchend', function(e) {
+                        clearTimeout(touchTimer);
+                    }, { passive: true });
+                    
+                    wrap.addEventListener('touchmove', function(e) {
+                        clearTimeout(touchTimer);
+                    }, { passive: true });
+                    
+                    wrap.addEventListener('touchcancel', function(e) {
+                        clearTimeout(touchTimer);
+                    }, { passive: true });
+                });
             }
             
             // 3. 通用：禁止复制图片
@@ -2206,22 +2246,7 @@
                 }
             }, true);
             
-            // 4. 动态添加样式保护
-            const style = document.createElement('style');
-            style.textContent = `
-                img, .card-bg, .lightbox-img {
-                    -webkit-touch-callout: none !important;
-                    -webkit-user-select: none !important;
-                    -moz-user-select: none !important;
-                    -ms-user-select: none !important;
-                    user-select: none !important;
-                    -webkit-user-drag: none !important;
-                    user-drag: none !important;
-                }
-            `;
-            document.head.appendChild(style);
-            
-            console.log('谢谢你的喜欢，请尊重作者版权哦');
+            console.log('版权保护系统已启动');
         }
         
         // ============ 显示保护提示 ============
@@ -2508,7 +2533,6 @@
         
         window.addEventListener('orientationchange', function() {
             setTimeout(() => {
-                // 旋转屏幕时重新应用保护
                 initEnhancedProtection();
             }, 100);
         });

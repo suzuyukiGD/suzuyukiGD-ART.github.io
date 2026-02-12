@@ -1160,6 +1160,41 @@
                 pointer-events: auto !important;
             }
         }
+        /* ===== 修复移动端滑动问题 ===== */
+@media (max-width: 768px) {
+    /* 让卡片区域可以正常滑动 */
+    .cards-container,
+    .content-wrapper,
+    body,
+    html {
+        touch-action: pan-y !important;
+        -webkit-overflow-scrolling: touch !important;
+        overflow-y: auto !important;
+    }
+    
+    /* 图片不拦截触摸事件 */
+    .card-bg,
+    .card img,
+    img:not(.lightbox-overlay.active img) {
+        pointer-events: none !important;
+    }
+    
+    /* 卡片包装器传递触摸事件 */
+    .card-wrap {
+        pointer-events: auto !important;
+        touch-action: pan-y !important;
+    }
+    
+    /* 卡片本身不拦截事件 */
+    .card {
+        pointer-events: none !important;
+    }
+    
+    /* 大图查看器内正常交互 */
+    .lightbox-overlay.active .lightbox-img {
+        pointer-events: auto !important;
+    }
+}
     </style>
     
     <!-- 添加Google字体 -->
@@ -2140,7 +2175,7 @@
             if (isMobile) {
                 // 禁止所有图片元素的长按菜单
                 document.querySelectorAll('img, .card-bg, .lightbox-img').forEach(el => {
-                    el.addEventListener('touchstart', function(e) {
+                    el.addEventListener('contextmenu', function(e) {
                         e.preventDefault();
                     }, { passive: false });
                     
@@ -2480,6 +2515,7 @@
     </script>
 </body>
 </html>
+
 
 
 
